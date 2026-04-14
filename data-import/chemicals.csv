@@ -1,0 +1,5 @@
+chemical_name,cas_number,quantity,unit,hazard_level,location,expiry_date,supplier,notes
+Sulfuric Acid 98%,7664-93-9,500,mL,Corrosive,AMS 204 Cabinet A,2026-12-31,Sigma-Aldrich,Store in cool place
+Sodium Chloride,7647-14-5,1000,g,Non-hazardous,AMS 205 Shelf B,2027-06-30,Fisher Scientific,Reorder when <200g
+Ethanol 95%,64-17-5,2000,mL,Flammable,AMS 206 Flammable Cabinet,2026-09-15,Merck,Keep away from heat
+Acetone,67-64-1,500,mL,Flammable,AMS 206 Flammable Cabinet,2025-08-20,Fisher Scientific,LOW STOCK - order soon

@@ -1,0 +1,4 @@
+name,employee_id,email,phone,primary_lab,backup_lab,shift
+Maria Reyes,EMP-101,maria.reyes@olfu.edu.ph,+63-917-8888888,AMS 204,AMS 205,Day (8AM-5PM)
+Juan Santos,EMP-102,juan.santos@olfu.edu.ph,+63-917-9999999,AMS 205,AMS 206,Day (8AM-5PM)
+Rosa Lopez,EMP-103,rosa.lopez@olfu.edu.ph,+63-917-4444444,AMS 206,AMS 204,Evening (1PM-10PM)

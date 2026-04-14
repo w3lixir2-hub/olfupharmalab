@@ -1,0 +1,39 @@
+HOW TO IMPORT CSV FILES INTO GOOGLE SHEETS
+==========================================
+
+You have 5 CSV files:
+1. lab-rooms.csv
+2. chemicals.csv
+3. equipment.csv
+4. instructors.csv
+5. lab-technicians.csv
+
+STEP-BY-STEP:
+
+1. Open your Google Sheet: https://docs.google.com/spreadsheets/d/1dIs2KMpadx6LTG_NuEwNyV8KLcE9nmUzEFkqdAKPFO4/
+
+2. For EACH CSV file:
+
+   A. Go to File → Import
+   B. Click "Upload" tab → Select the CSV file from your computer
+   C. Choose "Create new sheet" (or "Replace current sheet" if first import)
+   D. Click "Import"
+   E. Google Sheets will auto-create a new tab with the data
+
+3. Rename the tabs to match the data:
+   - Tab 1: "Lab Rooms"
+   - Tab 2: "Chemicals"
+   - Tab 3: "Equipment"
+   - Tab 4: "Instructors"
+   - Tab 5: "Lab Technicians"
+
+4. Done! Share the link with lab tech para mag-edit ng actual data.
+
+==========================================
+
+IMPORTANT:
+- Keep the column headers EXACTLY as they are (don't rename)
+- Don't add extra rows/columns
+- Lab tech edits → you download as CSV → send to me for bulk import
+
+Questions? Ask!

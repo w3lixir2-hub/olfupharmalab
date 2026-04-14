@@ -1,0 +1,5 @@
+instructor_name,employee_id,email,phone,specialization,labs_assigned
+Dr. Maria Santos,EMP-001,maria.santos@olfu.edu.ph,+63-917-1234567,Pharmaceutical Chemistry,AMS 204|AMS 205
+Prof. Juan dela Cruz,EMP-002,juan.delacruz@olfu.edu.ph,+63-917-7654321,Microbiology,AMS 204
+Dr. Rose Garcia,EMP-003,rose.garcia@olfu.edu.ph,+63-917-5555555,Pharmacology,PHAR 101
+Prof. Carlos Reyes,EMP-004,carlos.reyes@olfu.edu.ph,+63-917-6666666,Biochemistry,AMS 206

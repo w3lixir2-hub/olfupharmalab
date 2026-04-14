@@ -1,0 +1,6 @@
+room_code,floor,building,description,capacity,has_equipment
+AMS 204,2,Science Building,Advanced Microbiology Lab,30,Yes
+AMS 205,2,Science Building,Organic Chemistry Lab,25,Yes
+AMS 206,2,Science Building,Analytical Chemistry Lab,20,Yes
+PHAR 101,1,Pharmacy Building,Pharmaceutical Sciences Lab,35,Yes
+PHAR 102,1,Pharmacy Building,Pharmacy Practice Lab,25,No

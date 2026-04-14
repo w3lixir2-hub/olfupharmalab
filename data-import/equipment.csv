@@ -1,0 +1,6 @@
+equipment_name,model,quantity,location,status,last_maintenance,next_maintenance
+Microscope (Compound),Olympus CX21,5,AMS 204,Functional,2026-02-15,2026-08-15
+Spectrophotometer,UV-1900,2,AMS 205,Functional,2026-01-30,2026-07-30
+Centrifuge (High-speed),Hermle Z366K,1,AMS 206,Functional,2025-12-01,2026-06-01
+pH Meter Digital,Hanna HI98128,10,Various Labs,Functional,2026-03-10,2026-09-10
+Weighing Scale (Analytical),Mettler Toledo ML204T,3,AMS 204,In Repair,,
