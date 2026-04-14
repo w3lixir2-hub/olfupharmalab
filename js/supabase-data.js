@@ -35,20 +35,23 @@ function getCurrentTimeManilaHHmm() {
     parts.find(p => p.type === 'minute').value.padStart(2, '0');
 }
 
-/* ── Current user (session-based) ──────────────────────────── */
+/* ── Current user (persistent) ──────────────────────────── */
 
 function getCurrentUser() {
   try {
-    const u = JSON.parse(sessionStorage.getItem('labCurrentUser') || 'null');
+    const raw = localStorage.getItem('labCurrentUser') || sessionStorage.getItem('labCurrentUser');
+    const u = JSON.parse(raw || 'null');
     return u && u.name ? u.name : null;
   } catch (_) { return null; }
 }
 function setCurrentUser(name) {
   if (!name || !String(name).trim()) return false;
-  sessionStorage.setItem('labCurrentUser', JSON.stringify({ name: String(name).trim(), loginAt: new Date().toISOString() }));
+  const payload = JSON.stringify({ name: String(name).trim(), loginAt: new Date().toISOString() });
+  localStorage.setItem('labCurrentUser', payload);
   return true;
 }
 function clearCurrentUser() {
+  localStorage.removeItem('labCurrentUser');
   sessionStorage.removeItem('labCurrentUser');
 }
 
