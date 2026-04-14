@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lab Tech Login - PharmaLab IMS</title>
+    <link rel="stylesheet" href="css/lab-ui.css">
+    <style>
+        .login-page {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #0d9488 0%, #0f766e 50%, #115e59 100%);
+            padding: 24px;
+        }
+        .login-card {
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.25);
+            padding: 48px;
+            max-width: 420px;
+            width: 100%;
+        }
+        .login-logo {
+            width: 72px;
+            height: 72px;
+            background: linear-gradient(135deg, #0d9488, #0f766e);
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 32px;
+            font-weight: 700;
+            color: white;
+            margin: 0 auto 24px;
+        }
+        .login-title { font-size: 24px; font-weight: 700; color: #1a202c; text-align: center; margin-bottom: 8px; }
+        .login-subtitle { font-size: 14px; color: #718096; text-align: center; margin-bottom: 32px; }
+        .login-form .form-group { margin-bottom: 20px; }
+        .login-form label { display: block; font-size: 14px; font-weight: 600; color: #2d3748; margin-bottom: 8px; }
+        .login-form input {
+            width: 100%;
+            padding: 14px 16px;
+            border: 2px solid #e2e8f0;
+            border-radius: 10px;
+            font-size: 16px;
+            box-sizing: border-box;
+        }
+        .login-form input:focus { outline: none; border-color: #0d9488; }
+        .login-btn {
+            width: 100%;
+            padding: 14px;
+            background: linear-gradient(135deg, #0d9488, #0f766e);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 8px;
+        }
+        .login-btn:hover { opacity: 0.95; transform: translateY(-1px); }
+        .login-footer { margin-top: 24px; text-align: center; font-size: 13px; color: #718096; }
+        .login-footer a { color: #0d9488; text-decoration: none; }
+        .login-footer a:hover { text-decoration: underline; }
+    </style>
+</head>
+<body>
+    <div class="login-page">
+        <div class="login-card">
+            <div class="login-logo">PL</div>
+            <h1 class="login-title">Lab Tech Login</h1>
+            <p class="login-subtitle">Sign in with your credentials</p>
+            <form class="login-form" id="login-form" onsubmit="return handleLogin(event)">
+                <div class="form-group">
+                    <label for="user-name">Username</label>
+                    <input type="text" id="user-name" placeholder="Username" required autofocus>
+                </div>
+                <div class="form-group">
+                    <label for="user-pass">Password</label>
+                    <input type="password" id="user-pass" placeholder="Password" required>
+                </div>
+                <button type="submit" class="login-btn">Sign In</button>
+            </form>
+            <div class="login-footer">
+                <a href="START-HERE.html">← Back to Start</a>
+            </div>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="js/supabase-client.js"></script>
+    <script src="js/supabase-data.js"></script>
+    <script>
+        async function handleLogin(e) {
+            e.preventDefault();
+            var user = (document.getElementById('user-name').value || '').trim();
+            var pass = (document.getElementById('user-pass').value || '');
+            if (!user || !pass) return false;
+            if (user !== 'admin' || pass !== 'admin') {
+                alert('Invalid username or password.');
+                return false;
+            }
+            setCurrentUser(user);
+            try { await addAuditEntry('Login', user + ' signed in'); } catch(_) {}
+            var params = new URLSearchParams(window.location.search);
+            var redirect = params.get('redirect') || 'index.html';
+            if (!redirect.match(/^[a-zA-Z0-9_.-]+\.html/)) redirect = 'index.html';
+            window.location.href = redirect;
+            return false;
+        }
+    </script>
+</body>
+</html>

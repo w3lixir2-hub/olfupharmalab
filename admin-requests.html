@@ -1,0 +1,625 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Request Management - PharmaLab IMS</title>
+    <link rel="stylesheet" href="css/lab-ui.css">
+</head>
+<body>
+    <nav class="top-nav">
+        <div class="top-nav-left">
+            <div class="logo-placeholder">PL</div>
+            <div class="system-name">PharmaLab IMS</div>
+        </div>
+        <div class="top-nav-right">
+            <div class="user-profile">
+                <div class="user-avatar">AD</div>
+                <div class="user-info">
+                    <div class="user-name">Admin User</div>
+                    <div class="user-role">Lab Manager</div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Sidebar -->
+    <aside class="sidebar">
+        <nav class="sidebar-menu">
+            <a href="index.html" class="menu-item">
+                <svg class="menu-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <rect x="3" y="3" width="7" height="7"></rect>
+                    <rect x="14" y="3" width="7" height="7"></rect>
+                    <rect x="14" y="14" width="7" height="7"></rect>
+                    <rect x="3" y="14" width="7" height="7"></rect>
+                </svg>
+                Dashboard
+            </a>
+            <a href="labtech-dashboard.html" class="menu-item">
+                <svg class="menu-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+                Lab Tech Today
+            </a>
+            <a href="inventory.html" class="menu-item">
+                <svg class="menu-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
+                </svg>
+                Chemical Inventory
+            </a>
+            <a href="equipment.html" class="menu-item">
+                <svg class="menu-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <circle cx="12" cy="12" r="4"></circle>
+                    <line x1="4.93" y1="4.93" x2="9.17" y2="9.17"></line>
+                    <line x1="14.83" y1="14.83" x2="19.07" y2="19.07"></line>
+                    <line x1="14.83" y1="9.17" x2="19.07" y2="4.93"></line>
+                    <line x1="4.93" y1="19.07" x2="9.17" y2="14.83"></line>
+                </svg>
+                Equipment & Glassware
+            </a>
+            <a href="admin-requests.html" class="menu-item active">
+                <svg class="menu-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                    <polyline points="14 2 14 8 20 8"></polyline>
+                    <line x1="16" y1="13" x2="8" y2="13"></line>
+                    <line x1="16" y1="17" x2="8" y2="17"></line>
+                    <polyline points="10 9 9 9 8 9"></polyline>
+                </svg>
+                Requests & Acquisitions
+            </a>
+            <a href="activity-log.html" class="menu-item">
+                <svg class="menu-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+                Activity Log
+            </a>
+            <a href="admin-settings.html" class="menu-item">
+                <svg class="menu-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+                Settings
+            </a>
+            <div class="menu-section">
+                <div class="menu-section-title">Rooms</div>
+                <a href="add-schedule.html" class="menu-item">
+                    <svg class="menu-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+                    Add Schedule
+                </a>
+                <a href="lecture-rooms.html" class="menu-item">
+                    <svg class="menu-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 6h20v12H2z"></path><path d="M6 10h2v4H6z"></path><path d="M10 10h2v4h-2z"></path></svg>
+                    Lecture Rooms
+                </a>
+                <a href="laboratory-rooms.html" class="menu-item">
+                    <svg class="menu-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path></svg>
+                    Laboratory Rooms
+                </a>
+            </div>
+            <a href="room-logs.html" class="menu-item">
+                <svg class="menu-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+                Room Usage Logs
+            </a>
+        </nav>
+        <div class="sidebar-footer"><div id="sidebar-datetime">—</div><div style="margin-top:4px;font-size:11px;">Philippine Time (PHT)</div></div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <div class="breadcrumb"><a href="index.html">Home</a><span>/</span><span>Request Management</span></div>
+        <div class="page-header">
+            <h1 class="page-title">Request Management</h1>
+            <p class="page-subtitle">Review and process student material requests</p>
+        </div>
+
+        <!-- Statistics -->
+        <div class="stats-row">
+            <div class="stat-box">
+                <div class="stat-value" id="stat-pending">—</div>
+                <div class="stat-label">Pending Requests</div>
+            </div>
+            <div class="stat-box">
+                <div class="stat-value" id="stat-approved-today">—</div>
+                <div class="stat-label">Approved Today</div>
+            </div>
+            <div class="stat-box">
+                <div class="stat-value" id="stat-released">—</div>
+                <div class="stat-label">Released This Week</div>
+            </div>
+            <div class="stat-box">
+                <div class="stat-value" id="stat-total">—</div>
+                <div class="stat-label">Total This Month</div>
+            </div>
+        </div>
+
+        <!-- Filters -->
+        <div class="filters">
+            <div class="filters-grid">
+                <div class="filter-group">
+                    <label class="filter-label">Search</label>
+                    <input type="text" id="filter-search" class="filter-input" placeholder="Request ID, Student name...">
+                </div>
+                <div class="filter-group">
+                    <label class="filter-label">Status</label>
+                    <select id="filter-status" class="filter-select">
+                        <option value="">All Statuses</option>
+                        <option value="pending">Pending</option>
+                        <option value="approved">Approved</option>
+                        <option value="released">Released</option>
+                        <option value="returned">Returned</option>
+                        <option value="rejected">Rejected</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label class="filter-label">Request Type</label>
+                    <select id="filter-type" class="filter-select">
+                        <option value="">All Types</option>
+                        <option value="chemical">Chemicals</option>
+                        <option value="equipment">Equipment</option>
+                        <option value="glassware">Glassware</option>
+                        <option value="consumables">Consumables</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label class="filter-label">Date Needed</label>
+                    <input type="date" id="filter-date" class="filter-input">
+                </div>
+            </div>
+        </div>
+
+        <!-- Requests Table -->
+        <div class="table-container">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Request ID</th>
+                        <th>Student Name</th>
+                        <th>Student Number</th>
+                        <th>Subject</th>
+                        <th>Date Needed</th>
+                        <th>Date Submitted</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="requests-table-body">
+                    <!-- Dynamic content will be loaded here -->
+                </tbody>
+            </table>
+        </div>
+    </main>
+
+    <!-- Request Detail Modal -->
+    <div class="modal" id="requestModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title">Request Details - REQ-2026-0312</h2>
+                <button class="modal-close" onclick="closeModal()">×</button>
+            </div>
+            <div class="modal-body">
+                <!-- Student Information -->
+                <div class="info-section">
+                    <div class="info-section-title">Student Information</div>
+                    <div class="info-row">
+                        <span class="info-label">Full Name</span>
+                        <span class="info-value">Juan Dela Cruz</span>
+                    </div>
+                    <div class="info-row">
+                        <span class="info-label">Student Number</span>
+                        <span class="info-value">2020-12345</span>
+                    </div>
+                    <div class="info-row">
+                        <span class="info-label">Contact Number</span>
+                        <span class="info-value">09171234567</span>
+                    </div>
+                    <div class="info-row">
+                        <span class="info-label">Course & Year</span>
+                        <span class="info-value">BS Pharmacy - 3rd Year</span>
+                    </div>
+                    <div class="info-row">
+                        <span class="info-label">Section</span>
+                        <span class="info-value">A</span>
+                    </div>
+                </div>
+
+                <!-- Request Details -->
+                <div class="info-section">
+                    <div class="info-section-title">Request Details</div>
+                    <div class="info-row">
+                        <span class="info-label">Subject</span>
+                        <span class="info-value">Pharmaceutical Chemistry 1</span>
+                    </div>
+                    <div class="info-row">
+                        <span class="info-label">Experiment Name</span>
+                        <span class="info-value">Acid-Base Titration</span>
+                    </div>
+                    <div class="info-row">
+                        <span class="info-label">Instructor</span>
+                        <span class="info-value">Prof. Maria Santos</span>
+                    </div>
+                    <div class="info-row">
+                        <span class="info-label">Date Needed</span>
+                        <span class="info-value">January 25, 2026 at 10:00 AM</span>
+                    </div>
+                    <div class="info-row">
+                        <span class="info-label">Date Submitted</span>
+                        <span class="info-value">January 22, 2026 at 10:30 AM</span>
+                    </div>
+                    <div class="info-row">
+                        <span class="info-label">Laboratory</span>
+                        <span class="info-value">Pharmaceutical Chemistry Lab A</span>
+                    </div>
+                </div>
+
+                <!-- Requested Items -->
+                <div class="info-section">
+                    <div class="info-section-title">Requested Items</div>
+                    <table class="items-table">
+                        <thead>
+                            <tr>
+                                <th>Item Name</th>
+                                <th>Quantity</th>
+                                <th>Unit</th>
+                                <th>Availability</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Sodium Hydroxide (NaOH)</td>
+                                <td>500</td>
+                                <td>mL</td>
+                                <td><span class="status-badge approved">Available</span></td>
+                            </tr>
+                            <tr>
+                                <td>Hydrochloric Acid (HCl)</td>
+                                <td>250</td>
+                                <td>mL</td>
+                                <td><span class="status-badge approved">Available</span></td>
+                            </tr>
+                            <tr>
+                                <td>Burette (50mL)</td>
+                                <td>1</td>
+                                <td>pcs</td>
+                                <td><span class="status-badge approved">Available</span></td>
+                            </tr>
+                            <tr>
+                                <td>Erlenmeyer Flask (250mL)</td>
+                                <td>2</td>
+                                <td>pcs</td>
+                                <td><span class="status-badge approved">Available</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Purpose -->
+                <div class="info-section" id="remarks-section" style="display: none;">
+                    <div class="info-section-title">Purpose / Remarks</div>
+                    <p style="color: #4a5568; font-size: 14px; line-height: 1.6;" id="remarks-text">
+                        -
+                    </p>
+                </div>
+
+                <!-- Comments Section -->
+                <div class="comments-section">
+                    <label class="filter-label">Admin Notes / Comments</label>
+                    <textarea class="comment-textarea" placeholder="Add notes or special instructions..."></textarea>
+                </div>
+            </div>
+            <div class="modal-actions">
+                <button class="btn btn-danger" onclick="rejectRequest()">Reject Request</button>
+                <button class="btn btn-secondary" onclick="closeModal()">Save Draft</button>
+                <button class="btn btn-success" onclick="approveRequest()">Approve Request</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="js/supabase-client.js"></script>
+    <script src="js/supabase-data.js"></script>
+    <script src="js/auth-guard.js"></script>
+    <script>
+        let allRequests = [];
+        let currentRequestData = null;
+
+        async function loadRequests() {
+            allRequests = await getRequests();
+            renderRequests();
+            updateStatistics();
+        }
+
+        function getFilteredRequests() {
+            const search = (document.getElementById('filter-search').value || '').toLowerCase();
+            const status = document.getElementById('filter-status').value;
+            const type   = document.getElementById('filter-type').value;
+            const date   = document.getElementById('filter-date').value;
+
+            return allRequests.filter(r => {
+                if (search && !(
+                    (r.requestId    || '').toLowerCase().includes(search) ||
+                    (r.studentName  || '').toLowerCase().includes(search) ||
+                    (r.studentNumber|| '').toLowerCase().includes(search) ||
+                    (r.subject      || '').toLowerCase().includes(search)
+                )) return false;
+                if (status && r.status      !== status) return false;
+                if (type   && r.requestType !== type)   return false;
+                if (date   && r.dateNeeded  !== date)   return false;
+                return true;
+            });
+        }
+
+        // Format date for display
+        function formatDate(dateString) {
+            if (!dateString) return '-';
+            const date = new Date(dateString);
+            return date.toLocaleDateString('en-US', { 
+                year: 'numeric', 
+                month: 'short', 
+                day: 'numeric' 
+            });
+        }
+
+        // Format date with time
+        function formatDateTime(dateString) {
+            if (!dateString) return '-';
+            const date = new Date(dateString);
+            const dateStr = date.toLocaleDateString('en-US', { 
+                year: 'numeric', 
+                month: 'short', 
+                day: 'numeric' 
+            });
+            const timeStr = date.toLocaleTimeString('en-US', { 
+                hour: '2-digit', 
+                minute: '2-digit' 
+            });
+            return `${dateStr} ${timeStr}`;
+        }
+
+        // Format date needed with time
+        function formatDateNeeded(dateString, timeString) {
+            if (!dateString) return '-';
+            const date = new Date(dateString);
+            const dateStr = date.toLocaleDateString('en-US', { 
+                year: 'numeric', 
+                month: 'long', 
+                day: 'numeric' 
+            });
+            
+            if (timeString) {
+                const [hours, minutes] = timeString.split(':');
+                const hour12 = hours % 12 || 12;
+                const ampm = hours >= 12 ? 'PM' : 'AM';
+                return `${dateStr} at ${hour12}:${minutes} ${ampm}`;
+            }
+            return dateStr;
+        }
+
+        // Render requests table
+        function renderRequests() {
+            const tbody = document.getElementById('requests-table-body');
+            tbody.innerHTML = '';
+
+            const filtered = getFilteredRequests();
+
+            if (filtered.length === 0) {
+                tbody.innerHTML = `
+                    <tr>
+                        <td colspan="8" style="text-align: center; padding: 40px; color: #718096;">
+                            No requests found. Requests submitted through the form will appear here.
+                        </td>
+                    </tr>
+                `;
+                return;
+            }
+
+            filtered.forEach(request => {
+                const row = document.createElement('tr');
+                row.onclick = () => openRequestDetail(request.requestId);
+                
+                const statusClass = request.status || 'pending';
+                const statusText = statusClass.charAt(0).toUpperCase() + statusClass.slice(1);
+                
+                let actionButton = '';
+                if (statusClass === 'pending') {
+                    actionButton = `<button class="btn btn-primary btn-sm" onclick="event.stopPropagation(); openRequestDetail('${request.requestId}')">Review</button>`;
+                } else if (statusClass === 'approved') {
+                    actionButton = `<button class="btn btn-success btn-sm" onclick="event.stopPropagation(); window.open('print-checklist.html?requestId=${request.requestId}', '_blank')">Print</button>`;
+                } else {
+                    actionButton = `<button class="btn btn-secondary btn-sm" onclick="event.stopPropagation(); openRequestDetail('${request.requestId}')">View</button>`;
+                }
+
+                const dateNeededDisplay = request.dateNeeded ? formatDateNeeded(request.dateNeeded, request.timeNeeded) : '-';
+                
+                row.innerHTML = `
+                    <td><strong>${request.requestId}</strong></td>
+                    <td>${request.studentName}</td>
+                    <td>${request.studentNumber}</td>
+                    <td>${request.subject}</td>
+                    <td>${dateNeededDisplay}</td>
+                    <td>${formatDateTime(request.dateSubmitted)}</td>
+                    <td><span class="status-badge ${statusClass}">${statusText}</span></td>
+                    <td>${actionButton}</td>
+                `;
+                tbody.appendChild(row);
+            });
+        }
+
+        // Update statistics (always uses full allRequests, not filtered)
+        function updateStatistics() {
+            const today = new Date();
+            const weekAgo = new Date(); weekAgo.setDate(today.getDate() - 7);
+
+            const pending = allRequests.filter(r => r.status === 'pending').length;
+            const approvedToday = allRequests.filter(r => {
+                if (r.status !== 'approved') return false;
+                return new Date(r.dateSubmitted).toDateString() === today.toDateString();
+            }).length;
+            const releasedWeek = allRequests.filter(r => {
+                if (r.status !== 'released') return false;
+                const d = new Date(r.dateSubmitted);
+                return d >= weekAgo && d <= today;
+            }).length;
+            const total = allRequests.length;
+
+            document.getElementById('stat-pending').textContent = pending;
+            document.getElementById('stat-approved-today').textContent = approvedToday;
+            document.getElementById('stat-released').textContent = releasedWeek;
+            document.getElementById('stat-total').textContent = total;
+        }
+
+        // Open request detail modal
+        function openRequestDetail(requestId) {
+            const request = allRequests.find(r => r.requestId === requestId);
+            if (!request) {
+                alert('Request not found');
+                return;
+            }
+
+            currentRequestData = request;
+
+            // Update modal title
+            document.querySelector('.modal-title').textContent = `Request Details - ${request.requestId}`;
+
+            // Update student information
+            document.querySelectorAll('.info-section')[0].innerHTML = `
+                <div class="info-section-title">Student Information</div>
+                <div class="info-row">
+                    <span class="info-label">Full Name</span>
+                    <span class="info-value">${request.studentName}</span>
+                </div>
+                <div class="info-row">
+                    <span class="info-label">Student Number</span>
+                    <span class="info-value">${request.studentNumber}</span>
+                </div>
+                <div class="info-row">
+                    <span class="info-label">Contact Number</span>
+                    <span class="info-value">${request.contactNumber}</span>
+                </div>
+                <div class="info-row">
+                    <span class="info-label">Course & Year</span>
+                    <span class="info-value">${request.course} - ${request.yearLevel}${request.section ? ', Section ' + request.section : ''}</span>
+                </div>
+            `;
+
+            // Update request details
+            document.querySelectorAll('.info-section')[1].innerHTML = `
+                <div class="info-section-title">Request Details</div>
+                <div class="info-row">
+                    <span class="info-label">Subject</span>
+                    <span class="info-value">${request.subject}</span>
+                </div>
+                <div class="info-row">
+                    <span class="info-label">Experiment Name</span>
+                    <span class="info-value">${request.activity}</span>
+                </div>
+                <div class="info-row">
+                    <span class="info-label">Instructor</span>
+                    <span class="info-value">${request.instructor}</span>
+                </div>
+                <div class="info-row">
+                    <span class="info-label">Date Needed</span>
+                    <span class="info-value">${formatDateNeeded(request.dateNeeded, request.timeNeeded)}</span>
+                </div>
+                <div class="info-row">
+                    <span class="info-label">Date Submitted</span>
+                    <span class="info-value">${formatDateTime(request.dateSubmitted)}</span>
+                </div>
+                <div class="info-row">
+                    <span class="info-label">Laboratory</span>
+                    <span class="info-value">${request.laboratory}</span>
+                </div>
+            `;
+
+            // Update items table
+            const itemsTableBody = document.querySelectorAll('.info-section')[2].querySelector('tbody');
+            itemsTableBody.innerHTML = '';
+            request.items.forEach(item => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${item.name}</td>
+                    <td>${item.quantity}</td>
+                    <td>${item.unit}</td>
+                    <td><span class="status-badge approved">Available</span></td>
+                `;
+                itemsTableBody.appendChild(row);
+            });
+
+            // Update remarks
+            const remarksSection = document.getElementById('remarks-section');
+            const remarksText = document.getElementById('remarks-text');
+            if (request.remarks && request.remarks.trim()) {
+                remarksText.textContent = request.remarks;
+                remarksSection.style.display = 'block';
+            } else {
+                remarksSection.style.display = 'none';
+            }
+
+            document.getElementById('requestModal').classList.add('active');
+        }
+
+        function closeModal() {
+            document.getElementById('requestModal').classList.remove('active');
+        }
+
+        async function approveRequest() {
+            if (!currentRequestData) return;
+            if (!confirm('Are you sure you want to approve this request?')) return;
+
+            try {
+                await updateRequestStatus(currentRequestData.requestId, 'approved');
+                await addAuditEntry('Request Approved', currentRequestData.requestId + ' — ' + (currentRequestData.studentName || ''));
+
+                // Auto-add room schedule so the room turns green
+                const roomId    = currentRequestData.roomAssignment;
+                const date      = currentRequestData.dateNeeded;
+                const startTime = currentRequestData.timeNeeded || '08:00';
+                let endTime     = currentRequestData.timeEnd;
+                if (!endTime) {
+                    const parts = startTime.split(':');
+                    let h = parseInt(parts[0], 10) + 2;
+                    if (h >= 24) h -= 24;
+                    endTime = String(h).padStart(2, '0') + ':' + (parts[1] || '00');
+                }
+                if (roomId && date) {
+                    await addScheduleEntry({
+                        roomType: 'laboratory',
+                        roomId: String(roomId),
+                        date, startTime,
+                        endTime: endTime || '10:00',
+                        requestId: currentRequestData.requestId
+                    });
+                }
+
+                window.open('print-checklist.html?requestId=' + currentRequestData.requestId, '_blank');
+                await loadRequests();
+                closeModal();
+            } catch (err) {
+                alert('Error approving request: ' + (err.message || err));
+            }
+        }
+
+        async function rejectRequest() {
+            if (!currentRequestData) return;
+            const reason = prompt('Please provide a reason for rejection:');
+            if (reason === null) return;
+
+            try {
+                await updateRequestStatus(currentRequestData.requestId, 'rejected', { rejection_reason: reason });
+                await addAuditEntry('Request Rejected', currentRequestData.requestId + ' — ' + (currentRequestData.studentName || '') + (reason ? ' — ' + reason : ''));
+                await loadRequests();
+                closeModal();
+            } catch (err) {
+                alert('Error rejecting request: ' + (err.message || err));
+            }
+        }
+
+        document.getElementById('requestModal').addEventListener('click', function(e) {
+            if (e.target === this) closeModal();
+        });
+
+        // Wire up filters
+        document.getElementById('filter-search').addEventListener('input', renderRequests);
+        document.getElementById('filter-status').addEventListener('change', renderRequests);
+        document.getElementById('filter-type').addEventListener('change', renderRequests);
+        document.getElementById('filter-date').addEventListener('change', renderRequests);
+
+        // Load on page start + real-time subscription
+        loadRequests();
+        onTableChange('requests', () => loadRequests());
+    </script>
+    <script>(function(){function u(){var e=document.getElementById('sidebar-datetime');if(e)e.textContent=new Date().toLocaleString('en-PH',{timeZone:'Asia/Manila',weekday:'short',year:'numeric',month:'short',day:'numeric',hour:'2-digit',minute:'2-digit',second:'2-digit'});}u();setInterval(u,1000);})();</script>
+</body>
+</html>

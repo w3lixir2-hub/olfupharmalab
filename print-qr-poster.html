@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Laboratory QR Poster - Print</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        @page {
+            size: A4 portrait;
+            margin: 0;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', sans-serif;
+            background: white;
+            padding: 0;
+            margin: 0;
+        }
+
+        .poster {
+            width: 210mm;
+            height: 297mm;
+            padding: 30mm;
+            background: white;
+            position: relative;
+            page-break-after: always;
+        }
+
+        /* Header */
+        .poster-header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding-bottom: 30px;
+            border-bottom: 3px solid #667eea;
+        }
+
+        .institution-logo {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 16px;
+            margin: 0 auto 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 40px;
+            color: white;
+            font-weight: 700;
+        }
+
+        .institution-name {
+            font-size: 18px;
+            font-weight: 600;
+            color: #2d3748;
+            margin-bottom: 8px;
+        }
+
+        .department-name {
+            font-size: 16px;
+            color: #667eea;
+            font-weight: 600;
+        }
+
+        /* Main Content */
+        .poster-title {
+            font-size: 36px;
+            font-weight: 700;
+            color: #1a202c;
+            text-align: center;
+            margin-bottom: 20px;
+            line-height: 1.2;
+        }
+
+        .poster-subtitle {
+            font-size: 18px;
+            color: #4a5568;
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        /* QR Code Section */
+        .qr-section {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 40px;
+            border-radius: 20px;
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .qr-placeholder {
+            width: 250px;
+            height: 250px;
+            background: white;
+            border-radius: 16px;
+            margin: 0 auto 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 4px dashed #cbd5e0;
+            font-size: 14px;
+            color: #a0aec0;
+            padding: 20px;
+            text-align: center;
+            line-height: 1.6;
+        }
+
+        .scan-instruction {
+            color: white;
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .scan-subtext {
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 14px;
+        }
+
+        /* Instructions */
+        .instructions {
+            background: #f7fafc;
+            padding: 30px;
+            border-radius: 16px;
+            margin-bottom: 30px;
+        }
+
+        .instructions-title {
+            font-size: 20px;
+            font-weight: 600;
+            color: #2d3748;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .step-list {
+            list-style: none;
+            counter-reset: step-counter;
+        }
+
+        .step-item {
+            counter-increment: step-counter;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: start;
+            gap: 16px;
+        }
+
+        .step-number {
+            width: 36px;
+            height: 36px;
+            background: #667eea;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            flex-shrink: 0;
+        }
+
+        .step-number::before {
+            content: counter(step-counter);
+        }
+
+        .step-text {
+            flex: 1;
+            font-size: 16px;
+            color: #2d3748;
+            line-height: 36px;
+        }
+
+        /* Info Box */
+        .info-box {
+            background: #fef5e7;
+            border-left: 4px solid #f59e0b;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+        }
+
+        .info-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: #92400e;
+            margin-bottom: 8px;
+        }
+
+        .info-text {
+            font-size: 14px;
+            color: #92400e;
+            line-height: 1.6;
+        }
+
+        /* Lab Details */
+        .lab-details {
+            background: #ebf4ff;
+            padding: 20px;
+            border-radius: 12px;
+            text-align: center;
+        }
+
+        .lab-name {
+            font-size: 18px;
+            font-weight: 600;
+            color: #2c5282;
+            margin-bottom: 4px;
+        }
+
+        .lab-location {
+            font-size: 14px;
+            color: #2c5282;
+        }
+
+        /* Footer */
+        .poster-footer {
+            position: absolute;
+            bottom: 20mm;
+            left: 30mm;
+            right: 30mm;
+            text-align: center;
+            font-size: 12px;
+            color: #a0aec0;
+            border-top: 2px solid #e2e8f0;
+            padding-top: 16px;
+        }
+
+        /* No Print Elements */
+        .no-print {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+        }
+
+        .print-btn {
+            background: #667eea;
+            color: white;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 14px;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        @media print {
+            .no-print {
+                display: none;
+            }
+
+            body {
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Print Button -->
+    <div class="no-print">
+        <button class="print-btn" onclick="window.print()">🖨️ Print Poster</button>
+    </div>
+
+    <!-- Poster Content -->
+    <div class="poster">
+        <!-- Header -->
+        <div class="poster-header">
+            <div class="institution-logo">PL</div>
+            <div class="institution-name">[COLLEGE/UNIVERSITY NAME]</div>
+            <div class="department-name">College of Pharmacy</div>
+        </div>
+
+        <!-- Main Title -->
+        <h1 class="poster-title">📱 Request Laboratory Materials</h1>
+        <p class="poster-subtitle">Scan the QR code to submit your request online</p>
+
+        <!-- QR Code Section -->
+        <div class="qr-section">
+            <div class="qr-placeholder">
+                <div>
+                    <strong>QR CODE PLACEHOLDER</strong><br><br>
+                    Generate QR code pointing to:<br>
+                    <code>qr-landing.html</code><br>
+                    or<br>
+                    <code>student-request.html</code>
+                </div>
+            </div>
+            <div class="scan-instruction">👆 Scan with your phone camera</div>
+            <div class="scan-subtext">Works with any smartphone - no app needed</div>
+        </div>
+
+        <!-- Lab Details -->
+        <div class="lab-details">
+            <div class="lab-name">📍 AMS 204</div>
+            <div class="lab-location">2nd Floor, Science Building</div>
+        </div>
+
+        <!-- Instructions -->
+        <div class="instructions">
+            <h2 class="instructions-title">How to Request Materials</h2>
+            <ol class="step-list">
+                <li class="step-item">
+                    <div class="step-number"></div>
+                    <div class="step-text">Scan the QR code with your phone camera</div>
+                </li>
+                <li class="step-item">
+                    <div class="step-number"></div>
+                    <div class="step-text">Fill out the online request form</div>
+                </li>
+                <li class="step-item">
+                    <div class="step-number"></div>
+                    <div class="step-text">Wait for approval notification</div>
+                </li>
+                <li class="step-item">
+                    <div class="step-number"></div>
+                    <div class="step-text">Claim materials with your student ID</div>
+                </li>
+            </ol>
+        </div>
+
+        <!-- Important Notice -->
+        <div class="info-box">
+            <div class="info-title">⏱️ Important Reminder</div>
+            <div class="info-text">
+                Submit your request at least <strong>24 hours before</strong> your scheduled laboratory session.
+                Bring your <strong>student ID</strong> when claiming materials.
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="poster-footer">
+            PharmaLab Inventory Management System<br>
+            For assistance, contact the Laboratory Technician
+        </div>
+    </div>
+</body>
+</html>

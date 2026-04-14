@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Schedule - PharmaLab IMS</title>
+    <link rel="stylesheet" href="css/lab-ui.css">
+    <style>
+        .schedule-card { background: var(--lab-surface); border-radius: var(--lab-radius-lg); border: 1px solid var(--lab-border); box-shadow: 0 1px 3px rgba(0,0,0,0.05); padding: 28px; max-width: 520px; }
+        .form-group { margin-bottom: 18px; }
+        .form-group label { display: block; font-size: 14px; font-weight: 600; color: #2d3748; margin-bottom: 6px; }
+        .form-group input, .form-group select { width: 100%; padding: 10px 12px; border: 2px solid #e2e8f0; border-radius: 8px; font-size: 14px; }
+        .form-group input:focus, .form-group select:focus { outline: none; border-color: var(--lab-primary); }
+        .recurring-toggle { display: flex; align-items: center; gap: 8px; cursor: pointer; font-weight: 600; font-size: 14px; margin-bottom: 18px; }
+        .recurring-toggle input { width: auto; }
+        .recurring-options { display: none; margin-bottom: 18px; padding: 14px; background: #f7fafc; border-radius: 8px; border: 1px solid #e2e8f0; }
+        .recurring-options.show { display: block; }
+        .recurring-days { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 6px; }
+        .recurring-days label { display: flex; align-items: center; gap: 6px; cursor: pointer; font-weight: 500; }
+        .one-time-date { }
+        .btn { padding: 12px 24px; border-radius: var(--lab-radius); font-weight: 600; font-size: 14px; cursor: pointer; border: none; background: var(--lab-primary); color: white; }
+        .btn:hover { background: var(--lab-primary-hover); }
+        .btn-secondary { background: #edf2f7; color: #4a5568; text-decoration: none; display: inline-flex; align-items: center; gap: 8px; }
+        .btn-secondary:hover { background: #e2e8f0; }
+        .quick-links { margin-top: 28px; padding-top: 24px; border-top: 1px solid #e2e8f0; }
+        .quick-links p { font-size: 13px; color: #718096; margin-bottom: 12px; font-weight: 600; }
+        .quick-links a { margin-right: 12px; margin-bottom: 8px; }
+    </style>
+</head>
+<body>
+    <nav class="top-nav">
+        <div class="top-nav-left">
+            <div class="logo-placeholder">PL</div>
+            <div class="system-name">PharmaLab IMS</div>
+        </div>
+        <div class="top-nav-right">
+            <div class="user-profile">
+                <div class="user-avatar">AD</div>
+                <div><div style="font-weight:600">Admin User</div><div style="font-size:12px;color:#718096">Lab Manager</div></div>
+            </div>
+        </div>
+    </nav>
+    <aside class="sidebar">
+        <nav class="sidebar-menu">
+            <a href="index.html" class="menu-item"><svg class="menu-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>Dashboard</a>
+            <a href="labtech-dashboard.html" class="menu-item"><svg class="menu-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>Lab Tech Today</a>
+            <a href="inventory.html" class="menu-item"><svg class="menu-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path></svg>Chemical Inventory</a>
+            <a href="equipment.html" class="menu-item"><svg class="menu-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><circle cx="12" cy="12" r="4"></circle></svg>Equipment & Glassware</a>
+            <a href="admin-requests.html" class="menu-item"><svg class="menu-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg>Requests & Acquisitions</a>
+            <a href="activity-log.html" class="menu-item"><svg class="menu-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>Activity Log</a>
+            <a href="admin-settings.html" class="menu-item"><svg class="menu-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>Settings</a>
+            <div class="menu-section">
+                <div class="menu-section-title">Rooms</div>
+                <a href="add-schedule.html" class="menu-item active"><svg class="menu-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>Add Schedule</a>
+                <a href="lecture-rooms.html" class="menu-item"><svg class="menu-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 6h20v12H2z"></path><path d="M6 10h2v4H6z"></path><path d="M10 10h2v4h-2z"></path></svg>Lecture Rooms</a>
+                <a href="laboratory-rooms.html" class="menu-item"><svg class="menu-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path></svg>Laboratory Rooms</a>
+            </div>
+            <a href="room-logs.html" class="menu-item"><svg class="menu-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>Room Usage Logs</a>
+        </nav>
+        <div class="sidebar-footer"><div id="sidebar-datetime">—</div><div style="margin-top:4px;font-size:11px;">Philippine Time (PHT)</div></div>
+    </aside>
+    <main class="main-content">
+        <div class="breadcrumb"><a href="index.html">Home</a> <span>/</span> <span>Rooms</span> <span>/</span> <span>Add Schedule</span></div>
+        <header class="page-header">
+            <h1 class="page-title">Add Schedule</h1>
+            <p class="page-subtitle">Add room schedule here for Laboratory or Lecture rooms. Select room type, date, time, and room.</p>
+        </header>
+        <div class="schedule-card">
+            <div class="form-group">
+                <label>Room type</label>
+                <select id="sched-room-type">
+                    <option value="laboratory">Laboratory</option>
+                    <option value="lecture">Lecture</option>
+                </select>
+            </div>
+            <div class="form-group one-time-date" id="one-time-date">
+                <label>Date (one-time)</label>
+                <input type="date" id="sched-date">
+            </div>
+            <label class="recurring-toggle">
+                <input type="checkbox" id="sched-recurring"> Recurring (repeat by day) — Mon to Sat
+            </label>
+            <div class="recurring-options" id="recurring-options">
+                <div class="form-group">
+                    <label>Repeat on days</label>
+                    <div class="recurring-days">
+                        <label><input type="checkbox" class="sched-day" value="1"> Mon</label>
+                        <label><input type="checkbox" class="sched-day" value="2"> Tue</label>
+                        <label><input type="checkbox" class="sched-day" value="3"> Wed</label>
+                        <label><input type="checkbox" class="sched-day" value="4"> Thu</label>
+                        <label><input type="checkbox" class="sched-day" value="5"> Fri</label>
+                        <label><input type="checkbox" class="sched-day" value="6"> Sat</label>
+                    </div>
+                </div>
+                <div class="form-group" style="margin-bottom:8px;">
+                    <label>Start date</label>
+                    <input type="date" id="sched-start-date">
+                </div>
+                <div class="form-group">
+                    <label>End date</label>
+                    <input type="date" id="sched-end-date">
+                </div>
+            </div>
+            <div class="form-group">
+                <label>Room</label>
+                <select id="sched-room">
+                    <option value="1">AMS 204</option>
+                    <option value="2">AMS 205</option>
+                    <option value="3">AMS 301</option>
+                    <option value="4">AMS 302</option>
+                    <option value="5">AMS 303</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Start time</label>
+                <input type="time" id="sched-start" value="08:00">
+            </div>
+            <div class="form-group">
+                <label>End time</label>
+                <input type="time" id="sched-end" value="10:00">
+            </div>
+            <button type="button" class="btn" id="btn-add-schedule">Add to schedule</button>
+
+            <div class="quick-links">
+                <p>Quick links</p>
+                <a href="laboratory-rooms.html" class="btn btn-secondary">View Laboratory Rooms</a>
+                <a href="lecture-rooms.html" class="btn btn-secondary">View Lecture Rooms</a>
+                <a href="room-logs.html" class="btn btn-secondary">Room Usage Logs</a>
+            </div>
+        </div>
+    </main>
+
+    <script src="js/data.js"></script>
+    <script src="js/auth-guard.js"></script>
+    <script>
+    (function() {
+        function todayStr() {
+            var d = new Date();
+            return d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0');
+        }
+        function setDefaultDates() {
+            var t = todayStr();
+            document.getElementById('sched-date').value = t;
+            document.getElementById('sched-start-date').value = t;
+            document.getElementById('sched-end-date').value = t;
+        }
+        setDefaultDates();
+
+        document.getElementById('sched-recurring').addEventListener('change', function() {
+            var opts = document.getElementById('recurring-options');
+            var oneTime = document.getElementById('one-time-date');
+            if (this.checked) {
+                opts.classList.add('show');
+                oneTime.style.display = 'none';
+            } else {
+                opts.classList.remove('show');
+                oneTime.style.display = 'block';
+            }
+        });
+
+        document.getElementById('btn-add-schedule').addEventListener('click', function() {
+            var roomType = document.getElementById('sched-room-type').value;
+            var roomId = document.getElementById('sched-room').value;
+            var startTime = document.getElementById('sched-start').value;
+            var endTime = document.getElementById('sched-end').value;
+            var recurring = document.getElementById('sched-recurring').checked;
+
+            if (recurring) {
+                var startDate = document.getElementById('sched-start-date').value;
+                var endDate = document.getElementById('sched-end-date').value;
+                var daysChecked = [];
+                document.querySelectorAll('.sched-day:checked').forEach(function(cb) { daysChecked.push(parseInt(cb.value, 10)); });
+                if (!startDate || !endDate) { alert('Select Start date and End date for recurring schedule.'); return; }
+                if (daysChecked.length === 0) { alert('Select at least one day (Mon–Sat).'); return; }
+                var start = new Date(startDate + 'T12:00:00');
+                var end = new Date(endDate + 'T12:00:00');
+                if (start > end) { alert('Start date must be before or equal to End date.'); return; }
+                var count = 0;
+                for (var d = new Date(start); d <= end; d.setDate(d.getDate() + 1)) {
+                    var dayOfWeek = d.getDay();
+                    if (dayOfWeek === 0) continue;
+                    if (daysChecked.indexOf(dayOfWeek) === -1) continue;
+                    var dateStr = d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0');
+                    if (typeof addScheduleEntry === 'function') {
+                        addScheduleEntry({ roomType: roomType, roomId: roomId, date: dateStr, startTime: startTime, endTime: endTime, requestId: undefined });
+                        count++;
+                    }
+                }
+                if (count > 0) {
+                    alert('Added ' + count + ' schedule entry/entries (Mon–Sat in date range).');
+                    setDefaultDates();
+                } else {
+                    alert('No dates in range match the selected days.');
+                }
+            } else {
+                var date = document.getElementById('sched-date').value;
+                if (!date) { alert('Select a date.'); return; }
+                if (typeof addScheduleEntry === 'function') {
+                    addScheduleEntry({ roomType: roomType, roomId: roomId, date: date, startTime: startTime, endTime: endTime, requestId: undefined });
+                    alert('Schedule added.');
+                    setDefaultDates();
+                }
+            }
+        });
+    })();
+    </script>
+    <script>(function(){function u(){var e=document.getElementById('sidebar-datetime');if(e)e.textContent=new Date().toLocaleString('en-PH',{timeZone:'Asia/Manila',weekday:'short',year:'numeric',month:'short',day:'numeric',hour:'2-digit',minute:'2-digit',second:'2-digit'});}u();setInterval(u,1000);})();</script>
+</body>
+</html>

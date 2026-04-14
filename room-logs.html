@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Room Usage Logs - PharmaLab IMS</title>
+    <link rel="stylesheet" href="css/lab-ui.css">
+    <style>
+        .filters { display: flex; align-items: center; gap: 16px; flex-wrap: wrap; margin-bottom: 24px; }
+        .filters label { font-size: 14px; font-weight: 600; color: #4a5568; }
+        .filters select { padding: 10px 14px; border: 2px solid #e2e8f0; border-radius: 8px; font-size: 14px; min-width: 160px; }
+        .btn { padding: 10px 20px; border-radius: var(--lab-radius); font-weight: 600; font-size: 14px; cursor: pointer; border: none; background: var(--lab-primary); color: white; }
+        .btn:hover { background: var(--lab-primary-hover); }
+        .btn-print { background: #38a169; }
+        .btn-print:hover { background: #2f855a; }
+
+        .logs-card { background: white; border-radius: 12px; border: 1px solid #e2e8f0; box-shadow: 0 1px 3px rgba(0,0,0,0.05); overflow: hidden; }
+        .logs-table { width: 100%; border-collapse: collapse; }
+        .logs-table th, .logs-table td { padding: 12px 16px; text-align: left; border-bottom: 1px solid #e2e8f0; font-size: 14px; }
+        .logs-table th { background: #f7fafc; color: #4a5568; font-weight: 600; }
+        .logs-table tbody tr:hover { background: #f7fafc; }
+        .log-card-row { vertical-align: top; }
+        .empty-msg { text-align: center; padding: 48px 24px; color: #718096; font-size: 15px; }
+
+        .no-print { }
+        @media print {
+            .no-print, .sidebar, .top-nav, .filters, .btn { display: none !important; }
+            .main-content { margin-left: 0; margin-top: 0; }
+            body { background: white; }
+            .logs-card { box-shadow: none; border: 1px solid #ccc; }
+        }
+    </style>
+</head>
+<body>
+    <nav class="top-nav">
+        <div class="top-nav-left">
+            <div class="logo-placeholder">PL</div>
+            <div class="system-name">PharmaLab IMS</div>
+        </div>
+        <div class="top-nav-right">
+            <div class="user-profile">
+                <div class="user-avatar">AD</div>
+                <div><div style="font-weight:600">Admin User</div><div style="font-size:12px;color:#718096">Lab Manager</div></div>
+            </div>
+        </div>
+    </nav>
+    <aside class="sidebar">
+        <nav class="sidebar-menu">
+            <a href="index.html" class="menu-item"><svg class="menu-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>Dashboard</a>
+            <a href="labtech-dashboard.html" class="menu-item"><svg class="menu-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>Lab Tech Today</a>
+            <a href="inventory.html" class="menu-item"><svg class="menu-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path></svg>Chemical Inventory</a>
+            <a href="equipment.html" class="menu-item"><svg class="menu-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><circle cx="12" cy="12" r="4"></circle></svg>Equipment & Glassware</a>
+            <a href="admin-requests.html" class="menu-item"><svg class="menu-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg>Requests & Acquisitions</a>
+            <a href="activity-log.html" class="menu-item"><svg class="menu-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>Activity Log</a>
+            <a href="admin-settings.html" class="menu-item"><svg class="menu-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>Settings</a>
+            <div class="menu-section">
+                <div class="menu-section-title">Rooms</div>
+                <a href="add-schedule.html" class="menu-item"><svg class="menu-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>Add Schedule</a>
+                <a href="lecture-rooms.html" class="menu-item"><svg class="menu-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 6h20v12H2z"></path><path d="M6 10h2v4H6z"></path><path d="M10 10h2v4h-2z"></path></svg>Lecture Rooms</a>
+                <a href="laboratory-rooms.html" class="menu-item"><svg class="menu-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path></svg>Laboratory Rooms</a>
+            </div>
+            <a href="room-logs.html" class="menu-item active"><svg class="menu-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>Room Usage Logs</a>
+        </nav>
+        <div class="sidebar-footer"><div id="sidebar-datetime">—</div><div style="margin-top:4px;font-size:11px;">Philippine Time (PHT)</div></div>
+    </aside>
+
+    <main class="main-content">
+        <div class="breadcrumb"><a href="index.html">Home</a> <span>/</span> <span>Room Usage Logs</span></div>
+        <header class="page-header">
+            <div>
+                <h1 class="page-title">Room Usage Logs</h1>
+                <p class="page-subtitle">View and print room usage by period. Logs include finished and scheduled sessions.</p>
+            </div>
+        </header>
+
+        <div class="filters no-print">
+            <label for="period">Period:</label>
+            <select id="period">
+                <option value="week">This Week</option>
+                <option value="month">This Month</option>
+                <option value="year">This Year</option>
+            </select>
+            <label for="room-filter" style="margin-left:16px">Room:</label>
+            <select id="room-filter">
+                <option value="all">All Rooms</option>
+                <optgroup label="Lecture Rooms">
+                    <option value="lecture-1">Lecture Room 1</option>
+                    <option value="lecture-2">Lecture Room 2</option>
+                    <option value="lecture-3">Lecture Room 3</option>
+                    <option value="lecture-4">Lecture Room 4</option>
+                    <option value="lecture-5">Lecture Room 5</option>
+                    <option value="lecture-6">Lecture Room 6</option>
+                </optgroup>
+                <optgroup label="Laboratory Rooms">
+                    <option value="laboratory-1">Chemistry Lab A</option>
+                    <option value="laboratory-2">Chemistry Lab B</option>
+                    <option value="laboratory-3">Pharmaceutical Lab 1</option>
+                    <option value="laboratory-4">Pharmaceutical Lab 2</option>
+                    <option value="laboratory-5">Microbiology Lab</option>
+                    <option value="laboratory-6">Instrumentation Lab</option>
+                </optgroup>
+            </select>
+            <button type="button" class="btn btn-print" id="btn-print">🖨️ Print Report</button>
+        </div>
+
+        <div class="logs-card" id="logs-card">
+            <table class="logs-table" id="logs-table">
+                <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Room</th>
+                        <th>Start Time</th>
+                        <th>End Time</th>
+                        <th>Experiment / Activity</th>
+                        <th>Professor / Instructor</th>
+                        <th>Student (requested by)</th>
+                        <th>Request ID</th>
+                    </tr>
+                </thead>
+                <tbody id="logs-body">
+                    <tr><td colspan="8" class="empty-msg">Loading…</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </main>
+
+    <script src="js/data.js"></script>
+    <script src="js/auth-guard.js"></script>
+    <script>
+    (function() {
+        var ROOM_NAMES = ['AMS 204', 'AMS 205', 'AMS 301', 'AMS 302', 'AMS 303'];
+
+        function getRoomName(roomType, roomId) {
+            var id = parseInt(roomId, 10) - 1;
+            return ROOM_NAMES[id] || ('Room ' + roomId);
+        }
+
+        function getDateRange(period) {
+            var today = typeof getTodayManilaDateStr === 'function' ? getTodayManilaDateStr() : '';
+            if (!today) return { start: '', end: '' };
+            var y = parseInt(today.substring(0, 4), 10);
+            var m = parseInt(today.substring(5, 7), 10);
+            var d = parseInt(today.substring(8, 10), 10);
+            var start = today;
+            if (period === 'week') {
+                var day = new Date(y, m - 1, d);
+                day.setDate(day.getDate() - 6);
+                start = day.getFullYear() + '-' + String(day.getMonth() + 1).padStart(2, '0') + '-' + String(day.getDate()).padStart(2, '0');
+            } else if (period === 'month') {
+                start = y + '-' + String(m).padStart(2, '0') + '-01';
+            } else if (period === 'year') {
+                start = y + '-01-01';
+            }
+            return { start: start, end: today };
+        }
+
+        function renderLogs() {
+            var period = document.getElementById('period').value;
+            var roomFilter = document.getElementById('room-filter').value;
+            var range = getDateRange(period);
+            var schedule = typeof getRoomSchedule === 'function' ? getRoomSchedule() : [];
+            var entries = schedule.filter(function(e) {
+                if (e.date < range.start || e.date > range.end) return false;
+                if (roomFilter !== 'all') {
+                    var key = e.roomType + '-' + String(e.roomId);
+                    if (key !== roomFilter) return false;
+                }
+                return true;
+            });
+            entries.sort(function(a, b) {
+                if (a.date !== b.date) return b.date.localeCompare(a.date);
+                return (b.startTime || '').localeCompare(a.startTime || '');
+            });
+
+            var tbody = document.getElementById('logs-body');
+            if (entries.length === 0) {
+                var msg = roomFilter === 'all' ? 'No room usage logs for this period.' : 'No logs for this room in this period.';
+                tbody.innerHTML = '<tr><td colspan="8" class="empty-msg">' + msg + '</td></tr>';
+                return;
+            }
+
+            var rows = entries.map(function(entry) {
+                var req = typeof getRequestById === 'function' ? getRequestById(entry.requestId) : null;
+                var roomName = getRoomName(entry.roomType, entry.roomId);
+                var dateStr = entry.date ? (new Date(entry.date + 'T12:00:00').toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' })) : '—';
+                var experiment = req ? (req.activity || req.subject || '—') : '—';
+                var professor = req ? (req.instructor || '—') : '—';
+                var student = req ? (req.studentName || '—') : '—';
+                var reqId = (req && req.requestId) ? req.requestId : '—';
+                return '<tr><td>' + dateStr + '</td><td>' + roomName + '</td><td>' + (entry.startTime || '—') + '</td><td>' + (entry.endTime || '—') + '</td><td>' + experiment + '</td><td>' + professor + '</td><td>' + student + '</td><td>' + reqId + '</td></tr>';
+            });
+            tbody.innerHTML = rows.join('');
+        }
+
+        document.getElementById('period').addEventListener('change', renderLogs);
+        document.getElementById('room-filter').addEventListener('change', renderLogs);
+        document.getElementById('btn-print').addEventListener('click', function() { window.print(); });
+        renderLogs();
+    })();
+    </script>
+    <script>(function(){function u(){var e=document.getElementById('sidebar-datetime');if(e)e.textContent=new Date().toLocaleString('en-PH',{timeZone:'Asia/Manila',weekday:'short',year:'numeric',month:'short',day:'numeric',hour:'2-digit',minute:'2-digit',second:'2-digit'});}u();setInterval(u,1000);})();</script>
+</body>
+</html>

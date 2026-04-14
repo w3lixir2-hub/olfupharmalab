@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Portal - PharmaLab IMS</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #f5f7fa;
+            min-height: 100vh;
+        }
+
+        /* Top Nav */
+        .top-nav {
+            background: white;
+            border-bottom: 1px solid #e2e8f0;
+            padding: 0 24px;
+            height: 64px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        .top-nav-left { display: flex; align-items: center; gap: 12px; }
+        .logo-placeholder {
+            width: 36px; height: 36px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            border-radius: 8px;
+            display: flex; align-items: center; justify-content: center;
+            font-weight: 700; color: white; font-size: 14px;
+        }
+        .system-name { font-weight: 700; color: #1a202c; font-size: 16px; }
+
+        /* Main */
+        .main-content {
+            max-width: 860px;
+            margin: 0 auto;
+            padding: 32px 24px;
+        }
+
+        /* Welcome banner */
+        .welcome-banner {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 16px;
+            padding: 32px;
+            color: white;
+            margin-bottom: 32px;
+        }
+        .welcome-banner h1 { font-size: 24px; font-weight: 700; margin-bottom: 6px; }
+        .welcome-banner p { font-size: 15px; opacity: 0.9; }
+
+        /* Quick actions */
+        .quick-actions {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 16px;
+            margin-bottom: 32px;
+        }
+        .action-card {
+            background: white;
+            border-radius: 12px;
+            padding: 24px;
+            text-align: center;
+            text-decoration: none;
+            color: #1a202c;
+            border: 2px solid #e2e8f0;
+            transition: all 0.2s;
+            display: block;
+        }
+        .action-card:hover { border-color: #667eea; transform: translateY(-2px); box-shadow: 0 4px 16px rgba(102,126,234,0.15); }
+        .action-icon { font-size: 32px; margin-bottom: 12px; }
+        .action-title { font-weight: 600; font-size: 15px; }
+        .action-desc { font-size: 13px; color: #718096; margin-top: 4px; }
+
+        /* Track section */
+        .section-card {
+            background: white;
+            border-radius: 12px;
+            padding: 24px;
+            margin-bottom: 24px;
+            border: 1px solid #e2e8f0;
+        }
+        .section-title { font-size: 18px; font-weight: 700; color: #1a202c; margin-bottom: 20px; }
+
+        .track-form { display: flex; gap: 12px; flex-wrap: wrap; }
+        .track-input {
+            flex: 1;
+            min-width: 220px;
+            padding: 12px 16px;
+            border: 2px solid #e2e8f0;
+            border-radius: 8px;
+            font-size: 15px;
+            font-family: inherit;
+        }
+        .track-input:focus { outline: none; border-color: #667eea; }
+        .btn {
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 15px;
+            cursor: pointer;
+            border: none;
+        }
+        .btn-primary { background: #667eea; color: white; }
+        .btn-primary:hover { background: #5568d3; }
+        .btn-secondary { background: #edf2f7; color: #4a5568; }
+        .btn-secondary:hover { background: #e2e8f0; }
+
+        /* Result card */
+        .result-card {
+            margin-top: 20px;
+            padding: 20px;
+            border-radius: 10px;
+            border: 2px solid #e2e8f0;
+            display: none;
+        }
+        .result-card.show { display: block; }
+        .result-ref { font-size: 13px; color: #718096; margin-bottom: 4px; }
+        .result-ref-value { font-size: 20px; font-weight: 700; color: #667eea; font-family: 'Courier New', monospace; margin-bottom: 16px; }
+
+        .result-row { display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid #f0f0f0; font-size: 14px; }
+        .result-row:last-child { border-bottom: none; }
+        .result-label { color: #718096; }
+        .result-value { font-weight: 600; color: #2d3748; text-align: right; max-width: 60%; }
+
+        .status-badge {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 600;
+        }
+        .status-badge.pending   { background: #fef5e7; color: #d97706; }
+        .status-badge.approved  { background: #dbeafe; color: #1d4ed8; }
+        .status-badge.released  { background: #f0fff4; color: #22543d; }
+        .status-badge.returned  { background: #f3f4f6; color: #4b5563; }
+        .status-badge.rejected  { background: #fff5f5; color: #c53030; }
+
+        /* Items table */
+        .items-table { width: 100%; border-collapse: collapse; margin-top: 12px; font-size: 14px; }
+        .items-table th { text-align: left; padding: 8px 12px; background: #f7fafc; color: #718096; font-size: 12px; text-transform: uppercase; letter-spacing: 0.05em; }
+        .items-table td { padding: 8px 12px; border-bottom: 1px solid #f0f0f0; color: #2d3748; }
+
+        /* Error / info box */
+        .alert-box {
+            padding: 14px 16px;
+            border-radius: 8px;
+            font-size: 14px;
+            margin-top: 16px;
+            display: none;
+        }
+        .alert-box.show { display: block; }
+        .alert-error { background: #fff5f5; border-left: 4px solid #e53e3e; color: #c53030; }
+        .alert-info  { background: #ebf4ff; border-left: 4px solid #4299e1; color: #2c5282; }
+
+        /* My requests list */
+        .request-item {
+            padding: 16px;
+            border: 1px solid #e2e8f0;
+            border-radius: 10px;
+            margin-bottom: 12px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            transition: border-color 0.2s;
+        }
+        .request-item:hover { border-color: #667eea; }
+        .req-left { flex: 1; }
+        .req-id { font-weight: 700; color: #667eea; font-family: 'Courier New', monospace; font-size: 14px; }
+        .req-desc { font-size: 14px; color: #4a5568; margin-top: 2px; }
+        .req-date { font-size: 12px; color: #a0aec0; margin-top: 2px; }
+        .empty-state { text-align: center; color: #a0aec0; padding: 40px 20px; font-size: 14px; }
+
+        /* Footer note */
+        .footer-note { text-align: center; font-size: 13px; color: #a0aec0; margin-top: 32px; padding-bottom: 32px; }
+        .footer-note a { color: #667eea; text-decoration: none; }
+
+        @media (max-width: 600px) {
+            .track-form { flex-direction: column; }
+            .track-input { min-width: unset; }
+            .result-row { flex-direction: column; gap: 4px; }
+            .result-value { text-align: left; max-width: 100%; }
+        }
+    </style>
+</head>
+<body>
+    <nav class="top-nav">
+        <div class="top-nav-left">
+            <div class="logo-placeholder">PL</div>
+            <div class="system-name">PharmaLab IMS</div>
+        </div>
+        <div>
+            <span style="font-size:13px;color:#718096;">Student Portal</span>
+        </div>
+    </nav>
+
+    <main class="main-content">
+
+        <div class="welcome-banner">
+            <h1>Student Portal</h1>
+            <p>Submit material requests and track their status using your reference number.</p>
+        </div>
+
+        <div class="quick-actions">
+            <a href="student-request.html" class="action-card">
+                <div class="action-icon">📋</div>
+                <div class="action-title">New Request</div>
+                <div class="action-desc">Submit a material or equipment request</div>
+            </a>
+            <a href="qr-landing.html" class="action-card">
+                <div class="action-icon">📷</div>
+                <div class="action-title">Scan QR</div>
+                <div class="action-desc">Access via laboratory QR code</div>
+            </a>
+            <a href="print-qr-poster.html" class="action-card" target="_blank">
+                <div class="action-icon">🖨️</div>
+                <div class="action-title">QR Poster</div>
+                <div class="action-desc">Print lab QR poster for display</div>
+            </a>
+        </div>
+
+        <!-- Track by Reference Number -->
+        <div class="section-card">
+            <div class="section-title">🔍 Track Your Request</div>
+            <div class="track-form">
+                <input type="text" id="track-input" class="track-input" placeholder="Enter reference number (e.g. REQ-2026-0312)" />
+                <button class="btn btn-primary" onclick="trackRequest()">Track</button>
+                <button class="btn btn-secondary" onclick="clearTrack()">Clear</button>
+            </div>
+            <div id="track-error" class="alert-box alert-error"></div>
+            <div id="track-result" class="result-card"></div>
+        </div>
+
+        <!-- All Requests in localStorage -->
+        <div class="section-card">
+            <div class="section-title">📝 All Submitted Requests</div>
+            <div id="all-requests-list"></div>
+        </div>
+
+        <!-- Reminders -->
+        <div class="section-card">
+            <div class="section-title">📌 Important Reminders</div>
+            <ul style="padding-left:20px;color:#4a5568;font-size:14px;line-height:2;">
+                <li>Bring your <strong>Student ID</strong> when claiming materials.</li>
+                <li>Requests must be submitted <strong>at least 1 day in advance</strong>.</li>
+                <li>Approved requests not claimed on the scheduled date may be <strong>cancelled</strong>.</li>
+                <li>Return all borrowed equipment in <strong>good condition</strong>.</li>
+                <li>Check with your instructor before requesting <strong>hazardous chemicals</strong>.</li>
+            </ul>
+        </div>
+
+    </main>
+
+    <div class="footer-note">
+        <a href="START-HERE.html">← Back to Start</a> &nbsp;|&nbsp;
+        PharmaLab IMS &copy; 2026 College of Pharmacy
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="js/supabase-client.js"></script>
+    <script src="js/supabase-data.js"></script>
+    <script>
+        function fmt(s) {
+            if (!s) return '—';
+            return new Date(s).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
+        }
+        function fmtDT(s) {
+            if (!s) return '—';
+            const d = new Date(s);
+            return d.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' }) +
+                   ' ' + d.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' });
+        }
+        function statusBadge(status) {
+            const labels = { pending: 'Pending', approved: 'Approved', released: 'Released', returned: 'Returned', rejected: 'Rejected' };
+            return '<span class="status-badge ' + (status||'pending') + '">' + (labels[status] || status) + '</span>';
+        }
+
+        async function trackRequest() {
+            const val = (document.getElementById('track-input').value || '').trim().toUpperCase();
+            const errEl = document.getElementById('track-error');
+            const resEl = document.getElementById('track-result');
+
+            errEl.classList.remove('show');
+            resEl.classList.remove('show');
+
+            if (!val) {
+                errEl.textContent = 'Please enter a reference number.';
+                errEl.classList.add('show');
+                return;
+            }
+
+            const req = await getRequestById(val);
+
+            if (!req) {
+                errEl.textContent = 'No request found with reference number "' + val + '". Please check and try again.';
+                errEl.classList.add('show');
+                return;
+            }
+
+            showResult(req, resEl);
+        }
+
+        function fmtTime(hhmm) {
+            if (!hhmm) return '—';
+            var p = hhmm.split(':');
+            var h = parseInt(p[0], 10);
+            var m = p[1] || '00';
+            var h12 = (h % 12) || 12;
+            var ap = h >= 12 ? 'PM' : 'AM';
+            return h12 + ':' + m + ' ' + ap;
+        }
+
+        function statusMessage(req) {
+            var s = req.status;
+            if (s === 'pending')  return '<div style="background:#fef5e7;border-left:4px solid #d97706;padding:12px 16px;border-radius:8px;font-size:14px;color:#92400e;margin-bottom:16px;">⏳ <strong>Pending Review</strong> — Your request is waiting for approval from the lab technician.</div>';
+            if (s === 'approved') return '<div style="background:#dbeafe;border-left:4px solid #1d4ed8;padding:12px 16px;border-radius:8px;font-size:14px;color:#1e3a8a;margin-bottom:16px;">✅ <strong>Approved!</strong> — Your request has been approved. Bring your Student ID and claim your materials on the scheduled date.</div>';
+            if (s === 'released') return '<div style="background:#f0fff4;border-left:4px solid #22543d;padding:12px 16px;border-radius:8px;font-size:14px;color:#22543d;margin-bottom:16px;">📦 <strong>Released</strong> — Materials have been dispensed. Please return all borrowed items after use.</div>';
+            if (s === 'returned') return '<div style="background:#f3f4f6;border-left:4px solid #4b5563;padding:12px 16px;border-radius:8px;font-size:14px;color:#374151;margin-bottom:16px;">🔁 <strong>Returned</strong> — Items have been returned. Transaction complete.</div>';
+            if (s === 'rejected') return '<div style="background:#fff5f5;border-left:4px solid #e53e3e;padding:12px 16px;border-radius:8px;font-size:14px;color:#c53030;margin-bottom:16px;">❌ <strong>Rejected</strong>' + (req.rejectionReason ? ': ' + req.rejectionReason : '') + ' — Please coordinate with your instructor.</div>';
+            return '';
+        }
+
+        function showResult(req, container) {
+            const items = (req.items || []).map(function(item) {
+                return '<tr><td>' + (item.name||'—') + '</td><td>' + (item.quantity||'—') + ' ' + (item.unit||'') + '</td></tr>';
+            }).join('');
+
+            var timeStr = (req.timeNeeded && req.timeEnd)
+                ? fmtTime(req.timeNeeded) + ' – ' + fmtTime(req.timeEnd)
+                : (req.timeNeeded ? fmtTime(req.timeNeeded) : '—');
+
+            var roomName = req.roomAssignmentName || (req.roomAssignment ? 'Room ' + req.roomAssignment : '—');
+
+            container.innerHTML =
+                '<div class="result-ref">Reference Number</div>' +
+                '<div class="result-ref-value">' + (req.requestId||'—') + '</div>' +
+                statusMessage(req) +
+                '<div class="result-row"><span class="result-label">Status</span><span class="result-value">' + statusBadge(req.status) + '</span></div>' +
+                '<div class="result-row"><span class="result-label">Student Name</span><span class="result-value">' + (req.studentName||'—') + '</span></div>' +
+                '<div class="result-row"><span class="result-label">Subject</span><span class="result-value">' + (req.subject||'—') + '</span></div>' +
+                '<div class="result-row"><span class="result-label">Experiment</span><span class="result-value">' + (req.activity||'—') + '</span></div>' +
+                '<div class="result-row"><span class="result-label">Instructor</span><span class="result-value">' + (req.instructor||'—') + '</span></div>' +
+                '<div class="result-row"><span class="result-label">Date Needed</span><span class="result-value">' + fmt(req.dateNeeded) + '</span></div>' +
+                '<div class="result-row"><span class="result-label">Time</span><span class="result-value">' + timeStr + '</span></div>' +
+                '<div class="result-row"><span class="result-label">Room Assignment</span><span class="result-value">' + roomName + '</span></div>' +
+                '<div class="result-row"><span class="result-label">Submitted</span><span class="result-value">' + fmtDT(req.dateSubmitted) + '</span></div>' +
+                '<div style="margin-top:16px;font-weight:600;font-size:14px;color:#2d3748;">Requested Items</div>' +
+                '<table class="items-table"><thead><tr><th>Item</th><th>Quantity</th></tr></thead><tbody>' + (items || '<tr><td colspan="2" style="color:#a0aec0;text-align:center;">No items</td></tr>') + '</tbody></table>';
+
+            container.classList.add('show');
+        }
+
+        function clearTrack() {
+            document.getElementById('track-input').value = '';
+            document.getElementById('track-error').classList.remove('show');
+            document.getElementById('track-result').classList.remove('show');
+        }
+
+        async function renderAllRequests() {
+            const list = document.getElementById('all-requests-list');
+            const requests = await getRequests();
+            if (requests.length === 0) {
+                list.innerHTML = '<div class="empty-state">No requests submitted yet.<br><a href="student-request.html" style="color:#667eea;">Submit your first request →</a></div>';
+                return;
+            }
+            list.innerHTML = requests.map(function(r) {
+                return '<div class="request-item" onclick="quickView(\'' + (r.requestId||'') + '\')">' +
+                    '<div class="req-left">' +
+                    '<div class="req-id">' + (r.requestId||'—') + '</div>' +
+                    '<div class="req-desc">' + (r.subject||'—') + ' — ' + (r.activity||'—') + '</div>' +
+                    '<div class="req-date">Submitted: ' + fmtDT(r.dateSubmitted) + '</div>' +
+                    '</div>' +
+                    statusBadge(r.status) +
+                    '</div>';
+            }).join('');
+        }
+
+        function quickView(requestId) {
+            document.getElementById('track-input').value = requestId;
+            trackRequest();
+            document.getElementById('track-input').scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+
+        // Pre-fill from URL param ?ref=REQ-2026-XXXX
+        (async function() {
+            const params = new URLSearchParams(window.location.search);
+            const ref = params.get('ref');
+            if (ref) {
+                document.getElementById('track-input').value = ref;
+                await trackRequest();
+            }
+        })();
+
+        renderAllRequests();
+        onTableChange('requests', renderAllRequests);
+    </script>
+</body>
+</html>

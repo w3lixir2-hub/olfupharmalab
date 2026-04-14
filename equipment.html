@@ -1,0 +1,1626 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Equipment & Glassware - PharmaLab IMS</title>
+    <link rel="stylesheet" href="css/lab-ui.css">
+    <style>
+        /* Equipment-specific: tabs, equipment cards */
+        .tabs {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 24px;
+            border-bottom: 2px solid #e2e8f0;
+        }
+
+        .tab {
+            padding: 12px 24px;
+            background: none;
+            border: none;
+            font-size: 15px;
+            font-weight: 600;
+            color: #718096;
+            cursor: pointer;
+            border-bottom: 3px solid transparent;
+            margin-bottom: -2px;
+            transition: all 0.2s;
+        }
+
+        .tab:hover {
+            color: var(--lab-primary);
+        }
+
+        .tab.active {
+            color: var(--lab-primary);
+            border-bottom-color: var(--lab-primary);
+        }
+
+        .tab-panel {
+            display: none;
+        }
+
+        .tab-panel.active {
+            display: block;
+        }
+
+        /* Calendar */
+        .calendar-section {
+            background: white;
+            border-radius: 12px;
+            border: 1px solid #e2e8f0;
+            padding: 24px;
+            margin-bottom: 24px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+        }
+
+        .calendar-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .calendar-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: #1a202c;
+        }
+
+        .calendar-nav {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+        }
+
+        .calendar-nav-btn {
+            padding: 8px 14px;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            background: white;
+            font-weight: 600;
+            color: #4a5568;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .calendar-nav-btn:hover {
+            background: #f7fafc;
+            border-color: var(--lab-primary);
+            color: var(--lab-primary);
+        }
+
+        .calendar-month-year {
+            font-size: 16px;
+            font-weight: 600;
+            color: #2d3748;
+            min-width: 180px;
+            text-align: center;
+        }
+
+        .calendar-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 4px;
+        }
+
+        .calendar-weekday {
+            padding: 10px;
+            text-align: center;
+            font-size: 12px;
+            font-weight: 600;
+            color: #718096;
+            text-transform: uppercase;
+        }
+
+        .calendar-day {
+            min-height: 80px;
+            padding: 8px;
+            border-radius: 8px;
+            background: #f7fafc;
+            border: 1px solid #e2e8f0;
+            font-size: 13px;
+        }
+
+        .calendar-day.other-month {
+            background: #edf2f7;
+            color: #a0aec0;
+        }
+
+        .calendar-day.today {
+            background: #ebf8ff;
+            border-color: var(--lab-primary);
+            font-weight: 700;
+            color: var(--lab-primary);
+        }
+
+        .calendar-day-num {
+            font-weight: 600;
+            margin-bottom: 4px;
+            color: #2d3748;
+        }
+
+        .calendar-day.other-month .calendar-day-num {
+            color: #a0aec0;
+        }
+
+        .calendar-event {
+            font-size: 11px;
+            padding: 2px 6px;
+            border-radius: 4px;
+            margin-top: 4px;
+            background: #fef5e7;
+            color: #d97706;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .calendar-event.return {
+            background: #f0fff4;
+            color: #38a169;
+        }
+
+        .calendar-event.maintenance {
+            background: #fff5f5;
+            color: #e53e3e;
+        }
+
+        .currently-out-box {
+            background: white;
+            border-radius: 12px;
+            border: 1px solid #e2e8f0;
+            padding: 24px;
+            margin-bottom: 24px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+        }
+
+        .currently-out-box h3 {
+            font-size: 18px;
+            font-weight: 600;
+            color: #1a202c;
+            margin-bottom: 16px;
+        }
+
+        .log-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .log-table th,
+        .log-table td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .log-table th {
+            font-size: 12px;
+            font-weight: 600;
+            color: #718096;
+            text-transform: uppercase;
+        }
+
+        .log-table td {
+            font-size: 14px;
+            color: #2d3748;
+        }
+
+        .log-table tr:hover {
+            background: #f7fafc;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 48px 24px;
+            color: #718096;
+            font-size: 15px;
+        }
+
+        .empty-state-icon {
+            font-size: 48px;
+            margin-bottom: 16px;
+            opacity: 0.5;
+        }
+
+        /* Buttons */
+        .btn {
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.2s;
+            border: none;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-primary {
+            background: var(--lab-primary);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: var(--lab-primary-hover);
+        }
+
+        /* Stats */
+        .stats-row {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 16px;
+            margin-bottom: 24px;
+        }
+
+        .stat-box {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            border: 1px solid #e2e8f0;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .stat-box:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+        }
+
+        .stat-value {
+            font-size: 32px;
+            font-weight: 700;
+            color: #1a202c;
+        }
+
+        .stat-label {
+            font-size: 13px;
+            color: #718096;
+            margin-top: 4px;
+        }
+
+        /* Equipment Grid */
+        .equipment-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .equipment-card {
+            background: white;
+            border-radius: 12px;
+            border: 1px solid #e2e8f0;
+            padding: 20px;
+            transition: all 0.2s;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+        }
+
+        .equipment-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+        }
+
+        .equipment-image {
+            width: 100%;
+            height: 160px;
+            background: linear-gradient(135deg, #f7fafc 0%, #edf2f7 100%);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 48px;
+            margin-bottom: 16px;
+        }
+
+        .equipment-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: start;
+            margin-bottom: 12px;
+        }
+
+        .equipment-name {
+            font-size: 18px;
+            font-weight: 600;
+            color: #1a202c;
+            margin-bottom: 4px;
+        }
+
+        .equipment-id {
+            font-size: 12px;
+            color: #718096;
+            font-family: 'Courier New', monospace;
+        }
+
+        .equipment-status {
+            font-size: 12px;
+            font-weight: 600;
+            padding: 4px 10px;
+            border-radius: 10px;
+        }
+
+        .status-available {
+            background: #f0fff4;
+            color: #38a169;
+        }
+
+        .status-borrowed {
+            background: #fef5e7;
+            color: #d97706;
+        }
+
+        .status-maintenance {
+            background: #fff5f5;
+            color: #e53e3e;
+        }
+
+        .equipment-info {
+            font-size: 14px;
+            color: #4a5568;
+            margin-bottom: 8px;
+        }
+
+        .info-label {
+            color: #718096;
+            font-size: 13px;
+        }
+
+        .equipment-actions {
+            display: flex;
+            gap: 8px;
+            margin-top: 16px;
+            padding-top: 16px;
+            border-top: 1px solid #f7fafc;
+        }
+
+        .action-btn {
+            flex: 1;
+            padding: 8px 12px;
+            border-radius: 6px;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            border: none;
+        }
+
+        .action-btn-primary {
+            background: var(--lab-primary);
+            color: white;
+        }
+
+        .action-btn-secondary {
+            background: #edf2f7;
+            color: #4a5568;
+        }
+
+        .action-btn:hover {
+            transform: translateY(-1px);
+        }
+
+        /* Filters */
+        .filters {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            border: 1px solid #e2e8f0;
+            margin-bottom: 24px;
+            display: flex;
+            gap: 16px;
+            align-items: end;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+        }
+
+        .filter-group {
+            flex: 1;
+        }
+
+        .filter-label {
+            font-size: 13px;
+            font-weight: 600;
+            color: #4a5568;
+            margin-bottom: 8px;
+            display: block;
+        }
+
+        .filter-input,
+        .filter-select {
+            width: 100%;
+            padding: 10px 12px;
+            border: 2px solid #e2e8f0;
+            border-radius: 8px;
+            font-size: 14px;
+        }
+
+        .calibration-badge {
+            display: inline-block;
+            padding: 4px 10px;
+            border-radius: 10px;
+            font-size: 11px;
+            font-weight: 600;
+            margin-top: 8px;
+        }
+
+        .calibration-due {
+            background: #fff5f5;
+            color: #e53e3e;
+        }
+
+        .calibration-ok {
+            background: #f0fff4;
+            color: #38a169;
+        }
+
+        /* Equipment Table */
+        .table-container {
+            background: white;
+            border-radius: 12px;
+            border: 1px solid #e2e8f0;
+            overflow-x: auto;
+        }
+
+        .equipment-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .equipment-table thead {
+            background: #f7fafc;
+            position: sticky;
+            top: 0;
+        }
+
+        .equipment-table th {
+            padding: 14px 16px;
+            text-align: left;
+            font-size: 12px;
+            font-weight: 600;
+            color: #4a5568;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            border-bottom: 2px solid #e2e8f0;
+        }
+
+        .equipment-table td {
+            padding: 14px 16px;
+            border-bottom: 1px solid #f7fafc;
+            font-size: 14px;
+            color: #2d3748;
+        }
+
+        .equipment-table tbody tr:hover {
+            background: #f7fafc;
+        }
+
+        .equipment-name-cell {
+            font-weight: 600;
+            color: #2d3748;
+        }
+
+        .equipment-action-btns {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .equipment-action-btn {
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 6px 10px;
+            border-radius: 6px;
+            font-size: 13px;
+            font-weight: 500;
+            color: #4299e1;
+            transition: background 0.2s, color 0.2s;
+        }
+
+        .equipment-action-btn:hover {
+            background: #ebf8ff;
+            color: #2b6cb0;
+        }
+
+        .equipment-action-btn.action-delete {
+            color: #e53e3e;
+        }
+
+        .equipment-action-btn.action-delete:hover {
+            background: #fff5f5;
+            color: #c53030;
+        }
+
+        /* Modal */
+        .equipment-modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+            padding: 24px;
+        }
+
+        .equipment-modal-overlay.show {
+            display: flex;
+        }
+
+        .equipment-modal {
+            background: white;
+            border-radius: 12px;
+            max-width: 560px;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
+        }
+
+        .equipment-modal-header {
+            padding: 20px 24px;
+            border-bottom: 1px solid #e2e8f0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .equipment-modal-title {
+            font-size: 20px;
+            font-weight: 700;
+            color: #1a202c;
+        }
+
+        .equipment-modal-close {
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 8px;
+            color: #718096;
+            font-size: 24px;
+            line-height: 1;
+            border-radius: 6px;
+        }
+
+        .equipment-modal-close:hover {
+            background: #f7fafc;
+            color: #2d3748;
+        }
+
+        .equipment-modal-body {
+            padding: 24px;
+        }
+
+        .equipment-modal-section {
+            margin-bottom: 24px;
+        }
+
+        .equipment-modal-section:last-child {
+            margin-bottom: 0;
+        }
+
+        .equipment-modal-section-title {
+            font-size: 13px;
+            font-weight: 700;
+            color: #718096;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 12px;
+        }
+
+        .equipment-modal-detail-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 0;
+            border-bottom: 1px solid #f7fafc;
+            font-size: 14px;
+        }
+
+        .equipment-modal-detail-label {
+            color: #718096;
+        }
+
+        .equipment-modal-detail-value {
+            font-weight: 600;
+            color: #2d3748;
+        }
+
+        .parts-checklist {
+            list-style: none;
+        }
+
+        .parts-checklist li {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px;
+            background: #f7fafc;
+            border-radius: 8px;
+            margin-bottom: 8px;
+            font-size: 14px;
+        }
+
+        .parts-checklist li:last-child {
+            margin-bottom: 0;
+        }
+
+        /* Part edit row (upload image per part) */
+        .part-edit-row {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px;
+            background: #f7fafc;
+            border-radius: 8px;
+            margin-bottom: 8px;
+        }
+        .part-edit-row:last-child { margin-bottom: 0; }
+        .part-edit-preview {
+            width: 56px;
+            height: 56px;
+            border-radius: 8px;
+            background: #edf2f7;
+            overflow: hidden;
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .part-edit-preview img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .part-edit-preview .no-image {
+            font-size: 20px;
+            color: #a0aec0;
+        }
+        .part-edit-name { flex: 1; min-width: 0; }
+        .part-edit-upload { flex-shrink: 0; }
+
+        .part-thumb {
+            width: 56px;
+            height: 56px;
+            border-radius: 8px;
+            background: #edf2f7;
+            object-fit: cover;
+            flex-shrink: 0;
+        }
+
+        .part-thumb-placeholder {
+            width: 56px;
+            height: 56px;
+            border-radius: 8px;
+            background: #edf2f7;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            color: #a0aec0;
+            flex-shrink: 0;
+        }
+
+        .times-used-badge {
+            display: inline-block;
+            padding: 10px 16px;
+            background: #ebf8ff;
+            color: #2b6cb0;
+            font-size: 18px;
+            font-weight: 700;
+            border-radius: 8px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Top Navigation -->
+    <nav class="top-nav">
+        <div class="top-nav-left">
+            <div class="logo-placeholder">PL</div>
+            <div class="system-name">PharmaLab IMS</div>
+        </div>
+        <div class="top-nav-right">
+            <div class="user-profile">
+                <div class="user-avatar">AD</div>
+                <div class="user-info">
+                    <div class="user-name">Admin User</div>
+                    <div class="user-role">Lab Manager</div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Sidebar -->
+    <aside class="sidebar">
+        <nav class="sidebar-menu">
+            <a href="index.html" class="menu-item">
+                <svg class="menu-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <rect x="3" y="3" width="7" height="7"></rect>
+                    <rect x="14" y="3" width="7" height="7"></rect>
+                    <rect x="14" y="14" width="7" height="7"></rect>
+                    <rect x="3" y="14" width="7" height="7"></rect>
+                </svg>
+                Dashboard
+            </a>
+            <a href="labtech-dashboard.html" class="menu-item">
+                <svg class="menu-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+                Lab Tech Today
+            </a>
+            <a href="inventory.html" class="menu-item">
+                <svg class="menu-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
+                </svg>
+                Chemical Inventory
+            </a>
+            <a href="equipment.html" class="menu-item active">
+                <svg class="menu-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <circle cx="12" cy="12" r="4"></circle>
+                    <line x1="4.93" y1="4.93" x2="9.17" y2="9.17"></line>
+                    <line x1="14.83" y1="14.83" x2="19.07" y2="19.07"></line>
+                    <line x1="14.83" y1="9.17" x2="19.07" y2="4.93"></line>
+                    <line x1="4.93" y1="19.07" x2="9.17" y2="14.83"></line>
+                </svg>
+                Equipment & Glassware
+            </a>
+            <a href="admin-requests.html" class="menu-item">
+                <svg class="menu-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                    <polyline points="14 2 14 8 20 8"></polyline>
+                    <line x1="16" y1="13" x2="8" y2="13"></line>
+                    <line x1="16" y1="17" x2="8" y2="17"></line>
+                    <polyline points="10 9 9 9 8 9"></polyline>
+                </svg>
+                Requests & Acquisitions
+            </a>
+            <a href="activity-log.html" class="menu-item">
+                <svg class="menu-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+                Activity Log
+            </a>
+            <a href="admin-settings.html" class="menu-item">
+                <svg class="menu-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+                Settings
+            </a>
+            <div class="menu-section">
+                <div class="menu-section-title">Rooms</div>
+                <a href="add-schedule.html" class="menu-item">
+                    <svg class="menu-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+                    Add Schedule
+                </a>
+                <a href="lecture-rooms.html" class="menu-item">
+                    <svg class="menu-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 6h20v12H2z"></path><path d="M6 10h2v4H6z"></path><path d="M10 10h2v4h-2z"></path></svg>
+                    Lecture Rooms
+                </a>
+                <a href="laboratory-rooms.html" class="menu-item">
+                    <svg class="menu-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path></svg>
+                    Laboratory Rooms
+                </a>
+            </div>
+            <a href="room-logs.html" class="menu-item">
+                <svg class="menu-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+                Room Usage Logs
+            </a>
+        </nav>
+        <div class="sidebar-footer"><div id="sidebar-datetime">—</div><div style="margin-top:4px;font-size:11px;">Philippine Time (PHT)</div></div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <div class="page-header">
+            <div>
+                <h1 class="page-title">Equipment & Glassware</h1>
+                <p class="page-subtitle">Track and manage laboratory equipment</p>
+            </div>
+            <div style="display:flex;gap:12px;flex-wrap:wrap;">
+                <button type="button" class="btn btn-success" id="btn-return-equipment">↩ Equipment Return</button>
+                <button type="button" class="btn btn-primary" id="btn-add-equipment">➕ Add Equipment</button>
+            </div>
+        </div>
+
+        <!-- Tabs -->
+        <div class="tabs" role="tablist">
+            <button type="button" class="tab active" role="tab" data-tab="equipment" aria-selected="true">Equipment</button>
+            <button type="button" class="tab" role="tab" data-tab="glassware" aria-selected="false">Glassware</button>
+            <button type="button" class="tab" role="tab" data-tab="maintenance" aria-selected="false">Maintenance Schedule</button>
+            <button type="button" class="tab" role="tab" data-tab="borrow-log" aria-selected="false">Borrow/Return Log</button>
+        </div>
+
+        <!-- Panel: Equipment -->
+        <div id="panel-equipment" class="tab-panel active" role="tabpanel">
+            <div class="stats-row">
+                <div class="stat-box">
+                    <div class="stat-value" id="equipment-stat-total">—</div>
+                    <div class="stat-label">Total Equipment</div>
+                </div>
+            </div>
+
+            <div class="filters">
+                <div class="filter-group">
+                    <label class="filter-label">Search</label>
+                    <input type="text" class="filter-input" id="equipment-search" placeholder="Equipment name, brand, supplier...">
+                </div>
+                <div class="filter-group">
+                    <label class="filter-label">Storage Location</label>
+                    <select class="filter-select" id="equipment-storage-filter">
+                        <option value="">All Locations</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="table-container">
+                <table class="equipment-table">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Storage Location</th>
+                            <th>Quantity</th>
+                            <th>Brand</th>
+                            <th>Supplier</th>
+                            <th>Delivery Date</th>
+                            <th>Calibrate Date</th>
+                            <th>Remarks (Certificates)</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="equipment-tbody">
+                        <!-- Rendered from data.js -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <!-- end panel-equipment -->
+
+        <!-- Equipment More Info Modal -->
+        <div id="equipment-modal-overlay" class="equipment-modal-overlay" aria-hidden="true">
+            <div class="equipment-modal" role="dialog" aria-labelledby="equipment-modal-title">
+                <div class="equipment-modal-header">
+                    <h2 id="equipment-modal-title" class="equipment-modal-title">Equipment Details</h2>
+                    <button type="button" class="equipment-modal-close" id="equipment-modal-close" aria-label="Close">&times;</button>
+                </div>
+                <div class="equipment-modal-body" id="equipment-modal-body">
+                    <!-- Filled by script -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Panel: Glassware -->
+        <div id="panel-glassware" class="tab-panel" role="tabpanel">
+            <div class="stats-row">
+                <div class="stat-box">
+                    <div class="stat-value">89</div>
+                    <div class="stat-label">Total Glassware Items</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-value">12</div>
+                    <div class="stat-label">Currently Out</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-value">77</div>
+                    <div class="stat-label">Available</div>
+                </div>
+            </div>
+            <div class="filters">
+                <div class="filter-group">
+                    <label class="filter-label">Search</label>
+                    <input type="text" class="filter-input" id="glassware-search" placeholder="Beaker, flask, pipette...">
+                </div>
+                <div class="filter-group">
+                    <label class="filter-label">Type</label>
+                    <select class="filter-select" id="glassware-type">
+                        <option value="">All Types</option>
+                        <option value="beaker">Beakers</option>
+                        <option value="flask">Flasks</option>
+                        <option value="pipette">Pipettes</option>
+                        <option value="burette">Burettes</option>
+                        <option value="cylinder">Graduated Cylinders</option>
+                    </select>
+                </div>
+            </div>
+            <div class="equipment-grid" id="glassware-grid">
+                <div class="equipment-card">
+                    <div class="equipment-image">🧪</div>
+                    <div class="equipment-header">
+                        <div>
+                            <div class="equipment-name">Beaker (250 mL)</div>
+                            <div class="equipment-id">GW-BK-250</div>
+                        </div>
+                        <span class="equipment-status status-available">Available</span>
+                    </div>
+                    <div class="equipment-info"><span class="info-label">Qty:</span> 24 pcs</div>
+                    <div class="equipment-info"><span class="info-label">Location:</span> Cabinet A1</div>
+                    <div class="equipment-actions">
+                        <button type="button" class="action-btn action-btn-primary">View</button>
+                        <button type="button" class="action-btn action-btn-secondary">Borrow</button>
+                    </div>
+                </div>
+                <div class="equipment-card">
+                    <div class="equipment-image">🫙</div>
+                    <div class="equipment-header">
+                        <div>
+                            <div class="equipment-name">Erlenmeyer Flask (500 mL)</div>
+                            <div class="equipment-id">GW-EF-500</div>
+                        </div>
+                        <span class="equipment-status status-borrowed">Out</span>
+                    </div>
+                    <div class="equipment-info"><span class="info-label">Qty:</span> 18 pcs (2 out)</div>
+                    <div class="equipment-info"><span class="info-label">Borrowed by:</span> Lab 3 - Exp. 5</div>
+                    <div class="equipment-actions">
+                        <button type="button" class="action-btn action-btn-primary">View</button>
+                        <button type="button" class="action-btn action-btn-secondary" disabled style="opacity: 0.5;">Unavailable</button>
+                    </div>
+                </div>
+                <div class="equipment-card">
+                    <div class="equipment-image">📏</div>
+                    <div class="equipment-header">
+                        <div>
+                            <div class="equipment-name">Graduated Cylinder (100 mL)</div>
+                            <div class="equipment-id">GW-GC-100</div>
+                        </div>
+                        <span class="equipment-status status-available">Available</span>
+                    </div>
+                    <div class="equipment-info"><span class="info-label">Qty:</span> 15 pcs</div>
+                    <div class="equipment-info"><span class="info-label">Location:</span> Cabinet B2</div>
+                    <div class="equipment-actions">
+                        <button type="button" class="action-btn action-btn-primary">View</button>
+                        <button type="button" class="action-btn action-btn-secondary">Borrow</button>
+                    </div>
+                </div>
+                <div class="equipment-card">
+                    <div class="equipment-image">💧</div>
+                    <div class="equipment-header">
+                        <div>
+                            <div class="equipment-name">Volumetric Pipette (25 mL)</div>
+                            <div class="equipment-id">GW-VP-25</div>
+                        </div>
+                        <span class="equipment-status status-available">Available</span>
+                    </div>
+                    <div class="equipment-info"><span class="info-label">Qty:</span> 20 pcs</div>
+                    <div class="equipment-info"><span class="info-label">Location:</span> Cabinet A2</div>
+                    <div class="equipment-actions">
+                        <button type="button" class="action-btn action-btn-primary">View</button>
+                        <button type="button" class="action-btn action-btn-secondary">Borrow</button>
+                    </div>
+                </div>
+                <div class="equipment-card">
+                    <div class="equipment-image">🧴</div>
+                    <div class="equipment-header">
+                        <div>
+                            <div class="equipment-name">Burette (50 mL)</div>
+                            <div class="equipment-id">GW-BR-50</div>
+                        </div>
+                        <span class="equipment-status status-borrowed">Out</span>
+                    </div>
+                    <div class="equipment-info"><span class="info-label">Qty:</span> 12 pcs (3 out)</div>
+                    <div class="equipment-info"><span class="info-label">Borrowed by:</span> Chem Lab - Titration</div>
+                    <div class="equipment-actions">
+                        <button type="button" class="action-btn action-btn-primary">View</button>
+                        <button type="button" class="action-btn action-btn-secondary" disabled style="opacity: 0.5;">Unavailable</button>
+                    </div>
+                </div>
+                <div class="equipment-card">
+                    <div class="equipment-image">🫗</div>
+                    <div class="equipment-header">
+                        <div>
+                            <div class="equipment-name">Volumetric Flask (1 L)</div>
+                            <div class="equipment-id">GW-VF-1000</div>
+                        </div>
+                        <span class="equipment-status status-available">Available</span>
+                    </div>
+                    <div class="equipment-info"><span class="info-label">Qty:</span> 8 pcs</div>
+                    <div class="equipment-info"><span class="info-label">Location:</span> Cabinet B1</div>
+                    <div class="equipment-actions">
+                        <button type="button" class="action-btn action-btn-primary">View</button>
+                        <button type="button" class="action-btn action-btn-secondary">Borrow</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- end panel-glassware -->
+
+        <!-- Panel: Maintenance Schedule -->
+        <div id="panel-maintenance" class="tab-panel" role="tabpanel">
+            <div class="calendar-section">
+                <h3 class="calendar-title" style="margin-bottom: 16px;">Upcoming Maintenance & Calibration</h3>
+                <div class="filters" style="margin-bottom: 20px;">
+                    <div class="filter-group">
+                        <label class="filter-label">Status</label>
+                        <select class="filter-select" id="maintenance-filter">
+                            <option value="">All</option>
+                            <option value="scheduled">Scheduled</option>
+                            <option value="in-progress">In Progress</option>
+                            <option value="completed">Completed</option>
+                        </select>
+                    </div>
+                </div>
+                <table class="log-table">
+                    <thead>
+                        <tr>
+                            <th>Item / Asset ID</th>
+                            <th>Type</th>
+                            <th>Schedule Date</th>
+                            <th>Status</th>
+                            <th>Remarks</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Analytical Balance</strong><br><span class="equipment-id">ASSET-AB-001</span></td>
+                            <td>Calibration</td>
+                            <td>Aug 15, 2026</td>
+                            <td><span class="equipment-status status-available">Scheduled</span></td>
+                            <td>Annual calibration</td>
+                        </tr>
+                        <tr>
+                            <td><strong>pH Meter</strong><br><span class="equipment-id">ASSET-PH-005</span></td>
+                            <td>Calibration</td>
+                            <td>Feb 1, 2026</td>
+                            <td><span class="equipment-status status-maintenance">Due</span></td>
+                            <td>Buffer calibration due</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Magnetic Stirrer Hotplate</strong><br><span class="equipment-id">ASSET-HS-012</span></td>
+                            <td>Repair</td>
+                            <td>Jan 20, 2026</td>
+                            <td><span class="equipment-status status-maintenance">In Progress</span></td>
+                            <td>Under repair</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Centrifuge</strong><br><span class="equipment-id">ASSET-CF-007</span></td>
+                            <td>Maintenance</td>
+                            <td>Mar 10, 2026</td>
+                            <td><span class="equipment-status status-available">Scheduled</span></td>
+                            <td>Quarterly maintenance</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Compound Microscope</strong><br><span class="equipment-id">ASSET-MS-003</span></td>
+                            <td>Inspection</td>
+                            <td>Jun 1, 2026</td>
+                            <td><span class="equipment-status status-available">Scheduled</span></td>
+                            <td>Annual lens check</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <!-- end panel-maintenance -->
+
+        <!-- Panel: Borrow/Return Log + Calendar -->
+        <div id="panel-borrow-log" class="tab-panel" role="tabpanel">
+            <div class="calendar-section">
+                <div class="calendar-header">
+                    <h3 class="calendar-title">Borrow / Return Calendar</h3>
+                    <div class="calendar-nav">
+                        <button type="button" class="calendar-nav-btn" id="cal-prev" aria-label="Previous month">&larr;</button>
+                        <span class="calendar-month-year" id="cal-month-year">January 2026</span>
+                        <button type="button" class="calendar-nav-btn" id="cal-next" aria-label="Next month">&rarr;</button>
+                    </div>
+                </div>
+                <div class="calendar-grid" id="calendar-grid">
+                    <!-- filled by JS -->
+                </div>
+            </div>
+            <div class="currently-out-box">
+                <h3>Currently Out / In Use</h3>
+                <p style="font-size: 14px; color: #718096; margin-bottom: 16px;">Equipment and glassware currently borrowed or in use.</p>
+                <table class="log-table" id="currently-out-table">
+                    <thead>
+                        <tr>
+                            <th>Item</th>
+                            <th>Type</th>
+                            <th>Borrowed By</th>
+                            <th>Date Out</th>
+                            <th>Expected Return</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Compound Microscope</strong><br><span class="equipment-id">ASSET-MS-003</span></td>
+                            <td>Equipment</td>
+                            <td>Dr. Santos</td>
+                            <td>Jan 15, 2026</td>
+                            <td>Jan 30, 2026</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Erlenmeyer Flask (500 mL)</strong><br><span class="equipment-id">GW-EF-500</span> (2 pcs)</td>
+                            <td>Glassware</td>
+                            <td>Lab 3 - Exp. 5</td>
+                            <td>Jan 22, 2026</td>
+                            <td>Jan 28, 2026</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Burette (50 mL)</strong><br><span class="equipment-id">GW-BR-50</span> (3 pcs)</td>
+                            <td>Glassware</td>
+                            <td>Chem Lab - Titration</td>
+                            <td>Jan 24, 2026</td>
+                            <td>Jan 27, 2026</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="currently-out-box">
+                <h3>Recent Borrow / Return Log</h3>
+                <table class="log-table">
+                    <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>Action</th>
+                            <th>Item</th>
+                            <th>By</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Jan 24, 2026</td>
+                            <td><span class="equipment-status status-borrowed">Borrow</span></td>
+                            <td>Burette 50 mL (3 pcs)</td>
+                            <td>Chem Lab</td>
+                        </tr>
+                        <tr>
+                            <td>Jan 22, 2026</td>
+                            <td><span class="equipment-status status-borrowed">Borrow</span></td>
+                            <td>Erlenmeyer Flask 500 mL (2 pcs)</td>
+                            <td>Lab 3</td>
+                        </tr>
+                        <tr>
+                            <td>Jan 20, 2026</td>
+                            <td><span class="equipment-status status-available">Return</span></td>
+                            <td>Micropipette Set ASSET-MP-018</td>
+                            <td>Student - Reyes</td>
+                        </tr>
+                        <tr>
+                            <td>Jan 15, 2026</td>
+                            <td><span class="equipment-status status-borrowed">Borrow</span></td>
+                            <td>Compound Microscope ASSET-MS-003</td>
+                            <td>Dr. Santos</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <!-- end panel-borrow-log -->
+
+        <!-- Equipment Return Modal -->
+        <div id="return-modal-overlay" class="lab-modal-overlay">
+            <div class="lab-modal">
+                <div class="lab-modal-header">
+                    <h2 class="lab-modal-title">Equipment Return</h2>
+                    <button type="button" class="lab-modal-close" id="return-modal-close">&times;</button>
+                </div>
+                <div class="lab-modal-body">
+                    <div class="lab-form-group">
+                        <label class="lab-form-label" for="return-equipment-select">Equipment</label>
+                        <select id="return-equipment-select" class="lab-form-select"></select>
+                    </div>
+                    <div class="lab-form-group">
+                        <label class="lab-form-label" for="return-condition">Condition</label>
+                        <select id="return-condition" class="lab-form-select">
+                            <option value="ok">OK — Good condition</option>
+                            <option value="damaged">Damaged — Needs repair</option>
+                            <option value="missing">Missing parts</option>
+                        </select>
+                    </div>
+                    <div class="lab-form-group">
+                        <label class="lab-form-label" for="return-notes">Notes</label>
+                        <textarea id="return-notes" class="lab-form-textarea" placeholder="Optional: describe damage, missing parts, etc."></textarea>
+                    </div>
+                    <div class="lab-modal-actions">
+                        <button type="button" class="btn btn-primary" id="return-submit">Submit Return</button>
+                        <button type="button" class="btn btn-secondary" id="return-cancel">Cancel</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="js/data.js"></script>
+    <script src="js/auth-guard.js"></script>
+    <script>
+    (function() {
+        function formatDateStr(str) {
+            if (!str) return '—';
+            return typeof formatDate === 'function' ? formatDate(str) : new Date(str).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
+        }
+
+        function renderEquipmentTable() {
+            var list = typeof getEquipment === 'function' ? getEquipment() : [];
+            var tbody = document.getElementById('equipment-tbody');
+            var totalEl = document.getElementById('equipment-stat-total');
+            var storageSelect = document.getElementById('equipment-storage-filter');
+            if (totalEl) totalEl.textContent = list.length;
+
+            var locations = [];
+            list.forEach(function(e) {
+                var loc = e.storageLocation || e.storage || e.location || '';
+                if (loc && locations.indexOf(loc) === -1) locations.push(loc);
+            });
+            locations.sort();
+            if (storageSelect) {
+                var currentVal = storageSelect.value;
+                storageSelect.innerHTML = '<option value="">All Locations</option>' + locations.map(function(l) { return '<option value="' + l + '">' + l + '</option>'; }).join('');
+                if (currentVal) storageSelect.value = currentVal;
+            }
+
+            var searchVal = (document.getElementById('equipment-search') || {}).value || '';
+            var storageVal = storageSelect ? storageSelect.value : '';
+            var filtered = list.filter(function(e) {
+                var matchSearch = !searchVal || (e.name + ' ' + (e.brand || '') + ' ' + (e.supplier || '')).toLowerCase().indexOf(searchVal.toLowerCase()) !== -1;
+                var matchStorage = !storageVal || (e.storageLocation || e.storage || e.location || '') === storageVal;
+                return matchSearch && matchStorage;
+            });
+
+            if (!tbody) return;
+            tbody.innerHTML = filtered.map(function(e) {
+                var name = e.name || '—';
+                var storage = e.storageLocation || e.storage || e.location || '—';
+                var qty = e.quantity != null ? String(e.quantity) : '—';
+                var brand = e.brand || '—';
+                var supplier = e.supplier || '—';
+                var deliveryDate = formatDateStr(e.deliveryDate);
+                var calibrateDate = formatDateStr(e.calibrateDate);
+                var remarks = (e.remarksCertificates || '—').substring(0, 60) + ((e.remarksCertificates || '').length > 60 ? '…' : '');
+                var id = e.id || '';
+                return '<tr>' +
+                    '<td class="equipment-name-cell">' + name + '</td>' +
+                    '<td>' + storage + '</td>' +
+                    '<td style="text-align:right;font-weight:600;">' + qty + '</td>' +
+                    '<td>' + brand + '</td>' +
+                    '<td>' + supplier + '</td>' +
+                    '<td>' + deliveryDate + '</td>' +
+                    '<td>' + calibrateDate + '</td>' +
+                    '<td title="' + (e.remarksCertificates || '').replace(/"/g, '&quot;') + '">' + remarks + '</td>' +
+                    '<td><div class="equipment-action-btns">' +
+                    '<button type="button" class="equipment-action-btn" data-action="more-info" data-id="' + id + '">More info</button>' +
+                    '<button type="button" class="equipment-action-btn" data-action="edit" data-id="' + id + '">edit</button>' +
+                    '<button type="button" class="equipment-action-btn action-delete" data-action="delete" data-id="' + id + '">delete</button>' +
+                    '</div></td></tr>';
+            }).join('');
+
+            tbody.querySelectorAll('[data-action="more-info"]').forEach(function(btn) {
+                btn.addEventListener('click', function() { openEquipmentModal(this.getAttribute('data-id'), false); });
+            });
+            tbody.querySelectorAll('[data-action="edit"]').forEach(function(btn) {
+                btn.addEventListener('click', function() { openEquipmentModal(this.getAttribute('data-id'), true); });
+            });
+        }
+
+        function openEquipmentModal(id, isEdit) {
+            var eq = (id != null && typeof getEquipmentById === 'function') ? getEquipmentById(id) : null;
+            if (id != null && !eq) return;
+            var overlay = document.getElementById('equipment-modal-overlay');
+            var titleEl = document.getElementById('equipment-modal-title');
+            var bodyEl = document.getElementById('equipment-modal-body');
+            if (!overlay || !titleEl || !bodyEl) return;
+            if (eq == null) {
+                eq = { name: '', storageLocation: '', quantity: '', brand: '', supplier: '', deliveryDate: '', calibrateDate: '', remarksCertificates: '', timesUsed: 0, partsChecklist: [] };
+            }
+
+            titleEl.textContent = (id == null) ? 'Add Equipment' : (isEdit ? 'Edit Equipment' : (eq.name || 'Equipment Details'));
+
+            if (isEdit) {
+                var storage = (eq.storageLocation || eq.storage || eq.location || '').replace(/"/g, '&quot;');
+                var deliveryDate = eq.deliveryDate ? eq.deliveryDate : '';
+                var calibrateDate = eq.calibrateDate ? eq.calibrateDate : '';
+                var parts = eq.partsChecklist || [];
+                var partsHtml = '';
+                parts.forEach(function(p, i) {
+                    var partName = (p.name || '').replace(/"/g, '&quot;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+                    partsHtml += '<div class="part-edit-row" data-part-index="' + i + '">' +
+                        '<input type="text" class="lab-form-input eq-part-name part-edit-name" data-part-index="' + i + '" value="' + partName + '" placeholder="Part name">' +
+                        '<div class="part-edit-preview" data-part-index="' + i + '"><span class="no-image">📷</span></div>' +
+                        '<input type="hidden" class="eq-part-image" data-part-index="' + i + '">' +
+                        '<input type="file" accept="image/*" class="eq-part-file" data-part-index="' + i + '" style="display:none">' +
+                        '<button type="button" class="btn btn-secondary eq-part-upload-btn part-edit-upload" data-part-index="' + i + '">Upload</button>' +
+                        '</div>';
+                });
+                bodyEl.innerHTML =
+                    '<div class="lab-form-group"><label class="lab-form-label" for="eq-name">Name</label><input type="text" id="eq-name" class="lab-form-input" value="' + (eq.name || '').replace(/"/g, '&quot;') + '"></div>' +
+                    '<div class="lab-form-group"><label class="lab-form-label" for="eq-storage">Storage location</label><input type="text" id="eq-storage" class="lab-form-input" value="' + storage + '"></div>' +
+                    '<div class="lab-form-group"><label class="lab-form-label" for="eq-quantity">Quantity</label><input type="number" id="eq-quantity" class="lab-form-input" value="' + (eq.quantity != null ? eq.quantity : '') + '"></div>' +
+                    '<div class="lab-form-group"><label class="lab-form-label" for="eq-brand">Brand</label><input type="text" id="eq-brand" class="lab-form-input" value="' + (eq.brand || '').replace(/"/g, '&quot;') + '"></div>' +
+                    '<div class="lab-form-group"><label class="lab-form-label" for="eq-supplier">Supplier</label><input type="text" id="eq-supplier" class="lab-form-input" value="' + (eq.supplier || '').replace(/"/g, '&quot;') + '"></div>' +
+                    '<div class="lab-form-group"><label class="lab-form-label" for="eq-delivery">Delivery date</label><input type="date" id="eq-delivery" class="lab-form-input" value="' + deliveryDate + '"></div>' +
+                    '<div class="lab-form-group"><label class="lab-form-label" for="eq-calibrate">Calibrate date</label><input type="date" id="eq-calibrate" class="lab-form-input" value="' + calibrateDate + '"></div>' +
+                    '<div class="lab-form-group"><label class="lab-form-label" for="eq-remarks">Remarks (certificates)</label><textarea id="eq-remarks" class="lab-form-textarea" rows="3">' + (eq.remarksCertificates || '').replace(/</g, '&lt;').replace(/>/g, '&gt;') + '</textarea></div>' +
+                    '<div class="lab-form-group"><label class="lab-form-label" for="eq-times-used">Times used</label><input type="number" id="eq-times-used" class="lab-form-input" value="' + (eq.timesUsed != null ? eq.timesUsed : 0) + '"></div>' +
+                    '<div class="equipment-modal-section"><div class="equipment-modal-section-title">Parts checklist (upload image per part)</div><div id="eq-parts-container">' + partsHtml + '</div></div>' +
+                    '<div class="lab-modal-actions">' +
+                    '<button type="button" class="btn btn-primary" id="equipment-save">Save</button>' +
+                    '<button type="button" class="btn btn-secondary" id="equipment-cancel">Cancel</button>' +
+                    '</div>';
+                bodyEl.querySelectorAll('.eq-part-upload-btn').forEach(function(btn) {
+                    var idx = btn.getAttribute('data-part-index');
+                    var fileInput = bodyEl.querySelector('.eq-part-file[data-part-index="' + idx + '"]');
+                    btn.addEventListener('click', function() { fileInput && fileInput.click(); });
+                });
+                bodyEl.querySelectorAll('.eq-part-file').forEach(function(fileInput) {
+                    fileInput.addEventListener('change', function() {
+                        var file = this.files && this.files[0];
+                        if (!file || !file.type.startsWith('image/')) return;
+                        var idx = this.getAttribute('data-part-index');
+                        var reader = new FileReader();
+                        reader.onload = function() {
+                            var dataUrl = reader.result;
+                            var hidden = bodyEl.querySelector('.eq-part-image[data-part-index="' + idx + '"]');
+                            var preview = bodyEl.querySelector('.part-edit-preview[data-part-index="' + idx + '"]');
+                            if (hidden) hidden.value = dataUrl;
+                            if (preview) {
+                                preview.innerHTML = '';
+                                var img = document.createElement('img');
+                                img.src = dataUrl;
+                                img.alt = '';
+                                preview.appendChild(img);
+                            }
+                        };
+                        reader.readAsDataURL(file);
+                    });
+                });
+                parts.forEach(function(p, i) {
+                    if (p.imageUrl && p.imageUrl.trim()) {
+                        var hidden = bodyEl.querySelector('.eq-part-image[data-part-index="' + i + '"]');
+                        var preview = bodyEl.querySelector('.part-edit-preview[data-part-index="' + i + '"]');
+                        if (hidden) hidden.value = p.imageUrl;
+                        if (preview) { preview.innerHTML = '<img alt="">'; preview.querySelector('img').src = p.imageUrl; }
+                    }
+                });
+                document.getElementById('equipment-save').addEventListener('click', function() { saveEquipmentEdit(id); });
+                document.getElementById('equipment-cancel').addEventListener('click', closeEquipmentModal);
+            } else {
+                var parts = eq.partsChecklist || [];
+                var partsHtml = parts.length ? '<ul class="parts-checklist">' + parts.map(function(p) {
+                    var img = (p.imageUrl && p.imageUrl.trim()) ? '<img class="part-thumb" src="' + p.imageUrl.replace(/"/g, '&quot;') + '" alt="">' : '<div class="part-thumb-placeholder">📷</div>';
+                    return '<li>' + img + '<span>' + (p.name || 'Part') + '</span></li>';
+                }).join('') + '</ul>' : '<p style="color:#718096;font-size:14px;">No parts checklist.</p>';
+                var timesUsed = eq.timesUsed != null ? eq.timesUsed : 0;
+
+                bodyEl.innerHTML =
+                    '<div class="equipment-modal-section">' +
+                    '<div class="equipment-modal-section-title">More info</div>' +
+                    '<div class="equipment-modal-detail-row"><span class="equipment-modal-detail-label">Times used</span><span class="equipment-modal-detail-value"><span class="times-used-badge">' + timesUsed + '</span></span></div>' +
+                    '<div class="equipment-modal-detail-row"><span class="equipment-modal-detail-label">Storage</span><span class="equipment-modal-detail-value">' + (eq.storageLocation || eq.storage || eq.location || '—') + '</span></div>' +
+                    '<div class="equipment-modal-detail-row"><span class="equipment-modal-detail-label">Brand</span><span class="equipment-modal-detail-value">' + (eq.brand || '—') + '</span></div>' +
+                    '<div class="equipment-modal-detail-row"><span class="equipment-modal-detail-label">Supplier</span><span class="equipment-modal-detail-value">' + (eq.supplier || '—') + '</span></div>' +
+                    '<div class="equipment-modal-detail-row"><span class="equipment-modal-detail-label">Delivery date</span><span class="equipment-modal-detail-value">' + formatDateStr(eq.deliveryDate) + '</span></div>' +
+                    '<div class="equipment-modal-detail-row"><span class="equipment-modal-detail-label">Calibrate date</span><span class="equipment-modal-detail-value">' + formatDateStr(eq.calibrateDate) + '</span></div>' +
+                    '</div>' +
+                    '<div class="equipment-modal-section">' +
+                    '<div class="equipment-modal-section-title">Parts checklist</div>' + partsHtml +
+                    '</div>' +
+                    '<div class="equipment-modal-section">' +
+                    '<div class="equipment-modal-section-title">Remarks (certificates)</div>' +
+                    '<p style="font-size:14px;color:#2d3748;">' + (eq.remarksCertificates || '—') + '</p>' +
+                    '</div>' +
+                    '<div class="lab-modal-actions">' +
+                    '<button type="button" class="btn btn-primary" id="equipment-edit-btn">Edit</button>' +
+                    '<button type="button" class="btn btn-secondary" id="equipment-close-btn">Close</button>' +
+                    '</div>';
+                document.getElementById('equipment-edit-btn').addEventListener('click', function() { closeEquipmentModal(); openEquipmentModal(id, true); });
+                document.getElementById('equipment-close-btn').addEventListener('click', closeEquipmentModal);
+            }
+            overlay.classList.add('show');
+            overlay.setAttribute('aria-hidden', 'false');
+        }
+
+        function saveEquipmentEdit(id) {
+            var list = typeof getEquipment === 'function' ? getEquipment() : [];
+            var name = (document.getElementById('eq-name') || {}).value || '';
+            var storage = (document.getElementById('eq-storage') || {}).value || '';
+            var quantity = (document.getElementById('eq-quantity') || {}).value;
+            var brand = (document.getElementById('eq-brand') || {}).value || '';
+            var supplier = (document.getElementById('eq-supplier') || {}).value || '';
+            var deliveryDate = (document.getElementById('eq-delivery') || {}).value || '';
+            var calibrateDate = (document.getElementById('eq-calibrate') || {}).value || '';
+            var remarks = (document.getElementById('eq-remarks') || {}).value || '';
+            var timesUsed = parseInt((document.getElementById('eq-times-used') || {}).value, 10) || 0;
+            var partsChecklist = [];
+            var partsContainer = document.getElementById('eq-parts-container');
+            if (partsContainer) {
+                partsContainer.querySelectorAll('.part-edit-row').forEach(function(row) {
+                    var partName = (row.querySelector('.eq-part-name') || {}).value || '';
+                    var partImage = (row.querySelector('.eq-part-image') || {}).value || '';
+                    partsChecklist.push({ name: partName, imageUrl: partImage });
+                });
+            }
+            if (id == null) {
+                var newId = 'eq-' + Date.now();
+                list.push({
+                    id: newId,
+                    name: name,
+                    storageLocation: storage,
+                    quantity: quantity,
+                    brand: brand,
+                    supplier: supplier,
+                    deliveryDate: deliveryDate,
+                    calibrateDate: calibrateDate,
+                    remarksCertificates: remarks,
+                    timesUsed: timesUsed,
+                    partsChecklist: partsChecklist
+                });
+            } else {
+                var idx = list.findIndex(function(e) { return e.id === id; });
+                if (idx === -1) return;
+                if (partsChecklist.length === 0) partsChecklist = list[idx].partsChecklist || [];
+                list[idx] = Object.assign({}, list[idx], {
+                    name: name,
+                    storageLocation: storage,
+                    quantity: quantity,
+                    brand: brand,
+                    supplier: supplier,
+                    deliveryDate: deliveryDate,
+                    calibrateDate: calibrateDate,
+                    remarksCertificates: remarks,
+                    timesUsed: timesUsed,
+                    partsChecklist: partsChecklist
+                });
+            }
+            if (typeof saveEquipment === 'function') saveEquipment(list);
+            closeEquipmentModal();
+            renderEquipmentTable();
+        }
+
+        function closeEquipmentModal() {
+            var overlay = document.getElementById('equipment-modal-overlay');
+            if (overlay) {
+                overlay.classList.remove('show');
+                overlay.setAttribute('aria-hidden', 'true');
+            }
+        }
+
+        var modalClose = document.getElementById('equipment-modal-close');
+        if (modalClose) modalClose.addEventListener('click', closeEquipmentModal);
+        document.getElementById('equipment-modal-overlay').addEventListener('click', function(ev) {
+            if (ev.target === this) closeEquipmentModal();
+        });
+
+        var searchEl = document.getElementById('equipment-search');
+        var storageFilterEl = document.getElementById('equipment-storage-filter');
+        var btnAddEquipment = document.getElementById('btn-add-equipment');
+        if (searchEl) searchEl.addEventListener('input', renderEquipmentTable);
+        if (storageFilterEl) storageFilterEl.addEventListener('change', renderEquipmentTable);
+        if (btnAddEquipment) btnAddEquipment.addEventListener('click', function() { openEquipmentModal(null, true); });
+
+        renderEquipmentTable();
+    })();
+    </script>
+    <script>
+    (function() {
+        var tabs = document.querySelectorAll('.tabs .tab');
+        var panels = document.querySelectorAll('.tab-panel');
+
+        function showPanel(panelId) {
+            panels.forEach(function(p) {
+                p.classList.remove('active');
+            });
+            tabs.forEach(function(t) {
+                t.classList.remove('active');
+                t.setAttribute('aria-selected', 'false');
+            });
+            var panel = document.getElementById(panelId);
+            var tab = document.querySelector('.tabs .tab[data-tab="' + panelId.replace('panel-', '') + '"]');
+            if (panel) panel.classList.add('active');
+            if (tab) {
+                tab.classList.add('active');
+                tab.setAttribute('aria-selected', 'true');
+            }
+        }
+
+        tabs.forEach(function(tab) {
+            tab.addEventListener('click', function() {
+                var id = this.getAttribute('data-tab');
+                if (id) showPanel('panel-' + id);
+            });
+        });
+
+        // Calendar for Borrow/Return Log
+        var calMonthYearEl = document.getElementById('cal-month-year');
+        var calGridEl = document.getElementById('calendar-grid');
+        var calPrev = document.getElementById('cal-prev');
+        var calNext = document.getElementById('cal-next');
+
+        if (calGridEl && calMonthYearEl) {
+            var calDate = new Date();
+            var monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+            var weekdays = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+
+            var borrowReturnLog = [
+                { date: '2026-01-15', type: 'borrow', text: 'Microscope ASSET-MS-003' },
+                { date: '2026-01-20', type: 'return', text: 'Micropipette ASSET-MP-018' },
+                { date: '2026-01-22', type: 'borrow', text: 'Flask 500mL (2)' },
+                { date: '2026-01-24', type: 'borrow', text: 'Burette 50mL (3)' },
+                { date: '2026-01-27', type: 'return', text: 'Burette 50mL' },
+                { date: '2026-01-28', type: 'return', text: 'Flask 500mL' },
+                { date: '2026-01-30', type: 'return', text: 'Microscope' },
+                { date: '2026-01-20', type: 'maintenance', text: 'Hotplate repair' }
+            ];
+
+            function renderCalendar() {
+                var year = calDate.getFullYear();
+                var month = calDate.getMonth();
+                calMonthYearEl.textContent = monthNames[month] + ' ' + year;
+
+                var firstDay = new Date(year, month, 1);
+                var lastDay = new Date(year, month + 1, 0);
+                var startOffset = firstDay.getDay();
+                var daysInMonth = lastDay.getDate();
+                var prevMonthLast = new Date(year, month, 0).getDate();
+
+                var html = '';
+                for (var w = 0; w < 7; w++) {
+                    html += '<div class="calendar-weekday">' + weekdays[w] + '</div>';
+                }
+
+                var today = new Date();
+                today.setHours(0, 0, 0, 0);
+
+                for (var i = 0; i < startOffset; i++) {
+                    var d = prevMonthLast - startOffset + i + 1;
+                    html += '<div class="calendar-day other-month"><div class="calendar-day-num">' + d + '</div></div>';
+                }
+                for (var d = 1; d <= daysInMonth; d++) {
+                    var dateStr = year + '-' + String(month + 1).padStart(2, '0') + '-' + String(d).padStart(2, '0');
+                    var dayDate = new Date(year, month, d);
+                    var isToday = (dayDate.getTime() === today.getTime());
+                    var events = borrowReturnLog.filter(function(ev) { return ev.date === dateStr; });
+                    var eventsHtml = '';
+                    events.forEach(function(ev) {
+                        eventsHtml += '<div class="calendar-event ' + ev.type + '">' + ev.text + '</div>';
+                    });
+                    html += '<div class="calendar-day' + (isToday ? ' today' : '') + '">';
+                    html += '<div class="calendar-day-num">' + d + '</div>' + eventsHtml + '</div>';
+                }
+                var totalCells = startOffset + daysInMonth;
+                var remaining = totalCells % 7 ? 7 - (totalCells % 7) : 0;
+                for (var r = 0; r < remaining; r++) {
+                    html += '<div class="calendar-day other-month"><div class="calendar-day-num">' + (r + 1) + '</div></div>';
+                }
+                calGridEl.innerHTML = html;
+            }
+
+            if (calPrev) calPrev.addEventListener('click', function() {
+                calDate.setMonth(calDate.getMonth() - 1);
+                renderCalendar();
+            });
+            if (calNext) calNext.addEventListener('click', function() {
+                calDate.setMonth(calDate.getMonth() + 1);
+                renderCalendar();
+            });
+            renderCalendar();
+        }
+    })();
+    </script>
+    <script>
+    (function() {
+        var overlay = document.getElementById('return-modal-overlay');
+        var selectEl = document.getElementById('return-equipment-select');
+        var conditionEl = document.getElementById('return-condition');
+        var notesEl = document.getElementById('return-notes');
+        function openReturnModal() {
+            var list = typeof getEquipment === 'function' ? getEquipment() : [];
+            if (selectEl) {
+                selectEl.innerHTML = '<option value="">-- Select equipment --</option>' + list.map(function(e) { return '<option value="' + (e.id || '') + '">' + (e.name || '') + ' — ' + (e.storageLocation || e.storage || '') + '</option>'; }).join('');
+            }
+            if (notesEl) notesEl.value = '';
+            if (overlay) overlay.classList.add('show');
+        }
+        function closeReturnModal() { if (overlay) overlay.classList.remove('show'); }
+        function submitReturn() {
+            var eqId = selectEl ? selectEl.value : '';
+            var condition = conditionEl ? conditionEl.value : 'ok';
+            var notes = notesEl ? notesEl.value : '';
+            if (!eqId) { alert('Please select equipment.'); return; }
+            var list = typeof getEquipment === 'function' ? getEquipment() : [];
+            var eq = list.find(function(e) { return e.id === eqId; });
+            if (typeof addAuditEntry === 'function') addAuditEntry('Equipment Return', (eq ? eq.name : eqId) + ' — Condition: ' + condition + (notes ? ' — ' + notes : ''));
+            alert('Return recorded.');
+            closeReturnModal();
+        }
+        document.getElementById('btn-return-equipment').addEventListener('click', openReturnModal);
+        document.getElementById('return-modal-close').addEventListener('click', closeReturnModal);
+        document.getElementById('return-cancel').addEventListener('click', closeReturnModal);
+        document.getElementById('return-submit').addEventListener('click', submitReturn);
+    })();
+    </script>
+    <script>(function(){function u(){var e=document.getElementById('sidebar-datetime');if(e)e.textContent=new Date().toLocaleString('en-PH',{timeZone:'Asia/Manila',weekday:'short',year:'numeric',month:'short',day:'numeric',hour:'2-digit',minute:'2-digit',second:'2-digit'});}u();setInterval(u,1000);})();</script>
+</body>
+</html>

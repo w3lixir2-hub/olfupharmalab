@@ -1,0 +1,692 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Material Request - PharmaLab IMS</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .request-container {
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+            max-width: 800px;
+            width: 100%;
+            overflow: hidden;
+        }
+
+        .request-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 32px;
+            text-align: center;
+        }
+
+        .request-logo {
+            width: 64px;
+            height: 64px;
+            background: white;
+            border-radius: 12px;
+            margin: 0 auto 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 32px;
+            font-weight: 700;
+            color: #667eea;
+        }
+
+        .request-title {
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .request-subtitle {
+            font-size: 16px;
+            opacity: 0.95;
+        }
+
+        .request-form {
+            padding: 40px;
+        }
+
+        .progress-bar {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 40px;
+            position: relative;
+        }
+
+        .progress-bar::before {
+            content: '';
+            position: absolute;
+            top: 20px;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: #e2e8f0;
+            z-index: 0;
+        }
+
+        .progress-step {
+            position: relative;
+            z-index: 1;
+            text-align: center;
+            flex: 1;
+        }
+
+        .progress-circle {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: #e2e8f0;
+            color: #a0aec0;
+            margin: 0 auto 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .progress-step.active .progress-circle {
+            background: #667eea;
+            color: white;
+        }
+
+        .progress-step.completed .progress-circle {
+            background: #48bb78;
+            color: white;
+        }
+
+        .progress-label {
+            font-size: 13px;
+            color: #718096;
+            font-weight: 500;
+        }
+
+        .form-section {
+            display: none;
+        }
+
+        .form-section.active {
+            display: block;
+            animation: fadeIn 0.3s;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .section-title {
+            font-size: 22px;
+            font-weight: 600;
+            color: #1a202c;
+            margin-bottom: 24px;
+        }
+
+        .form-group {
+            margin-bottom: 24px;
+        }
+
+        .form-label {
+            display: block;
+            font-size: 14px;
+            font-weight: 600;
+            color: #2d3748;
+            margin-bottom: 8px;
+        }
+
+        .required {
+            color: #f56565;
+        }
+
+        .form-input,
+        .form-select,
+        .form-textarea {
+            width: 100%;
+            padding: 12px 16px;
+            border: 2px solid #e2e8f0;
+            border-radius: 8px;
+            font-size: 15px;
+            transition: border-color 0.2s;
+            font-family: inherit;
+        }
+
+        .form-input:focus,
+        .form-select:focus,
+        .form-textarea:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .form-textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+        }
+
+        .items-list {
+            border: 2px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 16px;
+        }
+
+        .item-row {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr auto;
+            gap: 12px;
+            margin-bottom: 16px;
+            align-items: end;
+        }
+
+        .btn {
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 15px;
+            cursor: pointer;
+            transition: all 0.2s;
+            border: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-primary {
+            background: #667eea;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #5568d3;
+            transform: translateY(-1px);
+        }
+
+        .btn-secondary {
+            background: #edf2f7;
+            color: #4a5568;
+        }
+
+        .btn-secondary:hover {
+            background: #e2e8f0;
+        }
+
+        .btn-add {
+            background: #f0fff4;
+            color: #38a169;
+            border: 2px dashed #68d391;
+        }
+
+        .btn-add:hover {
+            background: #c6f6d5;
+        }
+
+        .btn-remove {
+            background: #fff5f5;
+            color: #e53e3e;
+            padding: 8px 12px;
+        }
+
+        .form-actions {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 32px;
+            padding-top: 24px;
+            border-top: 2px solid #f7fafc;
+        }
+
+        .info-box {
+            background: #ebf4ff;
+            border-left: 4px solid #4299e1;
+            padding: 16px;
+            border-radius: 8px;
+            margin-bottom: 24px;
+        }
+
+        .info-box-title {
+            font-weight: 600;
+            color: #2c5282;
+            margin-bottom: 4px;
+        }
+
+        .info-box-text {
+            font-size: 14px;
+            color: #2c5282;
+        }
+
+        .confirmation {
+            text-align: center;
+            padding: 40px 20px;
+        }
+
+        .confirmation-icon {
+            width: 80px;
+            height: 80px;
+            background: #c6f6d5;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 40px;
+            margin: 0 auto 24px;
+        }
+
+        .confirmation-title {
+            font-size: 24px;
+            font-weight: 700;
+            color: #1a202c;
+            margin-bottom: 12px;
+        }
+
+        .confirmation-text {
+            font-size: 16px;
+            color: #718096;
+            margin-bottom: 24px;
+        }
+
+        .reference-number {
+            background: #f7fafc;
+            padding: 16px;
+            border-radius: 8px;
+            margin: 24px 0;
+        }
+
+        .reference-label {
+            font-size: 13px;
+            color: #718096;
+            margin-bottom: 4px;
+        }
+
+        .reference-value {
+            font-size: 24px;
+            font-weight: 700;
+            color: #667eea;
+            font-family: 'Courier New', monospace;
+        }
+
+        /* Print Styles */
+        @media print {
+            body {
+                background: white;
+            }
+
+            .request-header {
+                background: white !important;
+                color: #1a202c !important;
+                border-bottom: 2px solid #e2e8f0;
+            }
+
+            .progress-bar,
+            .form-actions,
+            .btn,
+            #prev-btn,
+            #next-btn,
+            #submit-btn {
+                display: none !important;
+            }
+
+            .request-container {
+                box-shadow: none;
+                max-width: 100%;
+            }
+
+            .request-form {
+                padding: 20px;
+            }
+
+            #review-summary {
+                display: block !important;
+            }
+
+            #success-message {
+                display: none !important;
+            }
+        }
+
+        @media (max-width: 640px) {
+            .form-row,
+            .item-row {
+                grid-template-columns: 1fr;
+            }
+
+            .request-form {
+                padding: 24px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="request-container">
+        <!-- Header -->
+        <div class="request-header">
+            <div class="request-logo">PL</div>
+            <h1 class="request-title">Laboratory Material Request</h1>
+            <p class="request-subtitle">College of Pharmacy - Material Acquisition Form</p>
+        </div>
+
+        <!-- Important: use local server so request is saved and visible to admin -->
+        <div class="info-box" id="file-protocol-warning" style="display: none; margin: 16px 24px; background: #fff3cd; border-left: 4px solid #ffc107;">
+            <div class="info-box-title">⚠️ Paalala</div>
+            <div class="info-box-text">
+                This page is being served as a file (file://). To <strong>save your request and make it visible to admin</strong>, use the local server. In the project folder run: <code>npm run dev</code>, then open: <a href="http://127.0.0.1:3000/student-request.html" target="_blank" rel="noopener" style="color: #1a202c; font-weight: 600;">http://127.0.0.1:3000/student-request.html</a>
+            </div>
+        </div>
+        <!-- Form -->
+        <div class="request-form">
+            <!-- Progress Bar -->
+            <div class="progress-bar">
+                <div class="progress-step active" id="step-1-indicator">
+                    <div class="progress-circle">1</div>
+                    <div class="progress-label">Student Info</div>
+                </div>
+                <div class="progress-step" id="step-2-indicator">
+                    <div class="progress-circle">2</div>
+                    <div class="progress-label">Request Details</div>
+                </div>
+                <div class="progress-step" id="step-3-indicator">
+                    <div class="progress-circle">3</div>
+                    <div class="progress-label">Items</div>
+                </div>
+                <div class="progress-step" id="step-4-indicator">
+                    <div class="progress-circle">4</div>
+                    <div class="progress-label">Confirm</div>
+                </div>
+            </div>
+
+            <!-- Step 1: Student Information -->
+            <div class="form-section active" id="step-1">
+                <h2 class="section-title">Student Information</h2>
+                
+                <div class="info-box">
+                    <div class="info-box-title">📱 QR Code Scanned Successfully</div>
+                    <div class="info-box-text">Room: AMS 204, AMS 205, AMS 301, AMS 302, AMS 303</div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Full Name <span class="required">*</span></label>
+                    <input type="text" id="student-name" class="form-input" placeholder="e.g., Juan Dela Cruz" required>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label class="form-label">Student Number <span class="required">*</span></label>
+                        <input type="text" id="student-number" class="form-input" placeholder="e.g., 2020-12345" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Contact Number <span class="required">*</span></label>
+                        <input type="tel" id="contact-number" class="form-input" placeholder="e.g., 09171234567" required>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label class="form-label">Course <span class="required">*</span></label>
+                        <select id="course" class="form-select" required>
+                            <option value="">Select Course</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Year Level <span class="required">*</span></label>
+                        <select id="year-level" class="form-select" required>
+                            <option value="">Select Year</option>
+                            <option value="1st Year">1st Year</option>
+                            <option value="2nd Year">2nd Year</option>
+                            <option value="3rd Year">3rd Year</option>
+                            <option value="4th Year">4th Year</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Section</label>
+                    <select id="section" class="form-select">
+                        <option value="">Select Section</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Step 2: Request Details -->
+            <div class="form-section" id="step-2">
+                <h2 class="section-title">Request Details</h2>
+
+                <div class="form-group">
+                    <label class="form-label">Subject <span class="required">*</span></label>
+                    <select id="subject" class="form-select" required>
+                        <option value="">Select Subject</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Experiment / Activity <span class="required">*</span></label>
+                    <select id="activity" class="form-select" required>
+                        <option value="">Select Experiment or Activity</option>
+                    </select>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label class="form-label">Date Needed <span class="required">*</span></label>
+                        <input type="date" id="date-needed" class="form-input" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Time Start <span class="required">*</span></label>
+                        <input type="time" id="time-needed" class="form-input" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Time End <span class="required">*</span></label>
+                        <input type="time" id="time-end" class="form-input" required>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Instructor <span class="required">*</span></label>
+                    <select id="instructor" class="form-select" required>
+                        <option value="">Select Instructor</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Room Assignment <span class="required">*</span></label>
+                    <select id="room-assignment" class="form-select" required>
+                        <option value="">Select room</option>
+                        <option value="1">AMS 204</option>
+                        <option value="2">AMS 205</option>
+                        <option value="3">AMS 301</option>
+                        <option value="4">AMS 302</option>
+                        <option value="5">AMS 303</option>
+                    </select>
+                    <small style="display:block;margin-top:6px;color:#718096;font-size:13px">Check which room you will use for the exact time.</small>
+                </div>
+            </div>
+
+            <!-- Step 3: Items -->
+            <div class="form-section" id="step-3">
+                <h2 class="section-title">Requested Items</h2>
+
+                <div class="form-group">
+                    <label class="form-label">Request Type <span class="required">*</span></label>
+                    <select class="form-select" id="request-type" required>
+                        <option value="">Select Type</option>
+                        <option value="chemical">Chemicals</option>
+                        <option value="equipment">Equipment</option>
+                        <option value="glassware">Glassware</option>
+                        <option value="consumables">Consumables</option>
+                    </select>
+                </div>
+
+                <div class="items-list" id="items-container">
+                    <div class="item-row">
+                        <div class="form-group">
+                            <label class="form-label">Item Name <span class="required">*</span></label>
+                            <select class="form-select item-name" required>
+                                <option value="">Select Item</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Quantity <span class="required">*</span></label>
+                            <input type="number" class="form-input item-quantity" placeholder="e.g., 500" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Unit <span class="required">*</span></label>
+                            <select class="form-select item-unit" required>
+                                <option value="mL">mL</option>
+                                <option value="L">L</option>
+                                <option value="g">g</option>
+                                <option value="kg">kg</option>
+                                <option value="pcs">pcs</option>
+                            </select>
+                        </div>
+                        <button type="button" class="btn btn-remove" onclick="this.parentElement.remove()" title="Remove item">✕</button>
+                    </div>
+                </div>
+
+                <button type="button" class="btn btn-add" onclick="addItem()">+ Add Another Item</button>
+
+                <div class="form-group" style="margin-top: 24px;">
+                    <label class="form-label">Purpose / Remarks</label>
+                    <textarea id="remarks" class="form-textarea" placeholder="Briefly describe the purpose of these materials..."></textarea>
+                </div>
+            </div>
+
+            <!-- Step 4: Confirmation -->
+            <div class="form-section" id="step-4">
+                <div class="confirmation" style="display: none;" id="success-message">
+                    <div class="confirmation-icon">✅</div>
+                    <h2 class="confirmation-title">Request Submitted Successfully!</h2>
+                    <p class="confirmation-text">Your material request has been received and is now pending approval.</p>
+                    
+                    <div class="reference-number">
+                        <div class="reference-label">Request Reference Number</div>
+                        <div class="reference-value" id="reference-number-display">REQ-2026-0312</div>
+                    </div>
+
+                    <div class="info-box">
+                        <div class="info-box-title">📋 Next Steps</div>
+                        <div class="info-box-text">
+                            1. Click <strong>Track My Request</strong> below to monitor approval status<br>
+                            2. Bring your <strong>Student ID</strong> when claiming materials<br>
+                            3. Be at your assigned room on the scheduled date and time
+                        </div>
+                    </div>
+
+                    <div style="display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; margin-top: 8px;">
+                        <a id="track-link" href="student-dashboard.html" class="btn btn-primary">
+                            🔍 Track My Request
+                        </a>
+                        <button type="button" class="btn btn-primary" onclick="printSuccessPage()">
+                            🖨️ Print Copy
+                        </button>
+                        <button type="button" class="btn btn-secondary" onclick="location.reload()">
+                            Submit Another
+                        </button>
+                    </div>
+                </div>
+
+                <div id="review-summary">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px;">
+                        <h2 class="section-title" style="margin: 0;">Review Your Request</h2>
+                        <button type="button" class="btn btn-primary" onclick="printReviewSummary()" style="display: none;" id="print-btn">
+                            🖨️ Print Summary
+                        </button>
+                    </div>
+                    
+                    <div class="info-box">
+                        <div class="info-box-title">⚠️ Please Review Carefully</div>
+                        <div class="info-box-text">Double-check all information before submitting. You cannot edit after submission.</div>
+                    </div>
+
+                    <div style="background: #f7fafc; padding: 24px; border-radius: 12px; margin-bottom: 24px;" id="student-info-review">
+                        <h3 style="font-size: 16px; font-weight: 600; margin-bottom: 16px; color: #2d3748;">Student Information</h3>
+                        <p style="margin-bottom: 8px; color: #4a5568;">Name: <strong id="review-name">-</strong></p>
+                        <p style="margin-bottom: 8px; color: #4a5568;">Student Number: <strong id="review-student-number">-</strong></p>
+                        <p style="margin-bottom: 8px; color: #4a5568;">Contact Number: <strong id="review-contact">-</strong></p>
+                        <p style="color: #4a5568;">Course: <strong id="review-course">-</strong></p>
+                    </div>
+
+                    <div style="background: #f7fafc; padding: 24px; border-radius: 12px; margin-bottom: 24px;" id="request-details-review">
+                        <h3 style="font-size: 16px; font-weight: 600; margin-bottom: 16px; color: #2d3748;">Request Details</h3>
+                        <p style="margin-bottom: 8px; color: #4a5568;">Subject: <strong id="review-subject">-</strong></p>
+                        <p style="margin-bottom: 8px; color: #4a5568;">Activity: <strong id="review-activity">-</strong></p>
+                        <p style="margin-bottom: 8px; color: #4a5568;">Instructor: <strong id="review-instructor">-</strong></p>
+                        <p style="margin-bottom: 8px; color: #4a5568;">Date Needed: <strong id="review-date">-</strong></p>
+                        <p style="margin-bottom: 8px; color: #4a5568;">Time: <strong id="review-time">-</strong> – <strong id="review-time-end">-</strong></p>
+                        <p style="color: #4a5568;">Room Assignment: <strong id="review-room">-</strong></p>
+                    </div>
+
+                    <div style="background: #f7fafc; padding: 24px; border-radius: 12px;" id="items-review">
+                        <h3 style="font-size: 16px; font-weight: 600; margin-bottom: 16px; color: #2d3748;">Requested Items</h3>
+                        <table style="width: 100%; border-collapse: collapse;" id="items-table">
+                            <thead>
+                                <tr style="border-bottom: 2px solid #e2e8f0;">
+                                    <th style="text-align: left; padding: 12px; color: #718096; font-size: 13px;">Item</th>
+                                    <th style="text-align: right; padding: 12px; color: #718096; font-size: 13px;">Quantity</th>
+                                </tr>
+                            </thead>
+                            <tbody id="items-table-body">
+                                <tr>
+                                    <td colspan="2" style="padding: 12px; color: #718096; text-align: center;">No items added yet</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div id="remarks-review" style="background: #f7fafc; padding: 24px; border-radius: 12px; margin-top: 24px; display: none;">
+                        <h3 style="font-size: 16px; font-weight: 600; margin-bottom: 16px; color: #2d3748;">Purpose / Remarks</h3>
+                        <p style="color: #4a5568;" id="review-remarks">-</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Form Actions -->
+            <div class="form-actions">
+                <button type="button" class="btn btn-secondary" onclick="previousStep()" id="prev-btn" style="display: none;">
+                    ← Previous
+                </button>
+                <button type="button" class="btn btn-primary" onclick="nextStep()" id="next-btn">
+                    Next →
+                </button>
+                <button type="button" class="btn btn-primary" onclick="submitForm()" id="submit-btn" style="display: none;">
+                    ✓ Submit Request
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="js/supabase-client.js"></script>
+    <script src="js/supabase-data.js"></script>
+    <script src="js/student-request.js"></script>
+    <script>
+    (function() {
+        if (window.location.protocol === 'file:') {
+            var el = document.getElementById('file-protocol-warning');
+            if (el) el.style.display = 'block';
+        }
+    })();
+    </script>
+</body>
+</html>

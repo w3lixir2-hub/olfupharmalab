@@ -1,0 +1,22 @@
+{
+  "name": "pharmalab-ims",
+  "version": "1.0.0",
+  "description": "Laboratory Inventory Management System - College of Pharmacy",
+  "private": true,
+  "scripts": {
+    "dev": "live-server --port=3000 --open=/START-HERE.html",
+    "start": "live-server --port=3000 --open=/START-HERE.html",
+    "serve": "live-server --port=3000"
+  },
+  "keywords": [
+    "lims",
+    "pharmacy",
+    "inventory",
+    "laboratory"
+  ],
+  "author": "",
+  "license": "UNLICENSED",
+  "devDependencies": {
+    "live-server": "^1.2.2"
+  }
+}
