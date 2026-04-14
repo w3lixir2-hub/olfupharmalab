@@ -212,16 +212,6 @@
                 <div class="action-title">New Request</div>
                 <div class="action-desc">Submit a material or equipment request</div>
             </a>
-            <a href="qr-landing.html" class="action-card">
-                <div class="action-icon">📷</div>
-                <div class="action-title">Scan QR</div>
-                <div class="action-desc">Access via laboratory QR code</div>
-            </a>
-            <a href="print-qr-poster.html" class="action-card" target="_blank">
-                <div class="action-icon">🖨️</div>
-                <div class="action-title">QR Poster</div>
-                <div class="action-desc">Print lab QR poster for display</div>
-            </a>
         </div>
 
         <!-- Track by Reference Number -->
@@ -234,12 +224,6 @@
             </div>
             <div id="track-error" class="alert-box alert-error"></div>
             <div id="track-result" class="result-card"></div>
-        </div>
-
-        <!-- All Requests in localStorage -->
-        <div class="section-card">
-            <div class="section-title">📝 All Submitted Requests</div>
-            <div id="all-requests-list"></div>
         </div>
 
         <!-- Reminders -->
@@ -361,31 +345,6 @@
             document.getElementById('track-result').classList.remove('show');
         }
 
-        async function renderAllRequests() {
-            const list = document.getElementById('all-requests-list');
-            const requests = await getRequests();
-            if (requests.length === 0) {
-                list.innerHTML = '<div class="empty-state">No requests submitted yet.<br><a href="student-request.html" style="color:#667eea;">Submit your first request →</a></div>';
-                return;
-            }
-            list.innerHTML = requests.map(function(r) {
-                return '<div class="request-item" onclick="quickView(\'' + (r.requestId||'') + '\')">' +
-                    '<div class="req-left">' +
-                    '<div class="req-id">' + (r.requestId||'—') + '</div>' +
-                    '<div class="req-desc">' + (r.subject||'—') + ' — ' + (r.activity||'—') + '</div>' +
-                    '<div class="req-date">Submitted: ' + fmtDT(r.dateSubmitted) + '</div>' +
-                    '</div>' +
-                    statusBadge(r.status) +
-                    '</div>';
-            }).join('');
-        }
-
-        function quickView(requestId) {
-            document.getElementById('track-input').value = requestId;
-            trackRequest();
-            document.getElementById('track-input').scrollIntoView({ behavior: 'smooth', block: 'center' });
-        }
-
         // Pre-fill from URL param ?ref=REQ-2026-XXXX
         (async function() {
             const params = new URLSearchParams(window.location.search);
@@ -395,9 +354,6 @@
                 await trackRequest();
             }
         })();
-
-        renderAllRequests();
-        onTableChange('requests', renderAllRequests);
     </script>
 </body>
 </html>
