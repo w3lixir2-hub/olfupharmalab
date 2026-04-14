@@ -281,7 +281,7 @@
         <!-- QR Code Section -->
         <div class="qr-section">
             <div class="qr-placeholder">
-                <canvas id="qr-canvas"></canvas>
+                <img id="qr-image" alt="QR Code" style="width: 250px; height: 250px; display: block;">
             </div>
             <div class="scan-instruction">👆 Scan with your phone camera</div>
             <div class="scan-subtext">Works with any smartphone - no app needed</div>
@@ -333,7 +333,6 @@
         </div>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.3/build/qrcode.min.js"></script>
     <script>
         // Change this to your deployed URL. Override per-poster with ?url=... in the address bar.
         const DEFAULT_QR_URL = 'https://olfupharmalab.vercel.app/qr-landing.html';
@@ -341,15 +340,8 @@
         const params = new URLSearchParams(window.location.search);
         const targetUrl = params.get('url') || DEFAULT_QR_URL;
 
-        QRCode.toCanvas(document.getElementById('qr-canvas'), targetUrl, {
-            width: 260,
-            margin: 1,
-            errorCorrectionLevel: 'M',
-            color: { dark: '#1a202c', light: '#ffffff' }
-        }, function (error) {
-            if (error) console.error(error);
-        });
-
+        const qrApi = 'https://api.qrserver.com/v1/create-qr-code/?size=500x500&margin=10&data=' + encodeURIComponent(targetUrl);
+        document.getElementById('qr-image').src = qrApi;
         document.getElementById('qr-url-display').textContent = targetUrl;
     </script>
 </body>
