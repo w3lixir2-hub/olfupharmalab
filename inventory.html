@@ -109,9 +109,10 @@
         <div class="page-header">
             <div>
                 <h1 class="page-title">Chemical Inventory</h1>
-                <p class="page-subtitle">Manage and track laboratory chemicals</p>
+                <p class="page-subtitle">Manage and track laboratory chemicals, reagents, glassware & equipment</p>
             </div>
             <div style="display: flex; gap: 12px; flex-wrap: wrap;">
+                <button type="button" class="btn btn-export" id="btn-import" title="Bulk import from JSON">📥 Import</button>
                 <button type="button" class="btn btn-export" id="btn-export">📊 Export CSV</button>
                 <button type="button" class="btn btn-primary" id="btn-add-chemical">➕ Add Chemical</button>
             </div>
@@ -121,7 +122,7 @@
         <div class="stats-row">
             <div class="stat-box">
                 <div class="stat-value" id="stat-total">—</div>
-                <div class="stat-label">Total Chemicals</div>
+                <div class="stat-label">Total Items</div>
             </div>
             <div class="stat-box">
                 <div class="stat-value" id="stat-expiring">—</div>
@@ -141,6 +142,17 @@
                     <input type="text" id="inventory-search" class="filter-input" placeholder="Chemical name, supplier...">
                 </div>
                 <div class="filter-group">
+                    <label class="filter-label" for="inventory-category">Category</label>
+                    <select id="inventory-category" class="filter-select">
+                        <option value="">All Categories</option>
+                        <option value="Liquid Reagent">Liquid Reagent</option>
+                        <option value="Solid Reagent">Solid Reagent</option>
+                        <option value="Glassware">Glassware</option>
+                        <option value="Equipment">Equipment</option>
+                        <option value="Antibiotic Disc">Antibiotic Disc</option>
+                    </select>
+                </div>
+                <div class="filter-group">
                     <label class="filter-label" for="inventory-storage">Storage</label>
                     <select id="inventory-storage" class="filter-select">
                         <option value="">All Storage</option>
@@ -155,13 +167,12 @@
             <table class="table">
                 <thead>
                     <tr>
-                        <th>Chemical Name</th>
-                        <th>Storage</th>
+                        <th>Item Name</th>
+                        <th>Category</th>
                         <th>Quantity</th>
+                        <th>Storage</th>
                         <th>Supplier</th>
-                        <th>Delivery Date</th>
                         <th>Expiry</th>
-                        <th>MSDS</th>
                         <th>Actions</th>
                     </tr>
                 </thead>
@@ -184,6 +195,35 @@
                 </div>
             </div>
         </div>
+        <!-- Import Modal -->
+        <div id="import-modal-overlay" class="lab-modal-overlay" aria-hidden="true">
+            <div class="lab-modal" role="dialog" aria-labelledby="import-modal-title" aria-modal="true" style="max-width: 600px;">
+                <div class="lab-modal-header">
+                    <h2 id="import-modal-title" class="lab-modal-title">Bulk Import Inventory</h2>
+                    <button type="button" class="lab-modal-close" id="import-modal-close" aria-label="Close">&times;</button>
+                </div>
+                <div class="lab-modal-body" id="import-modal-body">
+                    <p style="margin-bottom: 12px; color: var(--lab-text-secondary);">Import inventory items from the school's Excel-extracted JSON file. This will add all items to the database.</p>
+                    <div class="lab-form-group">
+                        <label class="lab-form-label" for="import-file">Select JSON File</label>
+                        <input type="file" id="import-file" accept=".json" class="lab-form-input">
+                    </div>
+                    <div id="import-preview" style="display:none; margin: 12px 0; padding: 12px; background: var(--lab-bg-secondary); border-radius: 8px;">
+                        <div id="import-stats" style="font-size: 14px;"></div>
+                    </div>
+                    <div id="import-progress" style="display:none; margin: 12px 0;">
+                        <div style="background: var(--lab-bg-secondary); border-radius: 8px; overflow: hidden; height: 8px;">
+                            <div id="import-bar" style="background: var(--lab-primary); height: 100%; width: 0%; transition: width 0.3s;"></div>
+                        </div>
+                        <div id="import-status" style="font-size: 13px; margin-top: 6px; color: var(--lab-text-secondary);"></div>
+                    </div>
+                    <div class="lab-modal-actions">
+                        <button type="button" class="btn btn-primary" id="import-start" disabled>Start Import</button>
+                        <button type="button" class="btn btn-secondary" id="import-cancel">Cancel</button>
+                    </div>
+                </div>
+            </div>
+        </div>
     </main>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="js/supabase-client.js"></script>
@@ -193,14 +233,27 @@
         (function () {
             var fmt = function (s) { return s ? new Date(s).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' }) : '—'; };
 
+            var categoryBadgeColors = {
+                'Liquid Reagent': '#3b82f6',
+                'Solid Reagent': '#8b5cf6',
+                'Glassware': '#06b6d4',
+                'Equipment': '#f59e0b',
+                'Antibiotic Disc': '#ef4444'
+            };
+
+            var categoryOptions = '<option value="">-- Select Category --</option><option value="Liquid Reagent">Liquid Reagent</option><option value="Solid Reagent">Solid Reagent</option><option value="Glassware">Glassware</option><option value="Equipment">Equipment</option><option value="Antibiotic Disc">Antibiotic Disc</option>';
+
             async function renderInventory() {
                 var list = await getChemicals();
                 var searchVal = (document.getElementById('inventory-search') || {}).value || '';
                 var storageVal = (document.getElementById('inventory-storage') || {}).value || '';
+                var categoryVal = (document.getElementById('inventory-category') || {}).value || '';
+
                 var filtered = list.filter(function (c) {
-                    var matchSearch = !searchVal || (c.name + ' ' + (c.supplier || '') + ' ' + (c.storage || c.location || '')).toLowerCase().indexOf(searchVal.toLowerCase()) !== -1;
+                    var matchSearch = !searchVal || (c.name + ' ' + (c.supplier || '') + ' ' + (c.storage || c.location || '') + ' ' + (c.category || '')).toLowerCase().indexOf(searchVal.toLowerCase()) !== -1;
                     var matchStorage = !storageVal || (c.storage || c.location || '') === storageVal;
-                    return matchSearch && matchStorage;
+                    var matchCategory = !categoryVal || (c.category || '') === categoryVal;
+                    return matchSearch && matchStorage && matchCategory;
                 });
 
                 var storageSelect = document.getElementById('inventory-storage');
@@ -231,21 +284,22 @@
                     var unit = c.unit || '';
                     var qtyStr = unit ? qty + ' ' + unit : String(qty);
                     var supplier = c.supplier || '—';
-                    var deliveryDate = fmt(c.deliveryDate);
                     var expiryStr = fmt(c.expiry);
                     var expiryDate = c.expiry ? new Date(c.expiry) : null;
                     var expiryClass = '';
                     if (expiryDate) { expiryDate.setHours(0, 0, 0, 0); if (expiryDate < today) expiryClass = 'expiry-danger'; else if (expiryDate <= in30) expiryClass = 'expiry-warning'; }
-                    var msds = c.msds && c.msds.trim() ? '<a href="' + c.msds.trim() + '" target="_blank" rel="noopener" class="action-btn">View MSDS</a>' : '—';
+                    var cat = c.category || '—';
+                    var catColor = categoryBadgeColors[cat] || '#6b7280';
+                    var catBadge = cat !== '—' ? '<span style="display:inline-block;padding:2px 8px;border-radius:12px;font-size:11px;font-weight:600;color:#fff;background:' + catColor + ';">' + cat + '</span>' : '—';
                     var id = c.id || '';
+                    var qtyStyle = qty <= 0 ? 'text-align:right;font-weight:600;color:var(--lab-danger);' : 'text-align:right;font-weight:600;';
                     return '<tr>' +
                         '<td><div class="chemical-name">' + (c.name || '—') + '</div></td>' +
+                        '<td>' + catBadge + '</td>' +
+                        '<td style="' + qtyStyle + '">' + qtyStr + '</td>' +
                         '<td>' + storage + '</td>' +
-                        '<td style="text-align: right; font-weight: 600;">' + qtyStr + '</td>' +
                         '<td>' + supplier + '</td>' +
-                        '<td>' + deliveryDate + '</td>' +
                         '<td class="' + expiryClass + '">' + expiryStr + '</td>' +
-                        '<td>' + msds + '</td>' +
                         '<td><div class="action-btns">' +
                         '<button type="button" class="action-btn" data-action="view" data-id="' + id + '">View</button>' +
                         '<button type="button" class="action-btn" data-action="edit" data-id="' + id + '">Edit</button>' +
@@ -259,7 +313,7 @@
                         var id = this.getAttribute('data-id');
                         if (action === 'view') openChemicalModal(id, false);
                         else if (action === 'edit') openChemicalModal(id, true);
-                        else if (action === 'delete' && id && confirm('Delete this chemical from inventory?')) deleteChemicalRecord(id);
+                        else if (action === 'delete' && id && confirm('Delete this item from inventory?')) deleteChemicalRecord(id);
                     });
                 });
             }
@@ -273,14 +327,17 @@
                 var c = chemicalId ? await getChemicalById(chemicalId) : null;
                 var isNew = !c;
 
-                titleEl.textContent = isNew ? 'Add Chemical' : (isEdit ? 'Edit Chemical' : 'Chemical details');
+                titleEl.textContent = isNew ? 'Add Item' : (isEdit ? 'Edit Item' : 'Item Details');
 
                 if (isEdit) {
+                    var curCat = c ? (c.category || '') : '';
+                    var catSelectHtml = categoryOptions.replace('value="' + curCat + '"', 'value="' + curCat + '" selected');
                     bodyEl.innerHTML =
-                        '<div class="lab-form-group"><label class="lab-form-label" for="chem-name">Chemical name</label><input type="text" id="chem-name" class="lab-form-input" value="' + (c ? (c.name || '').replace(/"/g, '&quot;') : '') + '" placeholder="e.g. Hydrochloric Acid"></div>' +
-                        '<div class="lab-form-group"><label class="lab-form-label" for="chem-storage">Storage</label><input type="text" id="chem-storage" class="lab-form-input" value="' + (c ? (c.storage || c.location || '').replace(/"/g, '&quot;') : '') + '" placeholder="e.g. Hazmat Cabinet A1"></div>' +
+                        '<div class="lab-form-group"><label class="lab-form-label" for="chem-name">Item name</label><input type="text" id="chem-name" class="lab-form-input" value="' + (c ? (c.name || '').replace(/"/g, '&quot;') : '') + '" placeholder="e.g. Hydrochloric Acid"></div>' +
+                        '<div class="lab-form-group"><label class="lab-form-label" for="chem-category">Category</label><select id="chem-category" class="lab-form-input">' + catSelectHtml + '</select></div>' +
                         '<div class="lab-form-group"><label class="lab-form-label" for="chem-quantity">Quantity</label><input type="number" id="chem-quantity" class="lab-form-input" step="any" value="' + (c ? c.quantity : '') + '" placeholder="0"></div>' +
-                        '<div class="lab-form-group"><label class="lab-form-label" for="chem-unit">Unit</label><input type="text" id="chem-unit" class="lab-form-input" value="' + (c ? (c.unit || '').replace(/"/g, '&quot;') : '') + '" placeholder="L, g, mL"></div>' +
+                        '<div class="lab-form-group"><label class="lab-form-label" for="chem-unit">Unit</label><input type="text" id="chem-unit" class="lab-form-input" value="' + (c ? (c.unit || '').replace(/"/g, '&quot;') : '') + '" placeholder="L, g, mL, pcs"></div>' +
+                        '<div class="lab-form-group"><label class="lab-form-label" for="chem-storage">Storage</label><input type="text" id="chem-storage" class="lab-form-input" value="' + (c ? (c.storage || c.location || '').replace(/"/g, '&quot;') : '') + '" placeholder="e.g. Hazmat Cabinet A1"></div>' +
                         '<div class="lab-form-group"><label class="lab-form-label" for="chem-supplier">Supplier</label><input type="text" id="chem-supplier" class="lab-form-input" value="' + (c ? (c.supplier || '').replace(/"/g, '&quot;') : '') + '"></div>' +
                         '<div class="lab-form-group"><label class="lab-form-label" for="chem-delivery">Delivery date</label><input type="date" id="chem-delivery" class="lab-form-input" value="' + (c && c.deliveryDate ? c.deliveryDate : '') + '"></div>' +
                         '<div class="lab-form-group"><label class="lab-form-label" for="chem-expiry">Expiry date</label><input type="date" id="chem-expiry" class="lab-form-input" value="' + (c && c.expiry ? c.expiry : '') + '"></div>' +
@@ -294,28 +351,31 @@
                     if (saveBtn) saveBtn.addEventListener('click', function () { saveChemicalRecord(chemicalId); });
                     if (cancelBtn) cancelBtn.addEventListener('click', closeChemicalModal);
                 } else {
-                    if (!c) { bodyEl.innerHTML = '<p>No chemical selected.</p>'; overlay.classList.add('show'); overlay.setAttribute('aria-hidden', 'false'); return; }
+                    if (!c) { bodyEl.innerHTML = '<p>No item selected.</p>'; overlay.classList.add('show'); overlay.setAttribute('aria-hidden', 'false'); return; }
                     var fifoHint = await getFIFOHintForChemical(c.name);
-                    var fifoHtml = (fifoHint && fifoHint.expiry && fifoHint.id === c.id) ? '<div class="fifo-hint">⚠️ Use this batch first — expires ' + fmt(c.expiry) + '</div>' : '';
+                    var fifoHtml = (fifoHint && fifoHint.expiry && fifoHint.id === c.id) ? '<div class="fifo-hint">Use this batch first - expires ' + fmt(c.expiry) + '</div>' : '';
                     var storage = c.storage || c.location || '—';
                     var qtyStr = (c.unit ? c.quantity + ' ' + c.unit : c.quantity) || '—';
+                    var cat = c.category || '—';
+                    var catColor = categoryBadgeColors[cat] || '#6b7280';
+                    var catBadgeView = cat !== '—' ? '<span style="display:inline-block;padding:2px 8px;border-radius:12px;font-size:11px;font-weight:600;color:#fff;background:' + catColor + ';">' + cat + '</span>' : '—';
                     bodyEl.innerHTML =
                         '<div class="lab-modal-section">' +
                         (fifoHtml ? fifoHtml : '') +
-                        '<div class="lab-detail-row"><span class="lab-detail-label">Chemical name</span><span class="lab-detail-value">' + (c.name || '—') + '</span></div>' +
-                        '<div class="lab-detail-row"><span class="lab-detail-label">Storage</span><span class="lab-detail-value">' + storage + '</span></div>' +
+                        '<div class="lab-detail-row"><span class="lab-detail-label">Item name</span><span class="lab-detail-value">' + (c.name || '—') + '</span></div>' +
+                        '<div class="lab-detail-row"><span class="lab-detail-label">Category</span><span class="lab-detail-value">' + catBadgeView + '</span></div>' +
                         '<div class="lab-detail-row"><span class="lab-detail-label">Quantity</span><span class="lab-detail-value">' + qtyStr + '</span></div>' +
+                        '<div class="lab-detail-row"><span class="lab-detail-label">Storage</span><span class="lab-detail-value">' + storage + '</span></div>' +
                         '<div class="lab-detail-row"><span class="lab-detail-label">Supplier</span><span class="lab-detail-value">' + (c.supplier || '—') + '</span></div>' +
                         '<div class="lab-detail-row"><span class="lab-detail-label">Delivery date</span><span class="lab-detail-value">' + fmt(c.deliveryDate) + '</span></div>' +
                         '<div class="lab-detail-row"><span class="lab-detail-label">Expiry</span><span class="lab-detail-value">' + fmt(c.expiry) + '</span></div>' +
-                        '<div class="lab-detail-row"><span class="lab-detail-label">MSDS / SDS</span><span class="lab-detail-value">' + (c.msds && c.msds.trim() ? '<a href="' + c.msds.trim() + '" target="_blank" rel="noopener" class="sds-btn">📄 View SDS</a>' : '—') + '</span></div>' +
+                        '<div class="lab-detail-row"><span class="lab-detail-label">MSDS / SDS</span><span class="lab-detail-value">' + (c.msds && c.msds.trim() ? '<a href="' + c.msds.trim() + '" target="_blank" rel="noopener" class="sds-btn">View SDS</a>' : '—') + '</span></div>' +
                         '</div>' +
                         '<div class="lab-modal-actions">' +
                         '<button type="button" class="btn btn-primary" id="chemical-edit-btn">Edit</button>' +
                         '<button type="button" class="btn btn-secondary" id="chemical-close-btn">Close</button>' +
                         '</div>';
                     document.getElementById('chemical-edit-btn').addEventListener('click', function () { closeChemicalModal(); openChemicalModal(chemicalId, true); });
-
                     document.getElementById('chemical-close-btn').addEventListener('click', closeChemicalModal);
                 }
 
@@ -330,6 +390,7 @@
 
             async function saveChemicalRecord(chemicalId) {
                 var name         = (document.getElementById('chem-name')     || {}).value || '';
+                var category     = (document.getElementById('chem-category') || {}).value || '';
                 var storage      = (document.getElementById('chem-storage')  || {}).value || '';
                 var quantity     = (document.getElementById('chem-quantity') || {}).value;
                 var unit         = (document.getElementById('chem-unit')     || {}).value || '';
@@ -339,7 +400,7 @@
                 var msds         = (document.getElementById('chem-msds')     || {}).value || '';
                 var record = {
                     id:            chemicalId || 'ch-' + Date.now(),
-                    name, storage, quantity, unit,
+                    name, category, storage, quantity, unit,
                     min_quantity:  0,
                     supplier,
                     delivery_date: deliveryDate || null,
@@ -365,19 +426,20 @@
             document.getElementById('chemical-modal-overlay').addEventListener('click', function (ev) { if (ev.target === this) closeChemicalModal(); });
             document.getElementById('btn-add-chemical').addEventListener('click', function () { openChemicalModal(null, true); });
 
-            document.getElementById('btn-export').addEventListener('click', function () {
-                var list = getChemicalsList();
-                if (list.length === 0) { alert('No chemicals to export.'); return; }
-                var headers = ['Name', 'Storage', 'Quantity', 'Unit', 'Min Quantity', 'Supplier', 'Delivery Date', 'Expiry', 'MSDS'];
+            /* ── CSV Export ──────────────────────────────────────── */
+            document.getElementById('btn-export').addEventListener('click', async function () {
+                var list = await getChemicals();
+                if (list.length === 0) { alert('No items to export.'); return; }
+                var headers = ['Name', 'Category', 'Quantity', 'Unit', 'Storage', 'Supplier', 'Delivery Date', 'Expiry', 'MSDS'];
                 var rows = list.map(function(c) {
                     return [
                         c.name || '',
-                        c.storage || c.location || '',
+                        c.category || '',
                         c.quantity !== undefined ? c.quantity : '',
                         c.unit || '',
-                        c.minQuantity !== undefined ? c.minQuantity : '',
+                        c.storage || c.location || '',
                         c.supplier || '',
-                        c.deliveryDate || '',
+                        c.deliveryDate || c.delivery_date || '',
                         c.expiry || '',
                         c.msds || ''
                     ].map(function(v) { return '"' + String(v).replace(/"/g, '""') + '"'; }).join(',');
@@ -387,15 +449,121 @@
                 var url = URL.createObjectURL(blob);
                 var a = document.createElement('a');
                 a.href = url;
-                a.download = 'chemical-inventory-' + new Date().toISOString().slice(0, 10) + '.csv';
+                a.download = 'inventory-' + new Date().toISOString().slice(0, 10) + '.csv';
                 a.click();
                 URL.revokeObjectURL(url);
             });
 
+            /* ── Bulk Import ─────────────────────────────────────── */
+            var importData = null;
+
+            function openImportModal() {
+                var overlay = document.getElementById('import-modal-overlay');
+                document.getElementById('import-file').value = '';
+                document.getElementById('import-preview').style.display = 'none';
+                document.getElementById('import-progress').style.display = 'none';
+                document.getElementById('import-start').disabled = true;
+                importData = null;
+                overlay.classList.add('show');
+                overlay.setAttribute('aria-hidden', 'false');
+            }
+
+            function closeImportModal() {
+                var overlay = document.getElementById('import-modal-overlay');
+                overlay.classList.remove('show');
+                overlay.setAttribute('aria-hidden', 'true');
+            }
+
+            document.getElementById('btn-import').addEventListener('click', openImportModal);
+            document.getElementById('import-modal-close').addEventListener('click', closeImportModal);
+            document.getElementById('import-cancel').addEventListener('click', closeImportModal);
+            document.getElementById('import-modal-overlay').addEventListener('click', function (ev) { if (ev.target === this) closeImportModal(); });
+
+            document.getElementById('import-file').addEventListener('change', function (e) {
+                var file = e.target.files[0];
+                if (!file) return;
+                var reader = new FileReader();
+                reader.onload = function (ev) {
+                    try {
+                        importData = JSON.parse(ev.target.result);
+                        if (!Array.isArray(importData)) throw new Error('JSON must be an array');
+                        var cats = {};
+                        importData.forEach(function (it) { cats[it.category || 'Uncategorized'] = (cats[it.category || 'Uncategorized'] || 0) + 1; });
+                        var withStock = importData.filter(function (it) { return Number(it.quantity) > 0; }).length;
+                        var statsHtml = '<strong>' + importData.length + ' items found</strong> (' + withStock + ' with stock)<br><br>';
+                        Object.keys(cats).sort().forEach(function (cat) {
+                            var color = categoryBadgeColors[cat] || '#6b7280';
+                            statsHtml += '<span style="display:inline-block;padding:2px 8px;border-radius:12px;font-size:11px;font-weight:600;color:#fff;background:' + color + ';margin:2px;">' + cat + ': ' + cats[cat] + '</span> ';
+                        });
+                        document.getElementById('import-stats').innerHTML = statsHtml;
+                        document.getElementById('import-preview').style.display = 'block';
+                        document.getElementById('import-start').disabled = false;
+                    } catch (err) {
+                        alert('Invalid JSON file: ' + err.message);
+                        importData = null;
+                    }
+                };
+                reader.readAsText(file);
+            });
+
+            document.getElementById('import-start').addEventListener('click', async function () {
+                if (!importData || importData.length === 0) return;
+                var btn = this;
+                btn.disabled = true;
+                btn.textContent = 'Importing...';
+                var progressDiv = document.getElementById('import-progress');
+                var bar = document.getElementById('import-bar');
+                var status = document.getElementById('import-status');
+                progressDiv.style.display = 'block';
+
+                var total = importData.length;
+                var done = 0;
+                var errors = 0;
+                var batchSize = 50;
+
+                for (var i = 0; i < total; i += batchSize) {
+                    var batch = importData.slice(i, i + batchSize).map(function (item) {
+                        return {
+                            id: item.id || ('ch-' + Date.now() + '-' + Math.random().toString(36).substr(2, 6)),
+                            name: item.name || '',
+                            category: item.category || '',
+                            quantity: Number(item.quantity) || 0,
+                            unit: item.unit || '',
+                            storage: item.storage || '',
+                            min_quantity: 0,
+                            supplier: item.supplier || '',
+                            delivery_date: item.delivery_date || null,
+                            expiry: item.expiry || null,
+                            msds: item.msds || ''
+                        };
+                    });
+
+                    try {
+                        await saveChemicals(batch);
+                        done += batch.length;
+                    } catch (err) {
+                        errors += batch.length;
+                        console.error('Batch import error:', err);
+                    }
+
+                    var pct = Math.round(((done + errors) / total) * 100);
+                    bar.style.width = pct + '%';
+                    status.textContent = done + ' of ' + total + ' imported' + (errors ? ' (' + errors + ' errors)' : '');
+                }
+
+                status.innerHTML = '<strong>Import complete!</strong> ' + done + ' items imported' + (errors ? ', ' + errors + ' errors' : '') + '.';
+                btn.textContent = 'Done';
+                await addAuditEntry('bulk_import', 'Imported ' + done + ' inventory items from school Excel file');
+                renderInventory();
+            });
+
+            /* ── Filters ─────────────────────────────────────────── */
             var invSearch = document.getElementById('inventory-search');
             var invStorage = document.getElementById('inventory-storage');
+            var invCategory = document.getElementById('inventory-category');
             if (invSearch) invSearch.addEventListener('input', renderInventory);
             if (invStorage) invStorage.addEventListener('change', renderInventory);
+            if (invCategory) invCategory.addEventListener('change', renderInventory);
 
             renderInventory();
         })();

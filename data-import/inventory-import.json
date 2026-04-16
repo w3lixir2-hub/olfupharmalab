@@ -1,0 +1,8696 @@
+[
+  {
+    "name": "Acetaldehyde",
+    "quantity": 600.0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-610b67de"
+  },
+  {
+    "name": "Acetic acid",
+    "quantity": 1000.0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-ae1b5dfa"
+  },
+  {
+    "name": "Acetic anhydride",
+    "quantity": 500.0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-b4f24d35"
+  },
+  {
+    "name": "Acetone",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-fd5460eb"
+  },
+  {
+    "name": "Acetaphenone",
+    "quantity": 500.0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-9afb51b7"
+  },
+  {
+    "name": "Acetyl chloride",
+    "quantity": 1000.0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-1a2f061a"
+  },
+  {
+    "name": "Almond oil",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-890f1520"
+  },
+  {
+    "name": "Ammonia / Ammonium Hydroxide",
+    "quantity": 8.0,
+    "unit": "L",
+    "category": "Liquid Reagent",
+    "id": "liq-974bc008"
+  },
+  {
+    "name": "Ammonium bromide",
+    "quantity": 1000.0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-2250026e"
+  },
+  {
+    "name": "Ammonium sulfide",
+    "quantity": 1500.0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-8c06d15b"
+  },
+  {
+    "name": "Aniline",
+    "quantity": 500.0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-4bc0bd7e"
+  },
+  {
+    "name": "Anise seed oil",
+    "quantity": 1000.0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-79bbeae0"
+  },
+  {
+    "name": "Barfoed's reagent",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-c3ed006c"
+  },
+  {
+    "name": "Benedict's reagent",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-9905ba97"
+  },
+  {
+    "name": "Benzaldehyde",
+    "quantity": 1000.0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-1325ac4a"
+  },
+  {
+    "name": "Benzene",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-e99de7b4"
+  },
+  {
+    "name": "Benzoyl Chloride",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-e05b3d66"
+  },
+  {
+    "name": "Benzyl alcohol",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-feed6d53"
+  },
+  {
+    "name": "Benzyl benzoate",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-875d3ef4"
+  },
+  {
+    "name": "Benzyl chloride",
+    "quantity": 500.0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-5c57c319"
+  },
+  {
+    "name": "Bial's reagent",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-b091f488"
+  },
+  {
+    "name": "Biuret",
+    "quantity": 500.0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-b93aff3a"
+  },
+  {
+    "name": "Bromine water",
+    "quantity": 1000.0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-3a49dedf"
+  },
+  {
+    "name": "Bromothymol blue",
+    "quantity": 100.0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-d37519f5"
+  },
+  {
+    "name": "Buffer solution(pH4)",
+    "quantity": 700.0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-20c78e90"
+  },
+  {
+    "name": "Buffer solution(pH7)",
+    "quantity": 800.0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-abdab944"
+  },
+  {
+    "name": "Butanol",
+    "quantity": 1000.0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-ae878050"
+  },
+  {
+    "name": "Butylamine",
+    "quantity": 500.0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-53ebe33a"
+  },
+  {
+    "name": "Cocamidropropyl Betaine",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-01df1f5c"
+  },
+  {
+    "name": "Coco Betaine",
+    "quantity": 800.0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-47cd1db8"
+  },
+  {
+    "name": "Calcium hypochlorite",
+    "quantity": 1200.0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-a4056093"
+  },
+  {
+    "name": "Carbon disulfide",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-39347c10"
+  },
+  {
+    "name": "Carbon tetrachloride",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-9594b334"
+  },
+  {
+    "name": "Carminic acid",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-aa6ffab2"
+  },
+  {
+    "name": "Castor oil",
+    "quantity": 1700.0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-d6a524c5"
+  },
+  {
+    "name": "Cedarwood oil",
+    "quantity": 900.0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-52573a8b"
+  },
+  {
+    "name": "Crystal Violet",
+    "quantity": 1300.0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-dc2c2509"
+  },
+  {
+    "name": "Chlorine water",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-89b9d385"
+  },
+  {
+    "name": "Chloroform",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-648e8961"
+  },
+  {
+    "name": "Chromic acid",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-2a330a44"
+  },
+  {
+    "name": "Cinnamon oil",
+    "quantity": 800.0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-adb68a18"
+  },
+  {
+    "name": "Clove oil",
+    "quantity": 500.0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-de18ded2"
+  },
+  {
+    "name": "Coconut oil",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-47228d90"
+  },
+  {
+    "name": "Coconut diethanol amide",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-9876165d"
+  },
+  {
+    "name": "Cod liver oil",
+    "quantity": 2400.0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-2cf2b989"
+  },
+  {
+    "name": "Corn oil",
+    "quantity": 700.0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-513e45db"
+  },
+  {
+    "name": "Cotton seed oil",
+    "quantity": 400.0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-e3580f98"
+  },
+  {
+    "name": "Cyclohexane",
+    "quantity": 1000.0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-33aec7a3"
+  },
+  {
+    "name": "Cyclohexanone",
+    "quantity": 200.0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-097e3c3c"
+  },
+  {
+    "name": "Denige's reagent",
+    "quantity": 500.0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-d681e60f"
+  },
+  {
+    "name": "Dragendorff`s",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-d142495a"
+  },
+  {
+    "name": "Denatured alcohol",
+    "quantity": 0,
+    "unit": "gal",
+    "category": "Liquid Reagent",
+    "id": "liq-38b6a3a6"
+  },
+  {
+    "name": "Dibutylamine",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-1fa88443"
+  },
+  {
+    "name": "Dichloromethane",
+    "quantity": 0,
+    "unit": "L",
+    "category": "Liquid Reagent",
+    "id": "liq-45aa7110"
+  },
+  {
+    "name": "Diethyl ether",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-65ea4958"
+  },
+  {
+    "name": "Dinitrophenylhydrazine (DNPH) reagent",
+    "quantity": 500.0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-888d4b69"
+  },
+  {
+    "name": "Eosin Yellow",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-1cb5b288"
+  },
+  {
+    "name": "Ether",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-ee9f1f99"
+  },
+  {
+    "name": "Ethyl acetate",
+    "quantity": 0,
+    "unit": "L",
+    "category": "Liquid Reagent",
+    "id": "liq-2c324bb8"
+  },
+  {
+    "name": "Ethyl alcohol 95%",
+    "quantity": 0,
+    "unit": "gal",
+    "category": "Liquid Reagent",
+    "id": "liq-bc2ccb5d"
+  },
+  {
+    "name": "Eucalyptus oil",
+    "quantity": 1000.0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-b0dd52ef"
+  },
+  {
+    "name": "Fehlings A",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-f3703544"
+  },
+  {
+    "name": "Fehlings B",
+    "quantity": 1000.0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-6cd960a3"
+  },
+  {
+    "name": "Formaldehyde",
+    "quantity": 1000.0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-909322ac"
+  },
+  {
+    "name": "Formic acid",
+    "quantity": 800.0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-8d5b5f21"
+  },
+  {
+    "name": "Grams Iodine",
+    "quantity": 500.0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-1a3a6424"
+  },
+  {
+    "name": "Glacial acetic",
+    "quantity": 2000.0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-15a07769"
+  },
+  {
+    "name": "Glycerine, pure",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-bf125e20"
+  },
+  {
+    "name": "Guiac solution",
+    "quantity": 500.0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-4dd82046"
+  },
+  {
+    "name": "Hexane",
+    "quantity": 0,
+    "unit": "L",
+    "category": "Liquid Reagent",
+    "id": "liq-f4ba5413"
+  },
+  {
+    "name": "Hopkin's cole reagent",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-6fc28bf8"
+  },
+  {
+    "name": "Hydrochloric acid",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-21777aad"
+  },
+  {
+    "name": "Hydrogen peroxide",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-0f4cf7cf"
+  },
+  {
+    "name": "Iodobromide",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-d04bdbb4"
+  },
+  {
+    "name": "Jojoba oil",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-4e2c6e24"
+  },
+  {
+    "name": "Lactic acid",
+    "quantity": 1200.0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-42cd33cf"
+  },
+  {
+    "name": "Lactophenol Cotton blue",
+    "quantity": 900.0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-34467cec"
+  },
+  {
+    "name": "Lavender oil",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-d1ca01a9"
+  },
+  {
+    "name": "Lemon oil",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-4c9d9664"
+  },
+  {
+    "name": "Linseed oil",
+    "quantity": 1000.0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-fe475fe1"
+  },
+  {
+    "name": "Lime water",
+    "quantity": 900.0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-af5d21e8"
+  },
+  {
+    "name": "Liquid Castile Soap",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-922467c2"
+  },
+  {
+    "name": "Lucas reagent",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-4a607b1c"
+  },
+  {
+    "name": "Malachite  green",
+    "quantity": 800.0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-b729bdc2"
+  },
+  {
+    "name": "Mayer's Reagent",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-d63db830"
+  },
+  {
+    "name": "MC Farland Reagent",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-14e363f3"
+  },
+  {
+    "name": "Methanol",
+    "quantity": 1.0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-228a5473"
+  },
+  {
+    "name": "Metahnol HPLC grade",
+    "quantity": 0,
+    "unit": "L",
+    "category": "Liquid Reagent",
+    "id": "liq-117b3980"
+  },
+  {
+    "name": "Methyl salicylate",
+    "quantity": 600.0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-dd549ab6"
+  },
+  {
+    "name": "Mineral oil",
+    "quantity": 4000.0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-10c69d09"
+  },
+  {
+    "name": "Millon's Reagent",
+    "quantity": 400.0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-22d06a39"
+  },
+  {
+    "name": "Molisch reagent",
+    "quantity": 400.0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-ee728af0"
+  },
+  {
+    "name": "N-butyl alcohol",
+    "quantity": 600.0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-81e5f8c7"
+  },
+  {
+    "name": "Nessler's reagent",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-578df0a4"
+  },
+  {
+    "name": "Nitric acid",
+    "quantity": 0,
+    "unit": "L",
+    "category": "Liquid Reagent",
+    "id": "liq-31df3295"
+  },
+  {
+    "name": "Ninhydrin",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-e55ae602"
+  },
+  {
+    "name": "N-propyl alcohol",
+    "quantity": 500.0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-88565310"
+  },
+  {
+    "name": "Octanol",
+    "quantity": 400.0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-85fbddfe"
+  },
+  {
+    "name": "Octyl alcohol",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-bc709750"
+  },
+  {
+    "name": "Oleic acid",
+    "quantity": 1400.0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-9e7b77ae"
+  },
+  {
+    "name": "Olive oil",
+    "quantity": 900.0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-86fc4f56"
+  },
+  {
+    "name": "Orange oil",
+    "quantity": 500.0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-93d41bc1"
+  },
+  {
+    "name": "Palm oil",
+    "quantity": 500.0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-3c0eda32"
+  },
+  {
+    "name": "Palmitic oil",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-2eb280f0"
+  },
+  {
+    "name": "Peppermint oil",
+    "quantity": 1000.0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-f9ef9d7c"
+  },
+  {
+    "name": "Petroleum ether",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-afab2a6b"
+  },
+  {
+    "name": "Phenol",
+    "quantity": 1300.0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-6a37f84c"
+  },
+  {
+    "name": "Phosporic acid",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-df4c913d"
+  },
+  {
+    "name": "Polyethylene glycol",
+    "quantity": 1000.0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-870fa901"
+  },
+  {
+    "name": "Potassium stannite",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-6bb21664"
+  },
+  {
+    "name": "Propandiol",
+    "quantity": 800.0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-3aed555d"
+  },
+  {
+    "name": "Propanol",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-eb516f43"
+  },
+  {
+    "name": "Propionic acid",
+    "quantity": 1200.0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-42d338e3"
+  },
+  {
+    "name": "Propylene glycol",
+    "quantity": 1000.0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-411b703c"
+  },
+  {
+    "name": "Pyridine",
+    "quantity": 800.0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-f6da7ee5"
+  },
+  {
+    "name": "P-Nitrobenzene Azoresorcinol",
+    "quantity": 500.0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-8bea3985"
+  },
+  {
+    "name": "Rosemary oil",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-52bacf87"
+  },
+  {
+    "name": "Schiff's Reagent",
+    "quantity": 800.0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-d17001a3"
+  },
+  {
+    "name": "Safranin",
+    "quantity": 300.0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-5cf42ede"
+  },
+  {
+    "name": "Sec-butyl alcohol",
+    "quantity": 1000.0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-9b2beb4c"
+  },
+  {
+    "name": "Sodium hypochlorite",
+    "quantity": 1500.0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-97217691"
+  },
+  {
+    "name": "Sulfuric acid",
+    "quantity": 2000.0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-fd48851f"
+  },
+  {
+    "name": "Tert-butyl alcohol",
+    "quantity": 1200.0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-d62cd0ca"
+  },
+  {
+    "name": "Tributylamine",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-93590b35"
+  },
+  {
+    "name": "Tollen's Reagent",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-7cd31a9f"
+  },
+  {
+    "name": "Toluene",
+    "quantity": 2500.0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-cb95b083"
+  },
+  {
+    "name": "Triethanolamine",
+    "quantity": 1900.0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-25cc835a"
+  },
+  {
+    "name": "Turpentine oil",
+    "quantity": 3500.0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-d9a3037e"
+  },
+  {
+    "name": "Tween 80",
+    "quantity": 1000.0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-900a6dc1"
+  },
+  {
+    "name": "Vanillin",
+    "quantity": 800.0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-26fa30c1"
+  },
+  {
+    "name": "Wagner's",
+    "quantity": 900.0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-3d08a1fa"
+  },
+  {
+    "name": "Water HPLC grade",
+    "quantity": 0,
+    "unit": "L",
+    "category": "Liquid Reagent",
+    "id": "liq-f0699fd9"
+  },
+  {
+    "name": "Xylol",
+    "quantity": 700.0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-760a40b2"
+  },
+  {
+    "name": "Acacia powder",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-00c61345"
+  },
+  {
+    "name": "Acetaminophen",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-f540282b"
+  },
+  {
+    "name": "Acetanilide",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-9cd30a83"
+  },
+  {
+    "name": "Activated charcoal",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-cda79956"
+  },
+  {
+    "name": "Albumin",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-e24a8496"
+  },
+  {
+    "name": "Alpha napthol",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-932052d7"
+  },
+  {
+    "name": "Alum",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-c0376258"
+  },
+  {
+    "name": "Aluminon",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-c6c2f4d0"
+  },
+  {
+    "name": "Aluminum chloride",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-86e6c864"
+  },
+  {
+    "name": "Aluminum hydroxide",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-86ab271b"
+  },
+  {
+    "name": "Aluminum Metal",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-69dae956"
+  },
+  {
+    "name": "Aluminum subacetate",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-23f1df81"
+  },
+  {
+    "name": "Ammonium acetate",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-41e33421"
+  },
+  {
+    "name": "Ammonium biphospate",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-baa3a3ca"
+  },
+  {
+    "name": "Ammonium hydroxide",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-37cd76fd"
+  },
+  {
+    "name": "Ammonium monophosphate",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-6d099f90"
+  },
+  {
+    "name": "di-Ammonium phosphate",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-f0bbf227"
+  },
+  {
+    "name": "Ammonium bromide",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-2250026e"
+  },
+  {
+    "name": "Ammonium carbonate",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-d3c44cdd"
+  },
+  {
+    "name": "Ammonium chloride",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-381123f7"
+  },
+  {
+    "name": "Ammonium iron sulfate (Hexahydrate)",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-62959e13"
+  },
+  {
+    "name": "Ammonium Molybdate Tetrahydrate",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-6ff78264"
+  },
+  {
+    "name": "Ammonium oxalate",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-95a62866"
+  },
+  {
+    "name": "Ammonium sulfate",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-a5e722a0"
+  },
+  {
+    "name": "Ammonium ferrous sulfate, hexahydrated",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-82887c81"
+  },
+  {
+    "name": "Ammonium sulfite",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-4f085766"
+  },
+  {
+    "name": "Ammonium thiocyanate",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-9402efd3"
+  },
+  {
+    "name": "Amoxicillin powder",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-4be96212"
+  },
+  {
+    "name": "Antimony chloride",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-cd05d189"
+  },
+  {
+    "name": "Antimony potassium tartrate",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-98285fe2"
+  },
+  {
+    "name": "Arsenic trioxide",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-c3b50f51"
+  },
+  {
+    "name": "Ascorbic acid",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-29eb6953"
+  },
+  {
+    "name": "Aspirin",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-5f9d6842"
+  },
+  {
+    "name": "Barium acetate",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-28cd78e9"
+  },
+  {
+    "name": "Barium acetate Hi A.R.",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-e97788af"
+  },
+  {
+    "name": "Barium chloride",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-8780abc6"
+  },
+  {
+    "name": "Barium hydroxide",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-219baef3"
+  },
+  {
+    "name": "Barium hydroxide octahydrate",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-785aceea"
+  },
+  {
+    "name": "Barium sulfate",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-fcdae46a"
+  },
+  {
+    "name": "Bentonite powder",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-70e82ccd"
+  },
+  {
+    "name": "Benzalkonium chloride",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-99fc672d"
+  },
+  {
+    "name": "Benzamide",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-2c3c6797"
+  },
+  {
+    "name": "Benzidine",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-c8e9eaae"
+  },
+  {
+    "name": "Benzoic acid",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-fc664150"
+  },
+  {
+    "name": "Bromocresol green",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-b7ac5645"
+  },
+  {
+    "name": "Bromothymol blue",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-d37519f5"
+  },
+  {
+    "name": "Beta-napthol",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-0eb539b6"
+  },
+  {
+    "name": "Bismuth chloride",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-63e5481f"
+  },
+  {
+    "name": "Bismuth subnitrate",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-974adf94"
+  },
+  {
+    "name": "Blood Agar",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-c04f5336"
+  },
+  {
+    "name": "Boric acid",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-350a09cf"
+  },
+  {
+    "name": "Bromophenol blue",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-8c3ee525"
+  },
+  {
+    "name": "Cadmium chloride",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-8d06da0e"
+  },
+  {
+    "name": "Cadmium acetate dihydrated",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-38714ee0"
+  },
+  {
+    "name": "Cadmium acetate hydrated",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-9a9731a0"
+  },
+  {
+    "name": "Cadmium nitrate",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-2bcd0f98"
+  },
+  {
+    "name": "Calamine powder",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-220583d0"
+  },
+  {
+    "name": "Calcium acetate",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-ee3c0a76"
+  },
+  {
+    "name": "Calcium carbonate",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-588896c4"
+  },
+  {
+    "name": "Calcium chloride",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-d6a12f21"
+  },
+  {
+    "name": "Calcium gluconate",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-05ed44cb"
+  },
+  {
+    "name": "Calcium hydroxide",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-4627297c"
+  },
+  {
+    "name": "Calcium hypochlorite",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-a4056093"
+  },
+  {
+    "name": "Calcium nitrate",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-4022590f"
+  },
+  {
+    "name": "Calcium oxalate",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-78b7ef03"
+  },
+  {
+    "name": "Calcium oxide",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-da9a332c"
+  },
+  {
+    "name": "Calcium stearate",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-06897769"
+  },
+  {
+    "name": "Calcium sulfate",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-7713e9cc"
+  },
+  {
+    "name": "Camphor",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-de09b633"
+  },
+  {
+    "name": "Caffeine",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-256b1916"
+  },
+  {
+    "name": "Carageenan",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-2a5d9766"
+  },
+  {
+    "name": "Carbol Fuchsin",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-dd90dac2"
+  },
+  {
+    "name": "Carbon",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-5665261c"
+  },
+  {
+    "name": "Carbopol",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-d1e1ff74"
+  },
+  {
+    "name": "Cetyl alcohol",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-6d50e0e9"
+  },
+  {
+    "name": "Cetyl esters wax",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-620816e2"
+  },
+  {
+    "name": "Cetostearyl alcohol",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-dae0fb00"
+  },
+  {
+    "name": "Cetrimonium chloride",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-0f2013e7"
+  },
+  {
+    "name": "Citric acid",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-42751ed6"
+  },
+  {
+    "name": "Chloral hydrate",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-daedb60a"
+  },
+  {
+    "name": "Chromium nitrate",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-162c3da7"
+  },
+  {
+    "name": "Cobalt (II) Chloride Hexahydrate",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-bdb308b0"
+  },
+  {
+    "name": "Cobalt nitrate",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-633072d2"
+  },
+  {
+    "name": "Cocamidopropyl Betaine",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-aaa00c37"
+  },
+  {
+    "name": "Colchicine",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-b029b84d"
+  },
+  {
+    "name": "Congo red",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-6dc8ee6e"
+  },
+  {
+    "name": "Copper sulfate",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-cc591064"
+  },
+  {
+    "name": "Cornstarch",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-a8fa2041"
+  },
+  {
+    "name": "Crystal violet",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-a3f859d8"
+  },
+  {
+    "name": "Cupric acetate",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-aee98144"
+  },
+  {
+    "name": "Cupric chloride",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-a5f6bcce"
+  },
+  {
+    "name": "Dextrose powder",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-c9f6f93a"
+  },
+  {
+    "name": "Diaminoethanetetra acetic acid (EDTA)",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-534b2e26"
+  },
+  {
+    "name": "Dimethyl glycoxime",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-ab5fd8c7"
+  },
+  {
+    "name": "Dinitrobenzoic acid",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-a6f61f3a"
+  },
+  {
+    "name": "Disodium EDTA",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-23742ff9"
+  },
+  {
+    "name": "DMDM Hydantoin",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-4ded9ba5"
+  },
+  {
+    "name": "Distilled monoglycerides",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-3b49c59d"
+  },
+  {
+    "name": "EDTA powder",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-700d75cd"
+  },
+  {
+    "name": "EMB (Eosin methylene blue) Agar",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-7ba5d29b"
+  },
+  {
+    "name": "Eosin yellow",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-250b1e85"
+  },
+  {
+    "name": "Eriochrome black",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-4f0375a7"
+  },
+  {
+    "name": "FD & C Red # 3",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-5473ac10"
+  },
+  {
+    "name": "Ferric ammonium sulfate",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-d2e3a5bf"
+  },
+  {
+    "name": "Ferric chloride",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-44c589f4"
+  },
+  {
+    "name": "Ferric hydroxide",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-60b659d1"
+  },
+  {
+    "name": "Ferric Oxide",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-ac509608"
+  },
+  {
+    "name": "Ferric sulfate",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-bec0334f"
+  },
+  {
+    "name": "Ferrous sulfate",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-a1996289"
+  },
+  {
+    "name": "Ferrous sulfide",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-c0cf255d"
+  },
+  {
+    "name": "Fructose",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-4b307d49"
+  },
+  {
+    "name": "Gelatin powder",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-8398dd69"
+  },
+  {
+    "name": "Glass wool",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-768c78d7"
+  },
+  {
+    "name": "Glucose powder",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-903385c9"
+  },
+  {
+    "name": "Glyceryl Stearate",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-20c6f7f3"
+  },
+  {
+    "name": "Hydrocyanic acid",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-27e86d7a"
+  },
+  {
+    "name": "Hydroxylamine hydrochloride",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-9d20fe2c"
+  },
+  {
+    "name": "Hydroxynapthol blue",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-3bc7a496"
+  },
+  {
+    "name": "Iodine crystals",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-824b2629"
+  },
+  {
+    "name": "Iodine monochloride",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-5e298784"
+  },
+  {
+    "name": "Iodine Prills",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-b9dc5881"
+  },
+  {
+    "name": "Iron Oxide",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-1e794c55"
+  },
+  {
+    "name": "Iron sulfide",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-ec69da57"
+  },
+  {
+    "name": "Kaolin",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-2e5da356"
+  },
+  {
+    "name": "Lactophenol",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-51906e24"
+  },
+  {
+    "name": "Lactose",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-d0c66a08"
+  },
+  {
+    "name": "Lactose broth",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-793c6119"
+  },
+  {
+    "name": "Lactose Monohydrate",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-73ba11d0"
+  },
+  {
+    "name": "Lanolin",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-e822aa4f"
+  },
+  {
+    "name": "Lead acetate",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-87beb4f0"
+  },
+  {
+    "name": "Lead acetate, trihydrate",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-13646800"
+  },
+  {
+    "name": "Lead nitrate",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-e06affcd"
+  },
+  {
+    "name": "Agar, LIA",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-a4f59eb9"
+  },
+  {
+    "name": "Lithium carbonate",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-fa17bf35"
+  },
+  {
+    "name": "Agar, MacConkey",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-306f3a8c"
+  },
+  {
+    "name": "Agar, Manitol salt",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-8ff8436b"
+  },
+  {
+    "name": "Magnesium carbonate (heavy)",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-bdadfe3b"
+  },
+  {
+    "name": "Magnesium carbonate (light)",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-d9b7012d"
+  },
+  {
+    "name": "Magnesium chloride",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-a35a4b4e"
+  },
+  {
+    "name": "Magnesium hydroxide",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-2be7a420"
+  },
+  {
+    "name": "Magnesium oxide",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-f8afb2ac"
+  },
+  {
+    "name": "Magnesium stearate",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-1304c55f"
+  },
+  {
+    "name": "Magnesium sulfate",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-b7655801"
+  },
+  {
+    "name": "Magnesium turnings",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-c057a7dc"
+  },
+  {
+    "name": "Magnesium trisilicate",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-4d721bde"
+  },
+  {
+    "name": "Manganese dioxide",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-0633d1a5"
+  },
+  {
+    "name": "Manganese trioxide",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-e911ad1e"
+  },
+  {
+    "name": "Manganese nitrate",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-457cd2a6"
+  },
+  {
+    "name": "Menthol crystal",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-1802cdea"
+  },
+  {
+    "name": "Mercury (II) chloride",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-9588f52f"
+  },
+  {
+    "name": "Mercury (I) chloride",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-9dcbb336"
+  },
+  {
+    "name": "Mercuric iodide",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-288e0313"
+  },
+  {
+    "name": "Mercuric oxide",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-8ad21713"
+  },
+  {
+    "name": "Mercurous nitrate",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-3d9f1735"
+  },
+  {
+    "name": "Mercury metal",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-c2a058dd"
+  },
+  {
+    "name": "Methyl cellulose",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-ea06f4bb"
+  },
+  {
+    "name": "Methyl red",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-3f10b5da"
+  },
+  {
+    "name": "Methyl orange",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-04bb813e"
+  },
+  {
+    "name": "Methyl paraben",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-a3f36643"
+  },
+  {
+    "name": "Methylene blue",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-30a82e25"
+  },
+  {
+    "name": "Mica powder",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-49836802"
+  },
+  {
+    "name": "Agar, Mueller hinton",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-d854cc00"
+  },
+  {
+    "name": "Napthalene",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-66abf6fb"
+  },
+  {
+    "name": "Agar, Nutrient",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-5666b56a"
+  },
+  {
+    "name": "Nutrient broth",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-f98ae68c"
+  },
+  {
+    "name": "Nickel sulfate",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-74313739"
+  },
+  {
+    "name": "Oxalic acid",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-58d3843e"
+  },
+  {
+    "name": "Palm Kernel Flakes",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-6107624a"
+  },
+  {
+    "name": "Paraffin wax",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-e2c6dee3"
+  },
+  {
+    "name": "Petroleum Jelly",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-98547abe"
+  },
+  {
+    "name": "Phenacetin",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-e55dca9d"
+  },
+  {
+    "name": "Phenanthroline monohydrate",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-62d91aa3"
+  },
+  {
+    "name": "Phenolpthalein",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-07f5529a"
+  },
+  {
+    "name": "Phenylalanine powder",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-24fabc8b"
+  },
+  {
+    "name": "Phenylhydrazine HCL",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-b976a2ed"
+  },
+  {
+    "name": "Phosphomolybdic acid",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-da8fce7f"
+  },
+  {
+    "name": "Phloroglucinol",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-15eeaf21"
+  },
+  {
+    "name": "Potassium acetate",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-ef49d19f"
+  },
+  {
+    "name": "Potassium antimony tartrate",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-df09d850"
+  },
+  {
+    "name": "Potassium bicarbonate",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-6c0b7f84"
+  },
+  {
+    "name": "Potassium bipthalate",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-9a275f2b"
+  },
+  {
+    "name": "Potassium bitartrate",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-010ae798"
+  },
+  {
+    "name": "Potassium bromate",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-ff442bdd"
+  },
+  {
+    "name": "Potassium chlorate",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-5748f046"
+  },
+  {
+    "name": "Potassium chloride",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-efe34fee"
+  },
+  {
+    "name": "Potassium chromate",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-17ef5b6c"
+  },
+  {
+    "name": "Potassium cyanide",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-a9066401"
+  },
+  {
+    "name": "Potassium dichromate",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-849ee3f3"
+  },
+  {
+    "name": "Potassium ferricyanide",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-8bb90607"
+  },
+  {
+    "name": "Potassium ferrocyanide",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-a316b5fd"
+  },
+  {
+    "name": "Potassium hydrogen Carbonate",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-be0d7ee3"
+  },
+  {
+    "name": "Potassium hydroxide",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-b4d39ae8"
+  },
+  {
+    "name": "Picric acid",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-8e192195"
+  },
+  {
+    "name": "Potassium iodide",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-72236859"
+  },
+  {
+    "name": "Potassium nitrate",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-e1074d86"
+  },
+  {
+    "name": "Potassium nitrite",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-2065f046"
+  },
+  {
+    "name": "Potassium oxalate",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-5d359ff4"
+  },
+  {
+    "name": "Potassium Oxalate Monohydrate",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-c59ad492"
+  },
+  {
+    "name": "Potassium perchlorate",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-a6c95bf3"
+  },
+  {
+    "name": "Potassium permanganate",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-2c585b9b"
+  },
+  {
+    "name": "Potassium phosphate",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-6f03eae7"
+  },
+  {
+    "name": "Potassium phosphate, Di-basic",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-f49d639c"
+  },
+  {
+    "name": "Potassium phosphate monobasic",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-cd09ad80"
+  },
+  {
+    "name": "Potassium pyroantimonate",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-30d60b45"
+  },
+  {
+    "name": "Potassium tartrate monobasic",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-e38759fc"
+  },
+  {
+    "name": "Potassium sodium tartrate",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-44fe6cdb"
+  },
+  {
+    "name": "Potassium thiocyanate",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-982e12c8"
+  },
+  {
+    "name": "Potassium sulfate",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-1031dada"
+  },
+  {
+    "name": "Precipitated sulfur",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-7b0b625d"
+  },
+  {
+    "name": "Propyl Paraben",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-836d7fe5"
+  },
+  {
+    "name": "P-rosaniline",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-d47b626c"
+  },
+  {
+    "name": "Quinine Sulfate",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-96021b64"
+  },
+  {
+    "name": "Quinhydrone",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-060b2458"
+  },
+  {
+    "name": "Red iron oxide",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-462ae5d6"
+  },
+  {
+    "name": "Resorcinol",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-ea83b649"
+  },
+  {
+    "name": "Ribose",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-265e6e36"
+  },
+  {
+    "name": "Rhodamine B",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-67315bf2"
+  },
+  {
+    "name": "Saccharin",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-e6f6b483"
+  },
+  {
+    "name": "Salicylic acid",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-e048fc99"
+  },
+  {
+    "name": "Silica gel, blue",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-66bc98a7"
+  },
+  {
+    "name": "Silica gel S-10",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-ab51a835"
+  },
+  {
+    "name": "Silica gel G-20",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-e68aee8d"
+  },
+  {
+    "name": "Silica powder",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-5269dfaa"
+  },
+  {
+    "name": "Silver acetate",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-4bd0fc77"
+  },
+  {
+    "name": "Silver chloride",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-bcac30be"
+  },
+  {
+    "name": "Silver nitrate",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-7c54a1af"
+  },
+  {
+    "name": "Agar, SIM",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-5471b76a"
+  },
+  {
+    "name": "Simmon citrate agar",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-09c7cbb2"
+  },
+  {
+    "name": "Sodium acetate",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-07375321"
+  },
+  {
+    "name": "Sodium acetate, trihydrate",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-7a47ec80"
+  },
+  {
+    "name": "Sodium arsenate",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-dfda7e56"
+  },
+  {
+    "name": "Sodium arsenite",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-d400bae5"
+  },
+  {
+    "name": "Sodium benzoate",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-cbc2e2bc"
+  },
+  {
+    "name": "Sodium bicarbonate",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-ef0ab4df"
+  },
+  {
+    "name": "Sodium bismuthate",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-61465d1a"
+  },
+  {
+    "name": "Sodium bisulfite, AR",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-ed2a0084"
+  },
+  {
+    "name": "Sodium bisulfite",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-466b85d2"
+  },
+  {
+    "name": "Sodium borate",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-acbb693f"
+  },
+  {
+    "name": "Sodium bromide",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-76ed77f2"
+  },
+  {
+    "name": "Sodium carbonate anhydrous",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-6d1b47de"
+  },
+  {
+    "name": "Sodium chloride",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-d552c63e"
+  },
+  {
+    "name": "Sodium citrate",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-73c285d1"
+  },
+  {
+    "name": "Sodium fluoride",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-714aa445"
+  },
+  {
+    "name": "Sodium peroxide",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-df94c7ce"
+  },
+  {
+    "name": "Sorbitol",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-0d3d2049"
+  },
+  {
+    "name": "Sodium cobalt nitrate",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-8eba1a06"
+  },
+  {
+    "name": "Sodium hydroxide",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-a1f065a8"
+  },
+  {
+    "name": "Sodium iodide",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-621f3289"
+  },
+  {
+    "name": "Sodium lauryl sulfate",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-9e2f4e67"
+  },
+  {
+    "name": "Sodium nitrate",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-949b31e4"
+  },
+  {
+    "name": "Sodium nitrite",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-3341115e"
+  },
+  {
+    "name": "Sodium nitroprusside",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-2e776596"
+  },
+  {
+    "name": "Sodium oxalate",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-43ad625c"
+  },
+  {
+    "name": "di-Sodium phosphate",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-bd334eaa"
+  },
+  {
+    "name": "Sodium phosphate Dibasic heptahydrate",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-9df896c7"
+  },
+  {
+    "name": "Sodium phosphate Monobasic heptahydrate",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-58c674ba"
+  },
+  {
+    "name": "Sodium phosphate",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-b2dc4157"
+  },
+  {
+    "name": "Sodium laureth sulfate",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-6990d3ac"
+  },
+  {
+    "name": "Sodium sulfate (anhydrous)",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-2d6a5d04"
+  },
+  {
+    "name": "Sodium sulfate",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-64427da9"
+  },
+  {
+    "name": "Sodium sulfite",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-73bcafe0"
+  },
+  {
+    "name": "Sodium thiosulfate",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-eb9b8126"
+  },
+  {
+    "name": "Soya Casein",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-06abc61a"
+  },
+  {
+    "name": "Spermaceti",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-d6519b43"
+  },
+  {
+    "name": "Stannic chloride",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-8fadc75a"
+  },
+  {
+    "name": "Stannous chloride",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-3a9d14af"
+  },
+  {
+    "name": "Starch",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-5406948e"
+  },
+  {
+    "name": "Stearic acid",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-fdf0f8e9"
+  },
+  {
+    "name": "Stearyl alcohol",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-dd0f9c33"
+  },
+  {
+    "name": "Strontium chloride",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-92ce0e3c"
+  },
+  {
+    "name": "Sublimed sulfur",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-75604c66"
+  },
+  {
+    "name": "Sucrose",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-68e5eefb"
+  },
+  {
+    "name": "Sulfur",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-3071b069"
+  },
+  {
+    "name": "Talc",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-5112f778"
+  },
+  {
+    "name": "Tannic acid",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-f4340d0d"
+  },
+  {
+    "name": "Tartaric acid",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-766fb205"
+  },
+  {
+    "name": "Thioacetamide",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-66de847c"
+  },
+  {
+    "name": "Thymol",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-035f03ce"
+  },
+  {
+    "name": "Tin granules",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-19486023"
+  },
+  {
+    "name": "Titanium dioxide",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-4cd0aea4"
+  },
+  {
+    "name": "Titanium oxide",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-3ba1258b"
+  },
+  {
+    "name": "Tragacanth gum",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-9d4f0541"
+  },
+  {
+    "name": "Triclosan",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-ea302f0d"
+  },
+  {
+    "name": "Trisodium citrate",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-4f8b8391"
+  },
+  {
+    "name": "Trisodium Phosphate",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-cfd73ca6"
+  },
+  {
+    "name": "Agar, Triple Sugar Iron",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-e4e94c9f"
+  },
+  {
+    "name": "Tyrosine powder",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-0c13c9b5"
+  },
+  {
+    "name": "Tryptophan powder",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-4480d485"
+  },
+  {
+    "name": "Urea",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-9bdaa28f"
+  },
+  {
+    "name": "Vanillin AR",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-430aaa46"
+  },
+  {
+    "name": "White petroleum snow",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-66b5eb62"
+  },
+  {
+    "name": "White beeswax",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-2023ce31"
+  },
+  {
+    "name": "Xylitol",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-7ea58e4b"
+  },
+  {
+    "name": "Xylose",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-209c0e8f"
+  },
+  {
+    "name": "Yeast",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-06540920"
+  },
+  {
+    "name": "Yellow beeswax",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-43c47a4c"
+  },
+  {
+    "name": "Zinc acetate",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-40ce157c"
+  },
+  {
+    "name": "Zinc chloride",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-2b2a4541"
+  },
+  {
+    "name": "Zinc dust",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-4d4a5e4f"
+  },
+  {
+    "name": "Zinc oxide",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-dd630461"
+  },
+  {
+    "name": "Zinc stearate",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-5bc174ac"
+  },
+  {
+    "name": "Zinc sulfate",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-175c79ab"
+  },
+  {
+    "name": "Zinc sulfate heptahydrate",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-6f951036"
+  },
+  {
+    "name": "Alcohol lamp",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-589b3c0a"
+  },
+  {
+    "name": "Aspirator",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-7c1eded1"
+  },
+  {
+    "name": "Band- aid",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-807b19c9"
+  },
+  {
+    "name": "Bandage",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-22b8c396"
+  },
+  {
+    "name": "Bent tube",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-ff402985"
+  },
+  {
+    "name": "Burn Oinment",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-de36e093"
+  },
+  {
+    "name": "cork (big )",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-5e815081"
+  },
+  {
+    "name": "cork (small )",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-651d5ad0"
+  },
+  {
+    "name": "Cotton",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-884af049"
+  },
+  {
+    "name": "Dropper ( glass )",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-993dab09"
+  },
+  {
+    "name": "75% Ethyl alcohol",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-793f345d"
+  },
+  {
+    "name": "Face Mask",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-99f47e7e"
+  },
+  {
+    "name": "Filter paper",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-c64a84e1"
+  },
+  {
+    "name": "Glass tubing",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-19c2d9f6"
+  },
+  {
+    "name": "Hydrogen Peroxide",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-a093e258"
+  },
+  {
+    "name": "Lens paper",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-251bab61"
+  },
+  {
+    "name": "Litmus paper (blue)",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-0a6ab375"
+  },
+  {
+    "name": "Litmus paper (red)",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-cf16f491"
+  },
+  {
+    "name": "Lysol disinfectant liquid",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-0d106712"
+  },
+  {
+    "name": "Lysol spray",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-2299e72d"
+  },
+  {
+    "name": "Magnesium ribbon",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-6afe6de9"
+  },
+  {
+    "name": "Povidone- iodine (60 ml",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-d9ed5dd8"
+  },
+  {
+    "name": "Reagent bottle boston round (60ml)",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-34d497bf"
+  },
+  {
+    "name": "Reagent bottle boston round (250ml)",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-f58d727e"
+  },
+  {
+    "name": "Reagent bottle wide mouth (250ml)",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-a78385d0"
+  },
+  {
+    "name": "Rubber Gloves",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-8bbc34b0"
+  },
+  {
+    "name": "Rubber tubing",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-bdc5b6a9"
+  },
+  {
+    "name": "Syringe 1ml",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-bd6eb86d"
+  },
+  {
+    "name": "Syringe 5ml",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-628cc0d5"
+  },
+  {
+    "name": "Test tube brush",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-a6346cf9"
+  },
+  {
+    "name": "Thimbles",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-fe5034d8"
+  },
+  {
+    "name": "Wash bottle (250ml)",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-e65410f6"
+  },
+  {
+    "name": "Wash bottle (500ml)",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-970f76ef"
+  },
+  {
+    "name": "Wax paper",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-588fe29e"
+  },
+  {
+    "name": "Wick ( Alcohol lamp)",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-abdba5b5"
+  },
+  {
+    "name": "Wire gauze",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-d7cb1b96"
+  },
+  {
+    "name": "Acid burette (25ml)",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-243bd273"
+  },
+  {
+    "name": "Acid burette (50ml)",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-4c994ca7"
+  },
+  {
+    "name": "Adapter",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-fea49d20"
+  },
+  {
+    "name": "Adrescence Apparatus",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-83a49c5e"
+  },
+  {
+    "name": "Alcohol lamp",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-589b3c0a"
+  },
+  {
+    "name": "Alkali burette (25ml)",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-5ac07f03"
+  },
+  {
+    "name": "Alkali burette (50ml)",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-934d0317"
+  },
+  {
+    "name": "Beaker (50ml, glass)",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-144b173c"
+  },
+  {
+    "name": "Beaker (100ml, glass)",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-0a5ee42e"
+  },
+  {
+    "name": "Beaker (250ml, glass)",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-2a4c2d51"
+  },
+  {
+    "name": "Beaker (500ml, glass)",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-89179e81"
+  },
+  {
+    "name": "Beaker (1000ml, glass)",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-be8251e1"
+  },
+  {
+    "name": "Blender (OSTERIZER)",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-c684b11d"
+  },
+  {
+    "name": "Bowl",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-9925a8c5"
+  },
+  {
+    "name": "Buchner funnel (big)",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-a3adaf9d"
+  },
+  {
+    "name": "Buchner funnel (small)",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-8ba485c2"
+  },
+  {
+    "name": "Burette clamp",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-64be708a"
+  },
+  {
+    "name": "Bunsen burner",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-0ed3bb10"
+  },
+  {
+    "name": "Caliper",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-6111659b"
+  },
+  {
+    "name": "Candle jar (DESSICATOR)",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-04960e28"
+  },
+  {
+    "name": "Cassia flask",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-08b9f270"
+  },
+  {
+    "name": "Casserole",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-192d73c1"
+  },
+  {
+    "name": "Clamp holder",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-c6d1f5af"
+  },
+  {
+    "name": "Chromatography column 250ml",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-59d75338"
+  },
+  {
+    "name": "Condenser",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-4be4468a"
+  },
+  {
+    "name": "Cork borer",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-ed9475c2"
+  },
+  {
+    "name": "Crucible and cover",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-67e63c86"
+  },
+  {
+    "name": "Crucible tongs",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-76f37f2b"
+  },
+  {
+    "name": "* Breakages/ Unreturned",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-fb8458a8"
+  },
+  {
+    "name": "* Obsolete -please see attachment",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-0a42e2da"
+  },
+  {
+    "name": "Dessicator with pump",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-300438ee"
+  },
+  {
+    "name": "Distilling flask (250ml)",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-9d517305"
+  },
+  {
+    "name": "Distilling flask (1000ml)",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-43a620bc"
+  },
+  {
+    "name": "Dumas bulb",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-5d9adc7e"
+  },
+  {
+    "name": "Electric stove",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-e06c4ffc"
+  },
+  {
+    "name": "Erlenmeyer flask (50ml)",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-98a57c7e"
+  },
+  {
+    "name": "Erlenmeyer flask (125ml)",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-9d4e2036"
+  },
+  {
+    "name": "Erlenmeyer flask (250ml)",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-ca2fd29e"
+  },
+  {
+    "name": "Erlenmeyer flask (500ml)",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-a898ac8f"
+  },
+  {
+    "name": "Erlenmeyer flask (1000ml)",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-15394418"
+  },
+  {
+    "name": "Evaporating dish (glass-big)",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-48fc1564"
+  },
+  {
+    "name": "Evaporating dish (porcelain)",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-c19d29d5"
+  },
+  {
+    "name": "Flask (big)",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-15618d47"
+  },
+  {
+    "name": "Florence flask (500ml)",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-790d951e"
+  },
+  {
+    "name": "Forceps",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-b0aec241"
+  },
+  {
+    "name": "Funnel (glass-big)",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-de3aa2b9"
+  },
+  {
+    "name": "Funnel (glass-small)",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-8cc71236"
+  },
+  {
+    "name": "Funnel (stainless)",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-a12061b2"
+  },
+  {
+    "name": "Graduated cylinder (10ml)",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-452b1361"
+  },
+  {
+    "name": "Graduated cylinder (25ml)",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-53a78c1e"
+  },
+  {
+    "name": "Graduated cylinder (50ml)",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-8c83fa8a"
+  },
+  {
+    "name": "Graduated cylinder (100ml)",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-22635037"
+  },
+  {
+    "name": "Graduated cylinder (250ml)",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-1cd6f13a"
+  },
+  {
+    "name": "Hand lens",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-11fcb6fe"
+  },
+  {
+    "name": "Heating mantle",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-127918bc"
+  },
+  {
+    "name": "Hot plate",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-638be71b"
+  },
+  {
+    "name": "Hygrometer",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-05d14ba9"
+  },
+  {
+    "name": "Hydrometer (Heavy)",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-874c09be"
+  },
+  {
+    "name": "Hydrometer (Light)",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-700ad87e"
+  },
+  {
+    "name": "Inoculating Loop",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-329ae533"
+  },
+  {
+    "name": "* Breakages/ Unreturned",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-fb8458a8"
+  },
+  {
+    "name": "Inoculating needle",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-b3024d13"
+  },
+  {
+    "name": "Iodine flask (250ml)",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-49944aba"
+  },
+  {
+    "name": "Iodine flask (500ml)",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-9aebb022"
+  },
+  {
+    "name": "Iron ring w/ clamp",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-377329ff"
+  },
+  {
+    "name": "Iron stand",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-069937ef"
+  },
+  {
+    "name": "Kjeldahl flask (250ml)",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-7e8284f8"
+  },
+  {
+    "name": "Kjeldahl flask (500ml)",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-82badd69"
+  },
+  {
+    "name": "Mortar and pestle",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-84775f27"
+  },
+  {
+    "name": "Oswald viscometer",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-dddb30ab"
+  },
+  {
+    "name": "Perculator cups",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-41564986"
+  },
+  {
+    "name": "Petri dishes (glass)",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-cf8366e9"
+  },
+  {
+    "name": "Pile",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-0d9e580f"
+  },
+  {
+    "name": "Pill tile",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-4032d5c3"
+  },
+  {
+    "name": "Pycnometer (25ml)",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-abf9823f"
+  },
+  {
+    "name": "Pycnometer (50ml)",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-aae7aa61"
+  },
+  {
+    "name": "Pipette (0.5ml)",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-88fe70d0"
+  },
+  {
+    "name": "Pipette (1ml)",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-fd0134e8"
+  },
+  {
+    "name": "Pipette (2ml)",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-74589aaf"
+  },
+  {
+    "name": "Pipette (5ml)",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-b3393e0e"
+  },
+  {
+    "name": "Pipette (10ml)",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-fe737031"
+  },
+  {
+    "name": "Round bottom flask(250ml)",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-0d3bfa3e"
+  },
+  {
+    "name": "Round bottom flask(500ml)",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-b8015419"
+  },
+  {
+    "name": "Round bottom flask(1000ml)",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-e24a14df"
+  },
+  {
+    "name": "S-clamp",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-e7f67aec"
+  },
+  {
+    "name": "Separatory funnel",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-9dcb2367"
+  },
+  {
+    "name": "Spatula (porcelain)",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-f7ade46a"
+  },
+  {
+    "name": "Spatula (stainless)",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-8c8b8093"
+  },
+  {
+    "name": "Spot plate by '6",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-076720e3"
+  },
+  {
+    "name": "Spot plate by '12",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-5c905d1d"
+  },
+  {
+    "name": "* Breakages/ Unreturned",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-fb8458a8"
+  },
+  {
+    "name": "Stalagmometer",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-3c2c2d11"
+  },
+  {
+    "name": "Stirring rod (glass)",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-828fa2c7"
+  },
+  {
+    "name": "Stirring rod (stainless)",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-0b5d8304"
+  },
+  {
+    "name": "Suction flask (4000ml)",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-d1dfdf12"
+  },
+  {
+    "name": "Suction flask (1000ml)",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-18b5a3be"
+  },
+  {
+    "name": "Suction flask (500ml)",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-7a561785"
+  },
+  {
+    "name": "Suppository mold",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-e94899fb"
+  },
+  {
+    "name": "Test tube holder",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-a7033d8c"
+  },
+  {
+    "name": "Test tube rack",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-67cb6507"
+  },
+  {
+    "name": "Test tube (small)",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-e9e831a3"
+  },
+  {
+    "name": "Testube (Big)",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-6a937dff"
+  },
+  {
+    "name": "Thermometer (digital)",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-0a12f5d8"
+  },
+  {
+    "name": "Thermometer (oral)",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-004152d8"
+  },
+  {
+    "name": "Thermometer (rectal)",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-6786cb3c"
+  },
+  {
+    "name": "Thermometer (alcohol)",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-720c764c"
+  },
+  {
+    "name": "Thermostat",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-18cebcea"
+  },
+  {
+    "name": "Thistle tube",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-f2e75cf3"
+  },
+  {
+    "name": "Three prong extension clamp",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-e051f655"
+  },
+  {
+    "name": "Tripod",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-28854d76"
+  },
+  {
+    "name": "Volumetric flask (10ml)",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-0c950a82"
+  },
+  {
+    "name": "Volumetric flask (25ml)",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-4b48be7e"
+  },
+  {
+    "name": "Volumetric flask (50ml)",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-658c8705"
+  },
+  {
+    "name": "Volumetric flask (100ml)",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-366eea60"
+  },
+  {
+    "name": "Volumetric flask (250ml)",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-106da999"
+  },
+  {
+    "name": "Volumetric flask (500ml)",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-23027c5c"
+  },
+  {
+    "name": "Volumetric flask (1000ml)",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-07f82c60"
+  },
+  {
+    "name": "Volumetric flask (2000ml)",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-8ea02d42"
+  },
+  {
+    "name": "Volumetric pipette (2ml)",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-4f42c376"
+  },
+  {
+    "name": "Volumetric pipette (5ml)",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-d1115b16"
+  },
+  {
+    "name": "Volumetric pipette (10ml)",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-f06078da"
+  },
+  {
+    "name": "Volumetric pipette (25ml)",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-e9420494"
+  },
+  {
+    "name": "Watch glass",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-9454d008"
+  },
+  {
+    "name": "Weighing bottle",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-4f67de92"
+  },
+  {
+    "name": "* Breakages/ Unreturned",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-fb8458a8"
+  },
+  {
+    "name": "Ampule Filler",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-8c900223"
+  },
+  {
+    "name": "Autoclave",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-f8d529a2"
+  },
+  {
+    "name": "Toploading balance",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-342703dd"
+  },
+  {
+    "name": "Analytical digital machine (OHAUS)",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-52952fda"
+  },
+  {
+    "name": "Capsuling machine",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-89df788a"
+  },
+  {
+    "name": "Centrifuge",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-eea6af64"
+  },
+  {
+    "name": "Chiller",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-c455c50f"
+  },
+  {
+    "name": "Circulating oven/Drying oven",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-4345ee46"
+  },
+  {
+    "name": "Clavenger apparatus Heavy",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-16f4417e"
+  },
+  {
+    "name": "Clavenger apparatus  Light",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-21c72d4a"
+  },
+  {
+    "name": "Cordless Corescope 2 w/ Monocular head stage",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-1fb44531"
+  },
+  {
+    "name": "Coating Pan, Local Fabrication",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-5c306697"
+  },
+  {
+    "name": "Dissolution Apparatus (2 Vessel)",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-3c075040"
+  },
+  {
+    "name": "Dissolution Apparatus (6 Vessel)",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-e0208226"
+  },
+  {
+    "name": "Disintegration Apparatus",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-72756efd"
+  },
+  {
+    "name": "Fourier-Transform Infrared Spectrophotometer",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-8bc04352"
+  },
+  {
+    "name": "Friabilator",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-9b530cf2"
+  },
+  {
+    "name": "Freezer",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-60846954"
+  },
+  {
+    "name": "Glucometer",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-3575df02"
+  },
+  {
+    "name": "Granulator",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-ea39b7a3"
+  },
+  {
+    "name": "Hardness tester (Stoke's Monsanto)",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-74548908"
+  },
+  {
+    "name": "High performance liquid chromatography (HPLC)",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-e595b317"
+  },
+  {
+    "name": "Incubator",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-62161515"
+  },
+  {
+    "name": "Liquid Filling Machine",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-2ffe58c3"
+  },
+  {
+    "name": "Magnetic stirrer",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-bb89d9f0"
+  },
+  {
+    "name": "Melting point apparatus",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-f2cb4e59"
+  },
+  {
+    "name": "Mechanical stirrer",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-d5dc0a23"
+  },
+  {
+    "name": "Metabolic cage",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-b1c52bdb"
+  },
+  {
+    "name": "Micropipette",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-300d930a"
+  },
+  {
+    "name": "Trinocular Compound Microscope",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-83bfaa59"
+  },
+  {
+    "name": "Mini Electric Liquid  Filler( YDF-10-10ml, vial)",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-b4b2c640"
+  },
+  {
+    "name": "Mixer",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-588fa75e"
+  },
+  {
+    "name": "Mohr-Westphal balance",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-0cc483df"
+  },
+  {
+    "name": "Moisture analyzer (OHAUS)",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-f10dfbf4"
+  },
+  {
+    "name": "Muffle furnace",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-0c94bc96"
+  },
+  {
+    "name": "* Obsolete -please see attachment",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-0a42e2da"
+  },
+  {
+    "name": "Ointment crimper",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-f2ec3ac9"
+  },
+  {
+    "name": "Ointment filler",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-421494f6"
+  },
+  {
+    "name": "Plantar Apparatus",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-16148db6"
+  },
+  {
+    "name": "Plethysmometer",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-d3f354a6"
+  },
+  {
+    "name": "Polarimeter",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-12ac9a10"
+  },
+  {
+    "name": "pH meter",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-c7d25979"
+  },
+  {
+    "name": "Refractometer",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-86d5c68b"
+  },
+  {
+    "name": "Refrigerator",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-2de78f08"
+  },
+  {
+    "name": "Rotary evaporator",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-22fcd816"
+  },
+  {
+    "name": "Sieve shaker",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-8f1a13c1"
+  },
+  {
+    "name": "Sieves (20)",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-96631534"
+  },
+  {
+    "name": "Sieves (40)",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-a0b1bdd5"
+  },
+  {
+    "name": "Sieves (60)",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-6cf1389d"
+  },
+  {
+    "name": "Sieves (80)",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-0a269144"
+  },
+  {
+    "name": "Sonicator bath",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-7b7ab5f8"
+  },
+  {
+    "name": "Suction apparatus",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-95976eab"
+  },
+  {
+    "name": "Tableting machine",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-91627275"
+  },
+  {
+    "name": "Telethermometer,Digital",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-3b1e536e"
+  },
+  {
+    "name": "Tensiometer ( Model JZHY-180)",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-bf2ecdce"
+  },
+  {
+    "name": "TLC chamber",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-72125b9d"
+  },
+  {
+    "name": "Urinometer",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-915ed4a9"
+  },
+  {
+    "name": "UV light",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-4178bd8c"
+  },
+  {
+    "name": "UV-Vis spectrophotometer",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-1487df41"
+  },
+  {
+    "name": "Viscometer",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-79338e30"
+  },
+  {
+    "name": "Water bath",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-3dd44d9f"
+  },
+  {
+    "name": "Weights (12's/ set)",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-42edf376"
+  },
+  {
+    "name": "* Obsolete -please see attachment",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-0a42e2da"
+  },
+  {
+    "name": "Water bath (obsolete) -1 unit",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-969ef164"
+  },
+  {
+    "name": "Amoxicillin",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-832bfd1f"
+  },
+  {
+    "name": "Bacitracin (Taxo A)",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-c5f5a4f9"
+  },
+  {
+    "name": "Ciprofloxacin",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-0c8d549f"
+  },
+  {
+    "name": "Clindamycin",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-4ff3b8b0"
+  },
+  {
+    "name": "Erythromycin",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-9de53760"
+  },
+  {
+    "name": "Gentamycin",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-b7e00c75"
+  },
+  {
+    "name": "Imipenem",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-7228bfba"
+  },
+  {
+    "name": "Novobiocin",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-9f81f41d"
+  },
+  {
+    "name": "Optochin",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-42d83a9e"
+  },
+  {
+    "name": "Piperacillin",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-c6c9967d"
+  },
+  {
+    "name": "Trimethroprim/Cotrimoxazole",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-921ab9d6"
+  },
+  {
+    "name": "Vancomycin",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-c68e131f"
+  },
+  {
+    "name": "Prepared by:",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-77c69c17"
+  },
+  {
+    "name": "Lelibeth Lambid",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-fdc5c7a0"
+  },
+  {
+    "name": "Laboratory technician",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-85cf963e"
+  },
+  {
+    "name": "Prepared By:",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-b581ecbf"
+  },
+  {
+    "name": "Queendolyn Garcia",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-3e67cf4a"
+  },
+  {
+    "name": "Laboratory Technician",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-291da147"
+  },
+  {
+    "name": "Mary June Aldunar",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-435da1f4"
+  },
+  {
+    "name": "Laboratory Technician",
+    "quantity": 0,
+    "unit": "mL",
+    "category": "Liquid Reagent",
+    "id": "liq-291da147"
+  },
+  {
+    "name": "Acacia powder",
+    "quantity": 1000.0,
+    "unit": "g",
+    "category": "Solid Reagent",
+    "id": "sol-00c61345"
+  },
+  {
+    "name": "Acetaminophen",
+    "quantity": 500.0,
+    "unit": "g",
+    "category": "Solid Reagent",
+    "id": "sol-f540282b"
+  },
+  {
+    "name": "Acetanilide",
+    "quantity": 350.0,
+    "unit": "g",
+    "category": "Solid Reagent",
+    "id": "sol-9cd30a83"
+  },
+  {
+    "name": "Activated charcoal",
+    "quantity": 500.0,
+    "unit": "g",
+    "category": "Solid Reagent",
+    "id": "sol-cda79956"
+  },
+  {
+    "name": "Albumin",
+    "quantity": 250.0,
+    "unit": "g",
+    "category": "Solid Reagent",
+    "id": "sol-e24a8496"
+  },
+  {
+    "name": "Alpha napthol",
+    "quantity": 850.0,
+    "unit": "g",
+    "category": "Solid Reagent",
+    "id": "sol-932052d7"
+  },
+  {
+    "name": "Alum",
+    "quantity": 100.0,
+    "unit": "g",
+    "category": "Solid Reagent",
+    "id": "sol-c0376258"
+  },
+  {
+    "name": "Aluminon",
+    "quantity": 20.0,
+    "unit": "g",
+    "category": "Solid Reagent",
+    "id": "sol-c6c2f4d0"
+  },
+  {
+    "name": "Aluminum chloride",
+    "quantity": 0,
+    "unit": "g",
+    "category": "Solid Reagent",
+    "id": "sol-86e6c864"
+  },
+  {
+    "name": "Aluminum hydroxide",
+    "quantity": 0,
+    "unit": "g",
+    "category": "Solid Reagent",
+    "id": "sol-86ab271b"
+  },
+  {
+    "name": "Aluminum Metal",
+    "quantity": 20.0,
+    "unit": "g",
+    "category": "Solid Reagent",
+    "id": "sol-69dae956"
+  },
+  {
+    "name": "Aluminum subacetate",
+    "quantity": 0,
+    "unit": "g",
+    "category": "Solid Reagent",
+    "id": "sol-23f1df81"
+  },
+  {
+    "name": "Aluminum sulfate (Alum)",
+    "quantity": 0,
+    "unit": "g",
+    "category": "Solid Reagent",
+    "id": "sol-aadf3b92"
+  },
+  {
+    "name": "Ammonium acetate",
+    "quantity": 450.0,
+    "unit": "g",
+    "category": "Solid Reagent",
+    "id": "sol-41e33421"
+  },
+  {
+    "name": "Ammonium biphospate",
+    "quantity": 100.0,
+    "unit": "g",
+    "category": "Solid Reagent",
+    "id": "sol-baa3a3ca"
+  },
+  {
+    "name": "Ammonium hydroxide",
+    "quantity": 0,
+    "unit": "g",
+    "category": "Solid Reagent",
+    "id": "sol-37cd76fd"
+  },
+  {
+    "name": "Ammonium Phosphate",
+    "quantity": 500.0,
+    "unit": "g",
+    "category": "Solid Reagent",
+    "id": "sol-ddfb342a"
+  },
+  {
+    "name": "di-Ammonium phosphate",
+    "quantity": 500.0,
+    "unit": "g",
+    "category": "Solid Reagent",
+    "id": "sol-f0bbf227"
+  },
+  {
+    "name": "Ammonium bromide",
+    "quantity": 70.0,
+    "unit": "g",
+    "category": "Solid Reagent",
+    "id": "sol-2250026e"
+  },
+  {
+    "name": "Ammonium carbonate",
+    "quantity": 500.0,
+    "unit": "g",
+    "category": "Solid Reagent",
+    "id": "sol-d3c44cdd"
+  },
+  {
+    "name": "Ammonium chloride",
+    "quantity": 900.0,
+    "unit": "g",
+    "category": "Solid Reagent",
+    "id": "sol-381123f7"
+  },
+  {
+    "name": "Ammonium Molybdate Tetrahydrate",
+    "quantity": 100.0,
+    "unit": "g",
+    "category": "Solid Reagent",
+    "id": "sol-6ff78264"
+  },
+  {
+    "name": "Ammonium oxalate",
+    "quantity": 0,
+    "unit": "g",
+    "category": "Solid Reagent",
+    "id": "sol-95a62866"
+  },
+  {
+    "name": "Ammonium sulfate",
+    "quantity": 850.0,
+    "unit": "g",
+    "category": "Solid Reagent",
+    "id": "sol-a5e722a0"
+  },
+  {
+    "name": "Ammonium ferrous sulfate, hexahydrated",
+    "quantity": 950.0,
+    "unit": "g",
+    "category": "Solid Reagent",
+    "id": "sol-82887c81"
+  },
+  {
+    "name": "Ammonium sulfite",
+    "quantity": 0,
+    "unit": "g",
+    "category": "Solid Reagent",
+    "id": "sol-4f085766"
+  },
+  {
+    "name": "Ammonium thiocyanate",
+    "quantity": 1500.0,
+    "unit": "g",
+    "category": "Solid Reagent",
+    "id": "sol-9402efd3"
+  },
+  {
+    "name": "Amoxicillin powder",
+    "quantity": 0,
+    "unit": "g",
+    "category": "Solid Reagent",
+    "id": "sol-4be96212"
+  },
+  {
+    "name": "Antimony chloride",
+    "quantity": 0,
+    "unit": "g",
+    "category": "Solid Reagent",
+    "id": "sol-cd05d189"
+  },
+  {
+    "name": "Antimony potassium tartrate",
+    "quantity": 600.0,
+    "unit": "g",
+    "category": "Solid Reagent",
+    "id": "sol-98285fe2"
+  },
+  {
+    "name": "Arsenic trioxide",
+    "quantity": 400.0,
+    "unit": "g",
+    "category": "Solid Reagent",
+    "id": "sol-c3b50f51"
+  },
+  {
+    "name": "Ascorbic acid",
+    "quantity": 0,
+    "unit": "g",
+    "category": "Solid Reagent",
+    "id": "sol-29eb6953"
+  },
+  {
+    "name": "Aspirin",
+    "quantity": 400.0,
+    "unit": "g",
+    "category": "Solid Reagent",
+    "id": "sol-5f9d6842"
+  },
+  {
+    "name": "Barium acetate",
+    "quantity": 450.0,
+    "unit": "g",
+    "category": "Solid Reagent",
+    "id": "sol-28cd78e9"
+  },
+  {
+    "name": "Barium acetate Hi A.R.",
+    "quantity": 0,
+    "unit": "g",
+    "category": "Solid Reagent",
+    "id": "sol-e97788af"
+  },
+  {
+    "name": "Barium chloride",
+    "quantity": 1000.0,
+    "unit": "g",
+    "category": "Solid Reagent",
+    "id": "sol-8780abc6"
+  },
+  {
+    "name": "Barium hydroxide",
+    "quantity": 350.0,
+    "unit": "g",
+    "category": "Solid Reagent",
+    "id": "sol-219baef3"
+  },
+  {
+    "name": "Barium hydroxide octahydrate",
+    "quantity": 0,
+    "unit": "g",
+    "category": "Solid Reagent",
+    "id": "sol-785aceea"
+  },
+  {
+    "name": "Barium sulfate",
+    "quantity": 450.0,
+    "unit": "g",
+    "category": "Solid Reagent",
+    "id": "sol-fcdae46a"
+  },
+  {
+    "name": "Bentonite powder",
+    "quantity": 250.0,
+    "unit": "g",
+    "category": "Solid Reagent",
+    "id": "sol-70e82ccd"
+  },
+  {
+    "name": "Benzalkonium chloride",
+    "quantity": 0,
+    "unit": "g",
+    "category": "Solid Reagent",
+    "id": "sol-99fc672d"
+  },
+  {
+    "name": "Benzamide",
+    "quantity": 400.0,
+    "unit": "g",
+    "category": "Solid Reagent",
+    "id": "sol-2c3c6797"
+  },
+  {
+    "name": "Benzidine",
+    "quantity": 0,
+    "unit": "g",
+    "category": "Solid Reagent",
+    "id": "sol-c8e9eaae"
+  },
+  {
+    "name": "Benzoic acid",
+    "quantity": 500.0,
+    "unit": "g",
+    "category": "Solid Reagent",
+    "id": "sol-fc664150"
+  },
+  {
+    "name": "Bromocresol green",
+    "quantity": 0,
+    "unit": "g",
+    "category": "Solid Reagent",
+    "id": "sol-b7ac5645"
+  },
+  {
+    "name": "Bromothymol blue",
+    "quantity": 0,
+    "unit": "g",
+    "category": "Solid Reagent",
+    "id": "sol-d37519f5"
+  },
+  {
+    "name": "Beta-napthol",
+    "quantity": 100.0,
+    "unit": "g",
+    "category": "Solid Reagent",
+    "id": "sol-0eb539b6"
+  },
+  {
+    "name": "Bismuth chloride",
+    "quantity": 0,
+    "unit": "g",
+    "category": "Solid Reagent",
+    "id": "sol-63e5481f"
+  },
+  {
+    "name": "Bismuth subnitrate",
+    "quantity": 0,
+    "unit": "g",
+    "category": "Solid Reagent",
+    "id": "sol-974adf94"
+  },
+  {
+    "name": "Blood Agar",
+    "quantity": 200.0,
+    "unit": "g",
+    "category": "Solid Reagent",
+    "id": "sol-c04f5336"
+  },
+  {
+    "name": "Boric acid",
+    "quantity": 1150.0,
+    "unit": "g",
+    "category": "Solid Reagent",
+    "id": "sol-350a09cf"
+  },
+  {
+    "name": "Bromophenol blue",
+    "quantity": 2.0,
+    "unit": "g",
+    "category": "Solid Reagent",
+    "id": "sol-8c3ee525"
+  },
+  {
+    "name": "Cadmium chloride",
+    "quantity": 0,
+    "unit": "g",
+    "category": "Solid Reagent",
+    "id": "sol-8d06da0e"
+  },
+  {
+    "name": "Cadmium acetate dihydrated",
+    "quantity": 1500.0,
+    "unit": "g",
+    "category": "Solid Reagent",
+    "id": "sol-38714ee0"
+  },
+  {
+    "name": "Cadmium acetate hydrated",
+    "quantity": 100.0,
+    "unit": "g",
+    "category": "Solid Reagent",
+    "id": "sol-9a9731a0"
+  },
+  {
+    "name": "Cadmium nitrate",
+    "quantity": 0,
+    "unit": "g",
+    "category": "Solid Reagent",
+    "id": "sol-2bcd0f98"
+  },
+  {
+    "name": "Calamine powder",
+    "quantity": 800.0,
+    "unit": "g",
+    "category": "Solid Reagent",
+    "id": "sol-220583d0"
+  },
+  {
+    "name": "Calcium acetate",
+    "quantity": 300.0,
+    "unit": "g",
+    "category": "Solid Reagent",
+    "id": "sol-ee3c0a76"
+  },
+  {
+    "name": "Calcium carbonate",
+    "quantity": 0,
+    "unit": "g",
+    "category": "Solid Reagent",
+    "id": "sol-588896c4"
+  },
+  {
+    "name": "Calcium chloride",
+    "quantity": 700.0,
+    "unit": "g",
+    "category": "Solid Reagent",
+    "id": "sol-d6a12f21"
+  },
+  {
+    "name": "Calcium gluconate",
+    "quantity": 0,
+    "unit": "g",
+    "category": "Solid Reagent",
+    "id": "sol-05ed44cb"
+  },
+  {
+    "name": "Calcium hydroxide",
+    "quantity": 900.0,
+    "unit": "g",
+    "category": "Solid Reagent",
+    "id": "sol-4627297c"
+  },
+  {
+    "name": "Calcium hypochlorite",
+    "quantity": 900.0,
+    "unit": "g",
+    "category": "Solid Reagent",
+    "id": "sol-a4056093"
+  },
+  {
+    "name": "Calcium nitrate",
+    "quantity": 0,
+    "unit": "g",
+    "category": "Solid Reagent",
+    "id": "sol-4022590f"
+  },
+  {
+    "name": "Calcium oxalate",
+    "quantity": 0,
+    "unit": "g",
+    "category": "Solid Reagent",
+    "id": "sol-78b7ef03"
+  },
+  {
+    "name": "Calcium oxide",
+    "quantity": 400.0,
+    "unit": "g",
+    "category": "Solid Reagent",
+    "id": "sol-da9a332c"
+  },
+  {
+    "name": "Calcium stearate",
+    "quantity": 0,
+    "unit": "g",
+    "category": "Solid Reagent",
+    "id": "sol-06897769"
+  },
+  {
+    "name": "Calcium sulfate",
+    "quantity": 500.0,
+    "unit": "g",
+    "category": "Solid Reagent",
+    "id": "sol-7713e9cc"
+  },
+  {
+    "name": "Camphor",
+    "quantity": 300.0,
+    "unit": "g",
+    "category": "Solid Reagent",
+    "id": "sol-de09b633"
+  },
+  {
+    "name": "Caffeine",
+    "quantity": 700.0,
+    "unit": "g",
+    "category": "Solid Reagent",
+    "id": "sol-256b1916"
+  },
+  {
+    "name": "Carageenan",
+    "quantity": 80.0,
+    "unit": "g",
+    "category": "Solid Reagent",
+    "id": "sol-2a5d9766"
+  },
+  {
+    "name": "Carbol Fuchsin",
+    "quantity": 20.0,
+    "unit": "g",
+    "category": "Solid Reagent",
+    "id": "sol-dd90dac2"
+  },
+  {
+    "name": "Carbon",
+    "quantity": 0,
+    "unit": "g",
+    "category": "Solid Reagent",
+    "id": "sol-5665261c"
+  },
+  {
+    "name": "Carbopol",
+    "quantity": 1000.0,
+    "unit": "g",
+    "category": "Solid Reagent",
+    "id": "sol-d1e1ff74"
+  },
+  {
+    "name": "Cetyl alcohol",
+    "quantity": 300.0,
+    "unit": "g",
+    "category": "Solid Reagent",
+    "id": "sol-6d50e0e9"
+  },
+  {
+    "name": "Cetyl esters wax",
+    "quantity": 0,
+    "unit": "g",
+    "category": "Solid Reagent",
+    "id": "sol-620816e2"
+  },
+  {
+    "name": "Cetostearyl alcohol",
+    "quantity": 525.0,
+    "unit": "g",
+    "category": "Solid Reagent",
+    "id": "sol-dae0fb00"
+  },
+  {
+    "name": "Cetrimonium chloride",
+    "quantity": 0,
+    "unit": "g",
+    "category": "Solid Reagent",
+    "id": "sol-0f2013e7"
+  },
+  {
+    "name": "Citric acid",
+    "quantity": 1000.0,
+    "unit": "g",
+    "category": "Solid Reagent",
+    "id": "sol-42751ed6"
+  },
+  {
+    "name": "Chloral hydrate",
+    "quantity": 0,
+    "unit": "g",
+    "category": "Solid Reagent",
+    "id": "sol-daedb60a"
+  },
+  {
+    "name": "Chromium nitrate",
+    "quantity": 0,
+    "unit": "g",
+    "category": "Solid Reagent",
+    "id": "sol-162c3da7"
+  },
+  {
+    "name": "Cobalt (II) Chloride Hexahydrate",
+    "quantity": 50.0,
+    "unit": "g",
+    "category": "Solid Reagent",
+    "id": "sol-bdb308b0"
+  },
+  {
+    "name": "Cobalt nitrate",
+    "quantity": 70.0,
+    "unit": "g",
+    "category": "Solid Reagent",
+    "id": "sol-633072d2"
+  },
+  {
+    "name": "Cocamidopropyl Betaine",
+    "quantity": 0,
+    "unit": "g",
+    "category": "Solid Reagent",
+    "id": "sol-aaa00c37"
+  },
+  {
+    "name": "Colchicine",
+    "quantity": 20.0,
+    "unit": "g",
+    "category": "Solid Reagent",
+    "id": "sol-b029b84d"
+  },
+  {
+    "name": "Cocoa Butter",
+    "quantity": 0,
+    "unit": "g",
+    "category": "Solid Reagent",
+    "id": "sol-49f57b60"
+  },
+  {
+    "name": "Congo red",
+    "quantity": 100.0,
+    "unit": "g",
+    "category": "Solid Reagent",
+    "id": "sol-6dc8ee6e"
+  },
+  {
+    "name": "Copper sulfate",
+    "quantity": 150.0,
+    "unit": "g",
+    "category": "Solid Reagent",
+    "id": "sol-cc591064"
+  },
+  {
+    "name": "Cornstarch",
+    "quantity": 1500.0,
+    "unit": "g",
+    "category": "Solid Reagent",
+    "id": "sol-a8fa2041"
+  },
+  {
+    "name": "Crystal violet",
+    "quantity": 150.0,
+    "unit": "g",
+    "category": "Solid Reagent",
+    "id": "sol-a3f859d8"
+  },
+  {
+    "name": "Cupric acetate",
+    "quantity": 120.0,
+    "unit": "g",
+    "category": "Solid Reagent",
+    "id": "sol-aee98144"
+  },
+  {
+    "name": "Cupric chloride",
+    "quantity": 250.0,
+    "unit": "g",
+    "category": "Solid Reagent",
+    "id": "sol-a5f6bcce"
+  },
+  {
+    "name": "Dextrose powder",
+    "quantity": 200.0,
+    "unit": "g",
+    "category": "Solid Reagent",
+    "id": "sol-c9f6f93a"
+  },
+  {
+    "name": "Diaminoethanetetra acetic acid (EDTA)",
+    "quantity": 150.0,
+    "unit": "g",
+    "category": "Solid Reagent",
+    "id": "sol-534b2e26"
+  },
+  {
+    "name": "Dimethyl glycoxime",
+    "quantity": 100.0,
+    "unit": "g",
+    "category": "Solid Reagent",
+    "id": "sol-ab5fd8c7"
+  },
+  {
+    "name": "Dinitrobenzoic acid",
+    "quantity": 75.0,
+    "unit": "g",
+    "category": "Solid Reagent",
+    "id": "sol-a6f61f3a"
+  },
+  {
+    "name": "Disodium EDTA",
+    "quantity": 200.0,
+    "unit": "g",
+    "category": "Solid Reagent",
+    "id": "sol-23742ff9"
+  },
+  {
+    "name": "DMDM Hydantoin",
+    "quantity": 0,
+    "unit": "g",
+    "category": "Solid Reagent",
+    "id": "sol-4ded9ba5"
+  },
+  {
+    "name": "Distilled monoglycerides",
+    "quantity": 0,
+    "unit": "g",
+    "category": "Solid Reagent",
+    "id": "sol-3b49c59d"
+  },
+  {
+    "name": "EDTA powder",
+    "quantity": 100.0,
+    "unit": "g",
+    "category": "Solid Reagent",
+    "id": "sol-700d75cd"
+  },
+  {
+    "name": "EMB (Eosin methylene blue) Agar",
+    "quantity": 500.0,
+    "unit": "g",
+    "category": "Solid Reagent",
+    "id": "sol-7ba5d29b"
+  },
+  {
+    "name": "Eosin yellow",
+    "quantity": 200.0,
+    "unit": "g",
+    "category": "Solid Reagent",
+    "id": "sol-250b1e85"
+  },
+  {
+    "name": "Eriochrome black",
+    "quantity": 0,
+    "unit": "g",
+    "category": "Solid Reagent",
+    "id": "sol-4f0375a7"
+  },
+  {
+    "name": "FD & C Red # 3",
+    "quantity": 0,
+    "unit": "g",
+    "category": "Solid Reagent",
+    "id": "sol-5473ac10"
+  },
+  {
+    "name": "Ferric ammonium sulfate",
+    "quantity": 1500.0,
+    "unit": "g",
+    "category": "Solid Reagent",
+    "id": "sol-d2e3a5bf"
+  },
+  {
+    "name": "Ferric chloride",
+    "quantity": 250.0,
+    "unit": "g",
+    "category": "Solid Reagent",
+    "id": "sol-44c589f4"
+  },
+  {
+    "name": "Ferric hydroxide",
+    "quantity": 0,
+    "unit": "g",
+    "category": "Solid Reagent",
+    "id": "sol-60b659d1"
+  },
+  {
+    "name": "Ferric Oxide",
+    "quantity": 0,
+    "unit": "g",
+    "category": "Solid Reagent",
+    "id": "sol-ac509608"
+  },
+  {
+    "name": "Ferric sulfate",
+    "quantity": 300.0,
+    "unit": "g",
+    "category": "Solid Reagent",
+    "id": "sol-bec0334f"
+  },
+  {
+    "name": "Ferrous sulfate",
+    "quantity": 0,
+    "unit": "g",
+    "category": "Solid Reagent",
+    "id": "sol-a1996289"
+  },
+  {
+    "name": "Ferrous sulfide",
+    "quantity": 0,
+    "unit": "g",
+    "category": "Solid Reagent",
+    "id": "sol-c0cf255d"
+  },
+  {
+    "name": "Fructose",
+    "quantity": 0,
+    "unit": "g",
+    "category": "Solid Reagent",
+    "id": "sol-4b307d49"
+  },
+  {
+    "name": "Gelatin powder",
+    "quantity": 550.0,
+    "unit": "g",
+    "category": "Solid Reagent",
+    "id": "sol-8398dd69"
+  },
+  {
+    "name": "Glass wool",
+    "quantity": 0,
+    "unit": "g",
+    "category": "Solid Reagent",
+    "id": "sol-768c78d7"
+  },
+  {
+    "name": "Glucose powder",
+    "quantity": 400.0,
+    "unit": "g",
+    "category": "Solid Reagent",
+    "id": "sol-903385c9"
+  },
+  {
+    "name": "Glyceryl Stearate",
+    "quantity": 250.0,
+    "unit": "g",
+    "category": "Solid Reagent",
+    "id": "sol-20c6f7f3"
+  },
+  {
+    "name": "Hydrocyanic acid",
+    "quantity": 500.0,
+    "unit": "g",
+    "category": "Solid Reagent",
+    "id": "sol-27e86d7a"
+  },
+  {
+    "name": "Hydroxylamine hydrochloride",
+    "quantity": 180.0,
+    "unit": "g",
+    "category": "Solid Reagent",
+    "id": "sol-9d20fe2c"
+  },
+  {
+    "name": "Hydroxynapthol blue",
+    "quantity": 10.0,
+    "unit": "g",
+    "category": "Solid Reagent",
+    "id": "sol-3bc7a496"
+  },
+  {
+    "name": "Iodine crystals",
+    "quantity": 200.0,
+    "unit": "g",
+    "category": "Solid Reagent",
+    "id": "sol-824b2629"
+  },
+  {
+    "name": "Iodine monochloride",
+    "quantity": 0,
+    "unit": "g",
+    "category": "Solid Reagent",
+    "id": "sol-5e298784"
+  },
+  {
+    "name": "Iodine Prills",
+    "quantity": 650.0,
+    "unit": "g",
+    "category": "Solid Reagent",
+    "id": "sol-b9dc5881"
+  },
+  {
+    "name": "Iron Oxide",
+    "quantity": 900.0,
+    "unit": "g",
+    "category": "Solid Reagent",
+    "id": "sol-1e794c55"
+  },
+  {
+    "name": "Iron sulfide",
+    "quantity": 250.0,
+    "unit": "g",
+    "category": "Solid Reagent",
+    "id": "sol-ec69da57"
+  },
+  {
+    "name": "Kaolin",
+    "quantity": 800.0,
+    "unit": "g",
+    "category": "Solid Reagent",
+    "id": "sol-2e5da356"
+  },
+  {
+    "name": "Lactophenol",
+    "quantity": 100.0,
+    "unit": "g",
+    "category": "Solid Reagent",
+    "id": "sol-51906e24"
+  },
+  {
+    "name": "Lactose",
+    "quantity": 0,
+    "unit": "g",
+    "category": "Solid Reagent",
+    "id": "sol-d0c66a08"
+  },
+  {
+    "name": "Lactose broth",
+    "quantity": 250.0,
+    "unit": "g",
+    "category": "Solid Reagent",
+    "id": "sol-793c6119"
+  },
+  {
+    "name": "Lactose Monohydrate",
+    "quantity": 500.0,
+    "unit": "g",
+    "category": "Solid Reagent",
+    "id": "sol-73ba11d0"
+  },
+  {
+    "name": "Lanolin",
+    "quantity": 900.0,
+    "unit": "g",
+    "category": "Solid Reagent",
+    "id": "sol-e822aa4f"
+  },
+  {
+    "name": "Lead acetate",
+    "quantity": 0,
+    "unit": "g",
+    "category": "Solid Reagent",
+    "id": "sol-87beb4f0"
+  },
+  {
+    "name": "Lead acetate, trihydrate",
+    "quantity": 0,
+    "unit": "g",
+    "category": "Solid Reagent",
+    "id": "sol-13646800"
+  },
+  {
+    "name": "Lead nitrate",
+    "quantity": 0,
+    "unit": "g",
+    "category": "Solid Reagent",
+    "id": "sol-e06affcd"
+  },
+  {
+    "name": "Agar, LIA",
+    "quantity": 0,
+    "unit": "g",
+    "category": "Solid Reagent",
+    "id": "sol-a4f59eb9"
+  },
+  {
+    "name": "Lithium carbonate",
+    "quantity": 300.0,
+    "unit": "g",
+    "category": "Solid Reagent",
+    "id": "sol-fa17bf35"
+  },
+  {
+    "name": "Agar, MacConkey",
+    "quantity": 1000.0,
+    "unit": "g",
+    "category": "Solid Reagent",
+    "id": "sol-306f3a8c"
+  },
+  {
+    "name": "Agar, Manitol salt",
+    "quantity": 500.0,
+    "unit": "g",
+    "category": "Solid Reagent",
+    "id": "sol-8ff8436b"
+  },
+  {
+    "name": "Magnesium carbonate (heavy)",
+    "quantity": 750.0,
+    "unit": "g",
+    "category": "Solid Reagent",
+    "id": "sol-bdadfe3b"
+  },
+  {
+    "name": "Magnesium carbonate (light)",
+    "quantity": 0,
+    "unit": "g",
+    "category": "Solid Reagent",
+    "id": "sol-d9b7012d"
+  },
+  {
+    "name": "Magnesium chloride",
+    "quantity": 200.0,
+    "unit": "g",
+    "category": "Solid Reagent",
+    "id": "sol-a35a4b4e"
+  },
+  {
+    "name": "Magnesium hydroxide",
+    "quantity": 350.0,
+    "unit": "g",
+    "category": "Solid Reagent",
+    "id": "sol-2be7a420"
+  },
+  {
+    "name": "Magnesium oxide",
+    "quantity": 700.0,
+    "unit": "g",
+    "category": "Solid Reagent",
+    "id": "sol-f8afb2ac"
+  },
+  {
+    "name": "Magnesium stearate",
+    "quantity": 300.0,
+    "unit": "g",
+    "category": "Solid Reagent",
+    "id": "sol-1304c55f"
+  },
+  {
+    "name": "Magnesium sulfate",
+    "quantity": 850.0,
+    "unit": "g",
+    "category": "Solid Reagent",
+    "id": "sol-b7655801"
+  },
+  {
+    "name": "Magnesium turnings",
+    "quantity": 20.0,
+    "unit": "g",
+    "category": "Solid Reagent",
+    "id": "sol-c057a7dc"
+  },
+  {
+    "name": "Magnesium trisilicate",
+    "quantity": 500.0,
+    "unit": "g",
+    "category": "Solid Reagent",
+    "id": "sol-4d721bde"
+  },
+  {
+    "name": "Manganese dioxide",
+    "quantity": 0,
+    "unit": "g",
+    "category": "Solid Reagent",
+    "id": "sol-0633d1a5"
+  },
+  {
+    "name": "Manganese trioxide",
+    "quantity": 0,
+    "unit": "g",
+    "category": "Solid Reagent",
+    "id": "sol-e911ad1e"
+  },
+  {
+    "name": "Manganese nitrate",
+    "quantity": 0,
+    "unit": "g",
+    "category": "Solid Reagent",
+    "id": "sol-457cd2a6"
+  },
+  {
+    "name": "Menthol crystal",
+    "quantity": 200.0,
+    "unit": "g",
+    "category": "Solid Reagent",
+    "id": "sol-1802cdea"
+  },
+  {
+    "name": "Mercury (II) chloride",
+    "quantity": 45.0,
+    "unit": "g",
+    "category": "Solid Reagent",
+    "id": "sol-9588f52f"
+  },
+  {
+    "name": "Mercury (I) chloride",
+    "quantity": 0,
+    "unit": "g",
+    "category": "Solid Reagent",
+    "id": "sol-9dcbb336"
+  },
+  {
+    "name": "Mercuric iodide",
+    "quantity": 40.0,
+    "unit": "g",
+    "category": "Solid Reagent",
+    "id": "sol-288e0313"
+  },
+  {
+    "name": "Mercuric oxide",
+    "quantity": 100.0,
+    "unit": "g",
+    "category": "Solid Reagent",
+    "id": "sol-8ad21713"
+  },
+  {
+    "name": "Mercurous nitrate",
+    "quantity": 0,
+    "unit": "g",
+    "category": "Solid Reagent",
+    "id": "sol-3d9f1735"
+  },
+  {
+    "name": "Mercury metal",
+    "quantity": 0,
+    "unit": "g",
+    "category": "Solid Reagent",
+    "id": "sol-c2a058dd"
+  },
+  {
+    "name": "Methyl cellulose",
+    "quantity": 0,
+    "unit": "g",
+    "category": "Solid Reagent",
+    "id": "sol-ea06f4bb"
+  },
+  {
+    "name": "Methyl red",
+    "quantity": 40.0,
+    "unit": "g",
+    "category": "Solid Reagent",
+    "id": "sol-3f10b5da"
+  },
+  {
+    "name": "Methyl orange",
+    "quantity": 35.0,
+    "unit": "g",
+    "category": "Solid Reagent",
+    "id": "sol-04bb813e"
+  },
+  {
+    "name": "Methyl paraben",
+    "quantity": 300.0,
+    "unit": "g",
+    "category": "Solid Reagent",
+    "id": "sol-a3f36643"
+  },
+  {
+    "name": "Methylene blue",
+    "quantity": 100.0,
+    "unit": "g",
+    "category": "Solid Reagent",
+    "id": "sol-30a82e25"
+  },
+  {
+    "name": "Mica powder",
+    "quantity": 0,
+    "unit": "g",
+    "category": "Solid Reagent",
+    "id": "sol-49836802"
+  },
+  {
+    "name": "Agar, Mueller hinton",
+    "quantity": 600.0,
+    "unit": "g",
+    "category": "Solid Reagent",
+    "id": "sol-d854cc00"
+  },
+  {
+    "name": "Napthalene",
+    "quantity": 440.0,
+    "unit": "g",
+    "category": "Solid Reagent",
+    "id": "sol-66abf6fb"
+  },
+  {
+    "name": "Agar, Nutrient",
+    "quantity": 600.0,
+    "unit": "g",
+    "category": "Solid Reagent",
+    "id": "sol-5666b56a"
+  },
+  {
+    "name": "Nutrient broth",
+    "quantity": 500.0,
+    "unit": "g",
+    "category": "Solid Reagent",
+    "id": "sol-f98ae68c"
+  },
+  {
+    "name": "Nickel sulfate",
+    "quantity": 125.0,
+    "unit": "g",
+    "category": "Solid Reagent",
+    "id": "sol-74313739"
+  },
+  {
+    "name": "Oxalic acid",
+    "quantity": 0,
+    "unit": "g",
+    "category": "Solid Reagent",
+    "id": "sol-58d3843e"
+  },
+  {
+    "name": "Palm Kernel Flakes",
+    "quantity": 0,
+    "unit": "g",
+    "category": "Solid Reagent",
+    "id": "sol-6107624a"
+  },
+  {
+    "name": "Paraffin wax",
+    "quantity": 1000.0,
+    "unit": "g",
+    "category": "Solid Reagent",
+    "id": "sol-e2c6dee3"
+  },
+  {
+    "name": "Phenacetin",
+    "quantity": 0,
+    "unit": "g",
+    "category": "Solid Reagent",
+    "id": "sol-e55dca9d"
+  },
+  {
+    "name": "Phenanthroline monohydrate",
+    "quantity": 0,
+    "unit": "g",
+    "category": "Solid Reagent",
+    "id": "sol-62d91aa3"
+  },
+  {
+    "name": "Phenolpthalein",
+    "quantity": 450.0,
+    "unit": "g",
+    "category": "Solid Reagent",
+    "id": "sol-07f5529a"
+  },
+  {
+    "name": "Phenylalanine powder",
+    "quantity": 0,
+    "unit": "g",
+    "category": "Solid Reagent",
+    "id": "sol-24fabc8b"
+  },
+  {
+    "name": "Phenylhydrazine HCL",
+    "quantity": 250.0,
+    "unit": "g",
+    "category": "Solid Reagent",
+    "id": "sol-b976a2ed"
+  },
+  {
+    "name": "Phosphomolybdic acid",
+    "quantity": 200.0,
+    "unit": "g",
+    "category": "Solid Reagent",
+    "id": "sol-da8fce7f"
+  },
+  {
+    "name": "Phloroglucinol",
+    "quantity": 70.0,
+    "unit": "g",
+    "category": "Solid Reagent",
+    "id": "sol-15eeaf21"
+  },
+  {
+    "name": "Potassium acetate",
+    "quantity": 800.0,
+    "unit": "g",
+    "category": "Solid Reagent",
+    "id": "sol-ef49d19f"
+  },
+  {
+    "name": "Potassium antimony tartrate",
+    "quantity": 0,
+    "unit": "g",
+    "category": "Solid Reagent",
+    "id": "sol-df09d850"
+  },
+  {
+    "name": "Potassium bicarbonate",
+    "quantity": 0,
+    "unit": "g",
+    "category": "Solid Reagent",
+    "id": "sol-6c0b7f84"
+  },
+  {
+    "name": "Potassium bipthalate",
+    "quantity": 0,
+    "unit": "g",
+    "category": "Solid Reagent",
+    "id": "sol-9a275f2b"
+  },
+  {
+    "name": "Potassium bitartrate",
+    "quantity": 0,
+    "unit": "g",
+    "category": "Solid Reagent",
+    "id": "sol-010ae798"
+  },
+  {
+    "name": "Potassium bromate",
+    "quantity": 100.0,
+    "unit": "g",
+    "category": "Solid Reagent",
+    "id": "sol-ff442bdd"
+  },
+  {
+    "name": "Potassium chlorate",
+    "quantity": 200.0,
+    "unit": "g",
+    "category": "Solid Reagent",
+    "id": "sol-5748f046"
+  },
+  {
+    "name": "Potassium chloride",
+    "quantity": 600.0,
+    "unit": "g",
+    "category": "Solid Reagent",
+    "id": "sol-efe34fee"
+  },
+  {
+    "name": "Potassium chromate",
+    "quantity": 250.0,
+    "unit": "g",
+    "category": "Solid Reagent",
+    "id": "sol-17ef5b6c"
+  },
+  {
+    "name": "Potassium cyanide",
+    "quantity": 0,
+    "unit": "g",
+    "category": "Solid Reagent",
+    "id": "sol-a9066401"
+  },
+  {
+    "name": "Potassium dichromate",
+    "quantity": 700.0,
+    "unit": "g",
+    "category": "Solid Reagent",
+    "id": "sol-849ee3f3"
+  },
+  {
+    "name": "Potassium ferricyanide",
+    "quantity": 400.0,
+    "unit": "g",
+    "category": "Solid Reagent",
+    "id": "sol-8bb90607"
+  },
+  {
+    "name": "Potassium ferrocyanide",
+    "quantity": 0,
+    "unit": "g",
+    "category": "Solid Reagent",
+    "id": "sol-a316b5fd"
+  },
+  {
+    "name": "Potassium hydrogen Carbonate",
+    "quantity": 400.0,
+    "unit": "g",
+    "category": "Solid Reagent",
+    "id": "sol-be0d7ee3"
+  },
+  {
+    "name": "Potassium hydroxide",
+    "quantity": 800.0,
+    "unit": "g",
+    "category": "Solid Reagent",
+    "id": "sol-b4d39ae8"
+  },
+  {
+    "name": "Picric acid",
+    "quantity": 500.0,
+    "unit": "g",
+    "category": "Solid Reagent",
+    "id": "sol-8e192195"
+  },
+  {
+    "name": "Potassium Iodate",
+    "quantity": 1000.0,
+    "unit": "g",
+    "category": "Solid Reagent",
+    "id": "sol-aebffc23"
+  },
+  {
+    "name": "Potassium iodide",
+    "quantity": 1000.0,
+    "unit": "g",
+    "category": "Solid Reagent",
+    "id": "sol-72236859"
+  },
+  {
+    "name": "Potassium nitrate",
+    "quantity": 150.0,
+    "unit": "g",
+    "category": "Solid Reagent",
+    "id": "sol-e1074d86"
+  },
+  {
+    "name": "Potassium nitrite",
+    "quantity": 0,
+    "unit": "g",
+    "category": "Solid Reagent",
+    "id": "sol-2065f046"
+  },
+  {
+    "name": "Potassium oxalate",
+    "quantity": 0,
+    "unit": "g",
+    "category": "Solid Reagent",
+    "id": "sol-5d359ff4"
+  },
+  {
+    "name": "Potassium Oxalate Monohydrate",
+    "quantity": 500.0,
+    "unit": "g",
+    "category": "Solid Reagent",
+    "id": "sol-c59ad492"
+  },
+  {
+    "name": "Potassium perchlorate",
+    "quantity": 0,
+    "unit": "g",
+    "category": "Solid Reagent",
+    "id": "sol-a6c95bf3"
+  },
+  {
+    "name": "Potassium permanganate",
+    "quantity": 300.0,
+    "unit": "g",
+    "category": "Solid Reagent",
+    "id": "sol-2c585b9b"
+  },
+  {
+    "name": "Potassium phosphate",
+    "quantity": 15.0,
+    "unit": "g",
+    "category": "Solid Reagent",
+    "id": "sol-6f03eae7"
+  },
+  {
+    "name": "Potassium phosphate, Di-basic",
+    "quantity": 0,
+    "unit": "g",
+    "category": "Solid Reagent",
+    "id": "sol-f49d639c"
+  },
+  {
+    "name": "Potassium phosphate monobasic",
+    "quantity": 250.0,
+    "unit": "g",
+    "category": "Solid Reagent",
+    "id": "sol-cd09ad80"
+  },
+  {
+    "name": "Potassium pyroantimonate",
+    "quantity": 30.0,
+    "unit": "g",
+    "category": "Solid Reagent",
+    "id": "sol-30d60b45"
+  },
+  {
+    "name": "Potassium tartrate monobasic",
+    "quantity": 200.0,
+    "unit": "g",
+    "category": "Solid Reagent",
+    "id": "sol-e38759fc"
+  },
+  {
+    "name": "Potassium sodium tartrate",
+    "quantity": 0,
+    "unit": "g",
+    "category": "Solid Reagent",
+    "id": "sol-44fe6cdb"
+  },
+  {
+    "name": "Potassium thiocyanate",
+    "quantity": 75.0,
+    "unit": "g",
+    "category": "Solid Reagent",
+    "id": "sol-982e12c8"
+  },
+  {
+    "name": "Potassium sulfate",
+    "quantity": 200.0,
+    "unit": "g",
+    "category": "Solid Reagent",
+    "id": "sol-1031dada"
+  },
+  {
+    "name": "Precipitated sulfur",
+    "quantity": 0,
+    "unit": "g",
+    "category": "Solid Reagent",
+    "id": "sol-7b0b625d"
+  },
+  {
+    "name": "Propyl Paraben",
+    "quantity": 200.0,
+    "unit": "g",
+    "category": "Solid Reagent",
+    "id": "sol-836d7fe5"
+  },
+  {
+    "name": "P-rosaniline",
+    "quantity": 0,
+    "unit": "g",
+    "category": "Solid Reagent",
+    "id": "sol-d47b626c"
+  },
+  {
+    "name": "Quinine Sulfate",
+    "quantity": 0,
+    "unit": "g",
+    "category": "Solid Reagent",
+    "id": "sol-96021b64"
+  },
+  {
+    "name": "Quinhydrone",
+    "quantity": 200.0,
+    "unit": "g",
+    "category": "Solid Reagent",
+    "id": "sol-060b2458"
+  },
+  {
+    "name": "Red iron oxide",
+    "quantity": 300.0,
+    "unit": "g",
+    "category": "Solid Reagent",
+    "id": "sol-462ae5d6"
+  },
+  {
+    "name": "Resorcinol",
+    "quantity": 100.0,
+    "unit": "g",
+    "category": "Solid Reagent",
+    "id": "sol-ea83b649"
+  },
+  {
+    "name": "Ribose",
+    "quantity": 0,
+    "unit": "g",
+    "category": "Solid Reagent",
+    "id": "sol-265e6e36"
+  },
+  {
+    "name": "Rhodamine B",
+    "quantity": 25.0,
+    "unit": "g",
+    "category": "Solid Reagent",
+    "id": "sol-67315bf2"
+  },
+  {
+    "name": "Saccharin",
+    "quantity": 0,
+    "unit": "g",
+    "category": "Solid Reagent",
+    "id": "sol-e6f6b483"
+  },
+  {
+    "name": "Salicylic acid",
+    "quantity": 700.0,
+    "unit": "g",
+    "category": "Solid Reagent",
+    "id": "sol-e048fc99"
+  },
+  {
+    "name": "Silica gel, blue",
+    "quantity": 0,
+    "unit": "g",
+    "category": "Solid Reagent",
+    "id": "sol-66bc98a7"
+  },
+  {
+    "name": "Silica gel S-10",
+    "quantity": 900.0,
+    "unit": "g",
+    "category": "Solid Reagent",
+    "id": "sol-ab51a835"
+  },
+  {
+    "name": "Silica gel G-20",
+    "quantity": 0,
+    "unit": "g",
+    "category": "Solid Reagent",
+    "id": "sol-e68aee8d"
+  },
+  {
+    "name": "Shea Butter",
+    "quantity": 0,
+    "unit": "g",
+    "category": "Solid Reagent",
+    "id": "sol-1a045281"
+  },
+  {
+    "name": "Silica powder",
+    "quantity": 250.0,
+    "unit": "g",
+    "category": "Solid Reagent",
+    "id": "sol-5269dfaa"
+  },
+  {
+    "name": "Silver acetate",
+    "quantity": 30.0,
+    "unit": "g",
+    "category": "Solid Reagent",
+    "id": "sol-4bd0fc77"
+  },
+  {
+    "name": "Silver chloride",
+    "quantity": 0,
+    "unit": "g",
+    "category": "Solid Reagent",
+    "id": "sol-bcac30be"
+  },
+  {
+    "name": "Silver nitrate",
+    "quantity": 0,
+    "unit": "g",
+    "category": "Solid Reagent",
+    "id": "sol-7c54a1af"
+  },
+  {
+    "name": "Agar, SIM",
+    "quantity": 1000.0,
+    "unit": "g",
+    "category": "Solid Reagent",
+    "id": "sol-5471b76a"
+  },
+  {
+    "name": "Simmon citrate agar",
+    "quantity": 700.0,
+    "unit": "g",
+    "category": "Solid Reagent",
+    "id": "sol-09c7cbb2"
+  },
+  {
+    "name": "Sodium acetate",
+    "quantity": 425.0,
+    "unit": "g",
+    "category": "Solid Reagent",
+    "id": "sol-07375321"
+  },
+  {
+    "name": "Sodium acetate, trihydrate",
+    "quantity": 100.0,
+    "unit": "g",
+    "category": "Solid Reagent",
+    "id": "sol-7a47ec80"
+  },
+  {
+    "name": "Sodium arsenate",
+    "quantity": 0,
+    "unit": "g",
+    "category": "Solid Reagent",
+    "id": "sol-dfda7e56"
+  },
+  {
+    "name": "Sodium arsenite",
+    "quantity": 50.0,
+    "unit": "g",
+    "category": "Solid Reagent",
+    "id": "sol-d400bae5"
+  },
+  {
+    "name": "Sodium benzoate",
+    "quantity": 0,
+    "unit": "g",
+    "category": "Solid Reagent",
+    "id": "sol-cbc2e2bc"
+  },
+  {
+    "name": "Sodium bicarbonate",
+    "quantity": 2.5,
+    "unit": "kg",
+    "category": "Solid Reagent",
+    "id": "sol-ef0ab4df"
+  },
+  {
+    "name": "Sodium bismuthate",
+    "quantity": 150.0,
+    "unit": "g",
+    "category": "Solid Reagent",
+    "id": "sol-61465d1a"
+  },
+  {
+    "name": "Sodium bisulfite, AR",
+    "quantity": 500.0,
+    "unit": "g",
+    "category": "Solid Reagent",
+    "id": "sol-ed2a0084"
+  },
+  {
+    "name": "Sodium bisulfite",
+    "quantity": 0,
+    "unit": "g",
+    "category": "Solid Reagent",
+    "id": "sol-466b85d2"
+  },
+  {
+    "name": "Sodium borate",
+    "quantity": 800.0,
+    "unit": "g",
+    "category": "Solid Reagent",
+    "id": "sol-acbb693f"
+  },
+  {
+    "name": "Sodium bromide",
+    "quantity": 550.0,
+    "unit": "g",
+    "category": "Solid Reagent",
+    "id": "sol-76ed77f2"
+  },
+  {
+    "name": "Sodium carbonate anhydrous",
+    "quantity": 0,
+    "unit": "g",
+    "category": "Solid Reagent",
+    "id": "sol-6d1b47de"
+  },
+  {
+    "name": "Sodium chloride",
+    "quantity": 0,
+    "unit": "g",
+    "category": "Solid Reagent",
+    "id": "sol-d552c63e"
+  },
+  {
+    "name": "Sodium citrate",
+    "quantity": 650.0,
+    "unit": "g",
+    "category": "Solid Reagent",
+    "id": "sol-73c285d1"
+  },
+  {
+    "name": "Sodium fluoride",
+    "quantity": 800.0,
+    "unit": "g",
+    "category": "Solid Reagent",
+    "id": "sol-714aa445"
+  },
+  {
+    "name": "Sodium peroxide",
+    "quantity": 300.0,
+    "unit": "g",
+    "category": "Solid Reagent",
+    "id": "sol-df94c7ce"
+  },
+  {
+    "name": "Sorbitol",
+    "quantity": 0,
+    "unit": "g",
+    "category": "Solid Reagent",
+    "id": "sol-0d3d2049"
+  },
+  {
+    "name": "Sodium cobalt nitrate",
+    "quantity": 100.0,
+    "unit": "g",
+    "category": "Solid Reagent",
+    "id": "sol-8eba1a06"
+  },
+  {
+    "name": "Sodium hydroxide",
+    "quantity": 0,
+    "unit": "g",
+    "category": "Solid Reagent",
+    "id": "sol-a1f065a8"
+  },
+  {
+    "name": "Sodium iodide",
+    "quantity": 100.0,
+    "unit": "g",
+    "category": "Solid Reagent",
+    "id": "sol-621f3289"
+  },
+  {
+    "name": "Sodium lauryl sulfate",
+    "quantity": 500.0,
+    "unit": "g",
+    "category": "Solid Reagent",
+    "id": "sol-9e2f4e67"
+  },
+  {
+    "name": "Sodium nitrate",
+    "quantity": 100.0,
+    "unit": "g",
+    "category": "Solid Reagent",
+    "id": "sol-949b31e4"
+  },
+  {
+    "name": "Sodium nitrite",
+    "quantity": 700.0,
+    "unit": "g",
+    "category": "Solid Reagent",
+    "id": "sol-3341115e"
+  },
+  {
+    "name": "Sodium nitroprusside",
+    "quantity": 100.0,
+    "unit": "g",
+    "category": "Solid Reagent",
+    "id": "sol-2e776596"
+  },
+  {
+    "name": "sodium oxalate",
+    "quantity": 500.0,
+    "unit": "g",
+    "category": "Solid Reagent",
+    "id": "sol-aa21cbb0"
+  },
+  {
+    "name": "Sodium phosphate dihydrtate",
+    "quantity": 500.0,
+    "unit": "g",
+    "category": "Solid Reagent",
+    "id": "sol-6b7899d8"
+  },
+  {
+    "name": "Sodium phosphate Dibasic heptahydrate",
+    "quantity": 500.0,
+    "unit": "g",
+    "category": "Solid Reagent",
+    "id": "sol-9df896c7"
+  },
+  {
+    "name": "Sodium phosphate Monobasic heptahydrate",
+    "quantity": 0,
+    "unit": "g",
+    "category": "Solid Reagent",
+    "id": "sol-58c674ba"
+  },
+  {
+    "name": "Sodium phosphate",
+    "quantity": 0,
+    "unit": "g",
+    "category": "Solid Reagent",
+    "id": "sol-b2dc4157"
+  },
+  {
+    "name": "Sodium laureth sulfate",
+    "quantity": 1400.0,
+    "unit": "g",
+    "category": "Solid Reagent",
+    "id": "sol-6990d3ac"
+  },
+  {
+    "name": "Sodium sulfate (anhydrous)",
+    "quantity": 900.0,
+    "unit": "g",
+    "category": "Solid Reagent",
+    "id": "sol-2d6a5d04"
+  },
+  {
+    "name": "Sodium sulfate",
+    "quantity": 1000.0,
+    "unit": "g",
+    "category": "Solid Reagent",
+    "id": "sol-64427da9"
+  },
+  {
+    "name": "Sodium sulfite",
+    "quantity": 400.0,
+    "unit": "g",
+    "category": "Solid Reagent",
+    "id": "sol-73bcafe0"
+  },
+  {
+    "name": "Sodium thiosulfate",
+    "quantity": 800.0,
+    "unit": "g",
+    "category": "Solid Reagent",
+    "id": "sol-eb9b8126"
+  },
+  {
+    "name": "Soya Casein",
+    "quantity": 350.0,
+    "unit": "g",
+    "category": "Solid Reagent",
+    "id": "sol-06abc61a"
+  },
+  {
+    "name": "Spermaceti",
+    "quantity": 200.0,
+    "unit": "g",
+    "category": "Solid Reagent",
+    "id": "sol-d6519b43"
+  },
+  {
+    "name": "Stannic chloride",
+    "quantity": 0,
+    "unit": "g",
+    "category": "Solid Reagent",
+    "id": "sol-8fadc75a"
+  },
+  {
+    "name": "Stannous chloride",
+    "quantity": 50.0,
+    "unit": "g",
+    "category": "Solid Reagent",
+    "id": "sol-3a9d14af"
+  },
+  {
+    "name": "Starch",
+    "quantity": 400.0,
+    "unit": "g",
+    "category": "Solid Reagent",
+    "id": "sol-5406948e"
+  },
+  {
+    "name": "Stearic acid",
+    "quantity": 0,
+    "unit": "g",
+    "category": "Solid Reagent",
+    "id": "sol-fdf0f8e9"
+  },
+  {
+    "name": "Stearyl alcohol",
+    "quantity": 1000.0,
+    "unit": "g",
+    "category": "Solid Reagent",
+    "id": "sol-dd0f9c33"
+  },
+  {
+    "name": "Strontium chloride",
+    "quantity": 50.0,
+    "unit": "g",
+    "category": "Solid Reagent",
+    "id": "sol-92ce0e3c"
+  },
+  {
+    "name": "Sublimed sulfur",
+    "quantity": 200.0,
+    "unit": "g",
+    "category": "Solid Reagent",
+    "id": "sol-75604c66"
+  },
+  {
+    "name": "Sucrose",
+    "quantity": 0,
+    "unit": "g",
+    "category": "Solid Reagent",
+    "id": "sol-68e5eefb"
+  },
+  {
+    "name": "Sulfur",
+    "quantity": 400.0,
+    "unit": "g",
+    "category": "Solid Reagent",
+    "id": "sol-3071b069"
+  },
+  {
+    "name": "Tannic acid",
+    "quantity": 0,
+    "unit": "g",
+    "category": "Solid Reagent",
+    "id": "sol-f4340d0d"
+  },
+  {
+    "name": "Tartaric acid",
+    "quantity": 0,
+    "unit": "g",
+    "category": "Solid Reagent",
+    "id": "sol-766fb205"
+  },
+  {
+    "name": "Thioacetamide",
+    "quantity": 0,
+    "unit": "g",
+    "category": "Solid Reagent",
+    "id": "sol-66de847c"
+  },
+  {
+    "name": "Thymol",
+    "quantity": 100.0,
+    "unit": "g",
+    "category": "Solid Reagent",
+    "id": "sol-035f03ce"
+  },
+  {
+    "name": "Tin granules",
+    "quantity": 0,
+    "unit": "g",
+    "category": "Solid Reagent",
+    "id": "sol-19486023"
+  },
+  {
+    "name": "Titanium dioxide",
+    "quantity": 0,
+    "unit": "g",
+    "category": "Solid Reagent",
+    "id": "sol-4cd0aea4"
+  },
+  {
+    "name": "Titanium oxide",
+    "quantity": 0,
+    "unit": "g",
+    "category": "Solid Reagent",
+    "id": "sol-3ba1258b"
+  },
+  {
+    "name": "Tragacanth gum",
+    "quantity": 700.0,
+    "unit": "g",
+    "category": "Solid Reagent",
+    "id": "sol-9d4f0541"
+  },
+  {
+    "name": "Triclosan",
+    "quantity": 200.0,
+    "unit": "g",
+    "category": "Solid Reagent",
+    "id": "sol-ea302f0d"
+  },
+  {
+    "name": "Trisodium citrate",
+    "quantity": 500.0,
+    "unit": "g",
+    "category": "Solid Reagent",
+    "id": "sol-4f8b8391"
+  },
+  {
+    "name": "Trisodium Phosphate",
+    "quantity": 400.0,
+    "unit": "g",
+    "category": "Solid Reagent",
+    "id": "sol-cfd73ca6"
+  },
+  {
+    "name": "Agar, Triple Sugar Iron",
+    "quantity": 500.0,
+    "unit": "g",
+    "category": "Solid Reagent",
+    "id": "sol-e4e94c9f"
+  },
+  {
+    "name": "Tyrosine powder",
+    "quantity": 60.0,
+    "unit": "g",
+    "category": "Solid Reagent",
+    "id": "sol-0c13c9b5"
+  },
+  {
+    "name": "Tryptophan powder",
+    "quantity": 200.0,
+    "unit": "g",
+    "category": "Solid Reagent",
+    "id": "sol-4480d485"
+  },
+  {
+    "name": "Urea",
+    "quantity": 200.0,
+    "unit": "g",
+    "category": "Solid Reagent",
+    "id": "sol-9bdaa28f"
+  },
+  {
+    "name": "Vanillin AR",
+    "quantity": 80.0,
+    "unit": "g",
+    "category": "Solid Reagent",
+    "id": "sol-430aaa46"
+  },
+  {
+    "name": "White petroleum snow",
+    "quantity": 0,
+    "unit": "g",
+    "category": "Solid Reagent",
+    "id": "sol-66b5eb62"
+  },
+  {
+    "name": "White beeswax",
+    "quantity": 800.0,
+    "unit": "g",
+    "category": "Solid Reagent",
+    "id": "sol-2023ce31"
+  },
+  {
+    "name": "Xylitol",
+    "quantity": 500.0,
+    "unit": "g",
+    "category": "Solid Reagent",
+    "id": "sol-7ea58e4b"
+  },
+  {
+    "name": "Xylose",
+    "quantity": 0,
+    "unit": "g",
+    "category": "Solid Reagent",
+    "id": "sol-209c0e8f"
+  },
+  {
+    "name": "Yeast",
+    "quantity": 200.0,
+    "unit": "g",
+    "category": "Solid Reagent",
+    "id": "sol-06540920"
+  },
+  {
+    "name": "Yellow beeswax",
+    "quantity": 600.0,
+    "unit": "g",
+    "category": "Solid Reagent",
+    "id": "sol-43c47a4c"
+  },
+  {
+    "name": "Zinc acetate",
+    "quantity": 0,
+    "unit": "g",
+    "category": "Solid Reagent",
+    "id": "sol-40ce157c"
+  },
+  {
+    "name": "Zinc chloride",
+    "quantity": 300.0,
+    "unit": "g",
+    "category": "Solid Reagent",
+    "id": "sol-2b2a4541"
+  },
+  {
+    "name": "Zinc dust",
+    "quantity": 900.0,
+    "unit": "g",
+    "category": "Solid Reagent",
+    "id": "sol-4d4a5e4f"
+  },
+  {
+    "name": "Zinc oxide",
+    "quantity": 0,
+    "unit": "g",
+    "category": "Solid Reagent",
+    "id": "sol-dd630461"
+  },
+  {
+    "name": "Zinc stearate",
+    "quantity": 200.0,
+    "unit": "g",
+    "category": "Solid Reagent",
+    "id": "sol-5bc174ac"
+  },
+  {
+    "name": "Zinc sulfate",
+    "quantity": 100.0,
+    "unit": "g",
+    "category": "Solid Reagent",
+    "id": "sol-175c79ab"
+  },
+  {
+    "name": "Zinc sulfate heptahydrate",
+    "quantity": 350.0,
+    "unit": "g",
+    "category": "Solid Reagent",
+    "id": "sol-6f951036"
+  },
+  {
+    "name": "Prepared By:",
+    "quantity": 0,
+    "unit": "g",
+    "category": "Solid Reagent",
+    "id": "sol-b581ecbf"
+  },
+  {
+    "name": "Queendolyn Garcia",
+    "quantity": 0,
+    "unit": "g",
+    "category": "Solid Reagent",
+    "id": "sol-3e67cf4a"
+  },
+  {
+    "name": "Laboratory Technician",
+    "quantity": 0,
+    "unit": "g",
+    "category": "Solid Reagent",
+    "id": "sol-291da147"
+  },
+  {
+    "name": "Mary June Aldunar",
+    "quantity": 0,
+    "unit": "g",
+    "category": "Solid Reagent",
+    "id": "sol-435da1f4"
+  },
+  {
+    "name": "Laboratory Technician",
+    "quantity": 0,
+    "unit": "g",
+    "category": "Solid Reagent",
+    "id": "sol-291da147"
+  },
+  {
+    "name": "Alcohol lamp",
+    "quantity": 27.0,
+    "unit": "pcs",
+    "category": "Glassware",
+    "id": "glw-589b3c0a"
+  },
+  {
+    "name": "Aspirator",
+    "quantity": 59.0,
+    "unit": "pcs",
+    "category": "Glassware",
+    "id": "glw-7c1eded1"
+  },
+  {
+    "name": "Band- aid",
+    "quantity": 0,
+    "unit": "box",
+    "category": "Glassware",
+    "id": "glw-807b19c9"
+  },
+  {
+    "name": "Bandage",
+    "quantity": 6.0,
+    "unit": "roll",
+    "category": "Glassware",
+    "id": "glw-22b8c396"
+  },
+  {
+    "name": "Bent tube",
+    "quantity": 1.0,
+    "unit": "pcs",
+    "category": "Glassware",
+    "id": "glw-ff402985"
+  },
+  {
+    "name": "Burn Oinment",
+    "quantity": 0,
+    "unit": "pcs",
+    "category": "Glassware",
+    "id": "glw-de36e093"
+  },
+  {
+    "name": "cork (big )",
+    "quantity": 48.0,
+    "unit": "pcs",
+    "category": "Glassware",
+    "id": "glw-5e815081"
+  },
+  {
+    "name": "cork (small )",
+    "quantity": 1.0,
+    "unit": "packs",
+    "category": "Glassware",
+    "id": "glw-651d5ad0"
+  },
+  {
+    "name": "Cotton",
+    "quantity": 8.0,
+    "unit": "packs",
+    "category": "Glassware",
+    "id": "glw-884af049"
+  },
+  {
+    "name": "Dropper ( glass )",
+    "quantity": 30.0,
+    "unit": "pcs",
+    "category": "Glassware",
+    "id": "glw-993dab09"
+  },
+  {
+    "name": "75% Ethyl alcohol",
+    "quantity": 0,
+    "unit": "gal",
+    "category": "Glassware",
+    "id": "glw-793f345d"
+  },
+  {
+    "name": "Face Mask",
+    "quantity": 0,
+    "unit": "box",
+    "category": "Glassware",
+    "id": "glw-99f47e7e"
+  },
+  {
+    "name": "Filter paper",
+    "quantity": 0,
+    "unit": "box",
+    "category": "Glassware",
+    "id": "glw-c64a84e1"
+  },
+  {
+    "name": "Glass tubing",
+    "quantity": 10.0,
+    "unit": "roll",
+    "category": "Glassware",
+    "id": "glw-19c2d9f6"
+  },
+  {
+    "name": "Hydrogen Peroxide",
+    "quantity": 6.0,
+    "unit": "bot",
+    "category": "Glassware",
+    "id": "glw-a093e258"
+  },
+  {
+    "name": "Lens paper",
+    "quantity": 1.0,
+    "unit": "pcs",
+    "category": "Glassware",
+    "id": "glw-251bab61"
+  },
+  {
+    "name": "Litmus paper (blue)",
+    "quantity": 0,
+    "unit": "tube",
+    "category": "Glassware",
+    "id": "glw-0a6ab375"
+  },
+  {
+    "name": "Litmus paper (red)",
+    "quantity": 0,
+    "unit": "tube",
+    "category": "Glassware",
+    "id": "glw-cf16f491"
+  },
+  {
+    "name": "Lysol disinfectant liquid",
+    "quantity": 0,
+    "unit": "gal",
+    "category": "Glassware",
+    "id": "glw-0d106712"
+  },
+  {
+    "name": "Lysol spray",
+    "quantity": 0,
+    "unit": "bot",
+    "category": "Glassware",
+    "id": "glw-2299e72d"
+  },
+  {
+    "name": "Magnesium ribbon",
+    "quantity": 17.0,
+    "unit": "roll",
+    "category": "Glassware",
+    "id": "glw-6afe6de9"
+  },
+  {
+    "name": "Povidone- iodine (60 ml",
+    "quantity": 6.0,
+    "unit": "bot",
+    "category": "Glassware",
+    "id": "glw-d9ed5dd8"
+  },
+  {
+    "name": "Reagent bottle boston round (60ml)",
+    "quantity": 1.0,
+    "unit": "pcs",
+    "category": "Glassware",
+    "id": "glw-34d497bf"
+  },
+  {
+    "name": "Reagent bottle boston round (250ml)",
+    "quantity": 0,
+    "unit": "pcs",
+    "category": "Glassware",
+    "id": "glw-f58d727e"
+  },
+  {
+    "name": "Reagent bottle wide mouth (250ml)",
+    "quantity": 22.0,
+    "unit": "pcs",
+    "category": "Glassware",
+    "id": "glw-a78385d0"
+  },
+  {
+    "name": "Rubber Gloves",
+    "quantity": 0,
+    "unit": "box",
+    "category": "Glassware",
+    "id": "glw-8bbc34b0"
+  },
+  {
+    "name": "Rubber tubing",
+    "quantity": 0,
+    "unit": "box",
+    "category": "Glassware",
+    "id": "glw-bdc5b6a9"
+  },
+  {
+    "name": "Syringe 1ml",
+    "quantity": 3.0,
+    "unit": "box",
+    "category": "Glassware",
+    "id": "glw-bd6eb86d"
+  },
+  {
+    "name": "Syringe 5ml",
+    "quantity": 0,
+    "unit": "box",
+    "category": "Glassware",
+    "id": "glw-628cc0d5"
+  },
+  {
+    "name": "Test tube brush",
+    "quantity": 83.0,
+    "unit": "pcs",
+    "category": "Glassware",
+    "id": "glw-a6346cf9"
+  },
+  {
+    "name": "Thimbles",
+    "quantity": 0,
+    "unit": "box",
+    "category": "Glassware",
+    "id": "glw-fe5034d8"
+  },
+  {
+    "name": "Wash bottle (250ml)",
+    "quantity": 24.0,
+    "unit": "pcs",
+    "category": "Glassware",
+    "id": "glw-e65410f6"
+  },
+  {
+    "name": "Wash bottle (500ml)",
+    "quantity": 20.0,
+    "unit": "pcs",
+    "category": "Glassware",
+    "id": "glw-970f76ef"
+  },
+  {
+    "name": "Wax paper",
+    "quantity": 0,
+    "unit": "box",
+    "category": "Glassware",
+    "id": "glw-588fe29e"
+  },
+  {
+    "name": "Wick ( Alcohol lamp)",
+    "quantity": 1.0,
+    "unit": "box",
+    "category": "Glassware",
+    "id": "glw-abdba5b5"
+  },
+  {
+    "name": "Wire gauze",
+    "quantity": 90.0,
+    "unit": "pcs",
+    "category": "Glassware",
+    "id": "glw-d7cb1b96"
+  },
+  {
+    "name": "Acid burette (25ml)",
+    "quantity": 27.0,
+    "unit": "pcs",
+    "category": "Glassware",
+    "id": "glw-243bd273"
+  },
+  {
+    "name": "Acid burette (50ml)",
+    "quantity": 9.0,
+    "unit": "pcs",
+    "category": "Glassware",
+    "id": "glw-4c994ca7"
+  },
+  {
+    "name": "Adapter",
+    "quantity": 5.0,
+    "unit": "pcs",
+    "category": "Glassware",
+    "id": "glw-fea49d20"
+  },
+  {
+    "name": "Adrescence Apparatus",
+    "quantity": 1.0,
+    "unit": "pcs",
+    "category": "Glassware",
+    "id": "glw-83a49c5e"
+  },
+  {
+    "name": "Alcohol lamp",
+    "quantity": 27.0,
+    "unit": "pcs",
+    "category": "Glassware",
+    "id": "glw-589b3c0a"
+  },
+  {
+    "name": "Alkali burette (25ml)",
+    "quantity": 11.0,
+    "unit": "pcs",
+    "category": "Glassware",
+    "id": "glw-5ac07f03"
+  },
+  {
+    "name": "Alkali burette (50ml)",
+    "quantity": 24.0,
+    "unit": "pcs",
+    "category": "Glassware",
+    "id": "glw-934d0317"
+  },
+  {
+    "name": "Beaker (50ml, glass)",
+    "quantity": 22.0,
+    "unit": "pcs",
+    "category": "Glassware",
+    "id": "glw-144b173c"
+  },
+  {
+    "name": "Beaker (250ml, glass)",
+    "quantity": 81.0,
+    "unit": "pcs",
+    "category": "Glassware",
+    "id": "glw-2a4c2d51"
+  },
+  {
+    "name": "Beaker (500ml, glass)",
+    "quantity": 1.0,
+    "unit": "pcs",
+    "category": "Glassware",
+    "id": "glw-89179e81"
+  },
+  {
+    "name": "Beaker (1000ml, glass)",
+    "quantity": 0,
+    "unit": "pcs",
+    "category": "Glassware",
+    "id": "glw-be8251e1"
+  },
+  {
+    "name": "Blender (OSTERIZER)",
+    "quantity": 7.0,
+    "unit": "pcs",
+    "category": "Glassware",
+    "id": "glw-c684b11d"
+  },
+  {
+    "name": "Bowl",
+    "quantity": 1.0,
+    "unit": "pcs",
+    "category": "Glassware",
+    "id": "glw-9925a8c5"
+  },
+  {
+    "name": "Buchner funnel (big)",
+    "quantity": 4.0,
+    "unit": "pcs",
+    "category": "Glassware",
+    "id": "glw-a3adaf9d"
+  },
+  {
+    "name": "Buchner funnel (small)",
+    "quantity": 9.0,
+    "unit": "pcs",
+    "category": "Glassware",
+    "id": "glw-8ba485c2"
+  },
+  {
+    "name": "Burette clamp",
+    "quantity": 47.0,
+    "unit": "pcs",
+    "category": "Glassware",
+    "id": "glw-64be708a"
+  },
+  {
+    "name": "Bunsen burner",
+    "quantity": 9.0,
+    "unit": "pcs",
+    "category": "Glassware",
+    "id": "glw-0ed3bb10"
+  },
+  {
+    "name": "Caliper",
+    "quantity": 2.0,
+    "unit": "pcs",
+    "category": "Glassware",
+    "id": "glw-6111659b"
+  },
+  {
+    "name": "Candle jar (DESSICATOR)",
+    "quantity": 3.0,
+    "unit": "pcs",
+    "category": "Glassware",
+    "id": "glw-04960e28"
+  },
+  {
+    "name": "Cassia flask",
+    "quantity": 8.0,
+    "unit": "pcs",
+    "category": "Glassware",
+    "id": "glw-08b9f270"
+  },
+  {
+    "name": "Casserole",
+    "quantity": 20.0,
+    "unit": "pcs",
+    "category": "Glassware",
+    "id": "glw-192d73c1"
+  },
+  {
+    "name": "Clamp holder",
+    "quantity": 6.0,
+    "unit": "pcs",
+    "category": "Glassware",
+    "id": "glw-c6d1f5af"
+  },
+  {
+    "name": "Chromatography column 250ml",
+    "quantity": 4.0,
+    "unit": "pcs",
+    "category": "Glassware",
+    "id": "glw-59d75338"
+  },
+  {
+    "name": "Condenser",
+    "quantity": 22.0,
+    "unit": "pcs",
+    "category": "Glassware",
+    "id": "glw-4be4468a"
+  },
+  {
+    "name": "Cork borer",
+    "quantity": 13.0,
+    "unit": "pcs",
+    "category": "Glassware",
+    "id": "glw-ed9475c2"
+  },
+  {
+    "name": "Crucible and cover",
+    "quantity": 21.0,
+    "unit": "pcs",
+    "category": "Glassware",
+    "id": "glw-67e63c86"
+  },
+  {
+    "name": "Crucible tongs",
+    "quantity": 16.0,
+    "unit": "pcs",
+    "category": "Glassware",
+    "id": "glw-76f37f2b"
+  },
+  {
+    "name": "Dessicator with pump",
+    "quantity": 1.0,
+    "unit": "pcs",
+    "category": "Glassware",
+    "id": "glw-300438ee"
+  },
+  {
+    "name": "Distilling flask (250ml)",
+    "quantity": 7.0,
+    "unit": "pcs",
+    "category": "Glassware",
+    "id": "glw-9d517305"
+  },
+  {
+    "name": "Distilling flask (1000ml)",
+    "quantity": 3.0,
+    "unit": "pcs",
+    "category": "Glassware",
+    "id": "glw-43a620bc"
+  },
+  {
+    "name": "Dumas bulb",
+    "quantity": 1.0,
+    "unit": "pcs",
+    "category": "Glassware",
+    "id": "glw-5d9adc7e"
+  },
+  {
+    "name": "Electric stove",
+    "quantity": 25.0,
+    "unit": "pcs",
+    "category": "Glassware",
+    "id": "glw-e06c4ffc"
+  },
+  {
+    "name": "Erlenmeyer flask (50ml)",
+    "quantity": 1.0,
+    "unit": "pcs",
+    "category": "Glassware",
+    "id": "glw-98a57c7e"
+  },
+  {
+    "name": "Erlenmeyer flask (125ml)",
+    "quantity": 3.0,
+    "unit": "pcs",
+    "category": "Glassware",
+    "id": "glw-9d4e2036"
+  },
+  {
+    "name": "Erlenmeyer flask (250ml)",
+    "quantity": 51.0,
+    "unit": "pcs",
+    "category": "Glassware",
+    "id": "glw-ca2fd29e"
+  },
+  {
+    "name": "Erlenmeyer flask (500ml)",
+    "quantity": 4.0,
+    "unit": "pcs",
+    "category": "Glassware",
+    "id": "glw-a898ac8f"
+  },
+  {
+    "name": "Erlenmeyer flask (1000ml)",
+    "quantity": 6.0,
+    "unit": "pcs",
+    "category": "Glassware",
+    "id": "glw-15394418"
+  },
+  {
+    "name": "Evaporating dish (glass-big)",
+    "quantity": 4.0,
+    "unit": "pcs",
+    "category": "Glassware",
+    "id": "glw-48fc1564"
+  },
+  {
+    "name": "Evaporating dish (porcelain)",
+    "quantity": 80.0,
+    "unit": "pcs",
+    "category": "Glassware",
+    "id": "glw-c19d29d5"
+  },
+  {
+    "name": "Flask (big)",
+    "quantity": 1.0,
+    "unit": "pcs",
+    "category": "Glassware",
+    "id": "glw-15618d47"
+  },
+  {
+    "name": "Florence flask (500ml)",
+    "quantity": 2.0,
+    "unit": "pcs",
+    "category": "Glassware",
+    "id": "glw-790d951e"
+  },
+  {
+    "name": "Forceps",
+    "quantity": 18.0,
+    "unit": "pcs",
+    "category": "Glassware",
+    "id": "glw-b0aec241"
+  },
+  {
+    "name": "Funnel (glass-big)",
+    "quantity": 14.0,
+    "unit": "pcs",
+    "category": "Glassware",
+    "id": "glw-de3aa2b9"
+  },
+  {
+    "name": "Funnel (glass-small)",
+    "quantity": 33.0,
+    "unit": "pcs",
+    "category": "Glassware",
+    "id": "glw-8cc71236"
+  },
+  {
+    "name": "Funnel (stainless)",
+    "quantity": 4.0,
+    "unit": "pcs",
+    "category": "Glassware",
+    "id": "glw-a12061b2"
+  },
+  {
+    "name": "Graduated cylinder (10ml)",
+    "quantity": 54.0,
+    "unit": "pcs",
+    "category": "Glassware",
+    "id": "glw-452b1361"
+  },
+  {
+    "name": "Graduated cylinder (25ml)",
+    "quantity": 15.0,
+    "unit": "pcs",
+    "category": "Glassware",
+    "id": "glw-53a78c1e"
+  },
+  {
+    "name": "Graduated cylinder (50ml)",
+    "quantity": 38.0,
+    "unit": "pcs",
+    "category": "Glassware",
+    "id": "glw-8c83fa8a"
+  },
+  {
+    "name": "Graduated cylinder (100ml)",
+    "quantity": 13.0,
+    "unit": "pcs",
+    "category": "Glassware",
+    "id": "glw-22635037"
+  },
+  {
+    "name": "Graduated cylinder (250ml)",
+    "quantity": 10.0,
+    "unit": "pcs",
+    "category": "Glassware",
+    "id": "glw-1cd6f13a"
+  },
+  {
+    "name": "Hand lens",
+    "quantity": 3.0,
+    "unit": "pcs",
+    "category": "Glassware",
+    "id": "glw-11fcb6fe"
+  },
+  {
+    "name": "Heating mantle",
+    "quantity": 1.0,
+    "unit": "pcs",
+    "category": "Glassware",
+    "id": "glw-127918bc"
+  },
+  {
+    "name": "Hot plate",
+    "quantity": 3.0,
+    "unit": "pcs",
+    "category": "Glassware",
+    "id": "glw-638be71b"
+  },
+  {
+    "name": "Hygrometer",
+    "quantity": 2.0,
+    "unit": "pcs",
+    "category": "Glassware",
+    "id": "glw-05d14ba9"
+  },
+  {
+    "name": "Hydrometer (Heavy)",
+    "quantity": 5.0,
+    "unit": "pcs",
+    "category": "Glassware",
+    "id": "glw-874c09be"
+  },
+  {
+    "name": "Hydrometer (Light)",
+    "quantity": 5.0,
+    "unit": "pcs",
+    "category": "Glassware",
+    "id": "glw-700ad87e"
+  },
+  {
+    "name": "Inoculating Loop",
+    "quantity": 50.0,
+    "unit": "pcs",
+    "category": "Glassware",
+    "id": "glw-329ae533"
+  },
+  {
+    "name": "Inoculating needle",
+    "quantity": 35.0,
+    "unit": "pcs",
+    "category": "Glassware",
+    "id": "glw-b3024d13"
+  },
+  {
+    "name": "Iodine flask (250ml)",
+    "quantity": 12.0,
+    "unit": "pcs",
+    "category": "Glassware",
+    "id": "glw-49944aba"
+  },
+  {
+    "name": "Iodine flask (500ml)",
+    "quantity": 6.0,
+    "unit": "pcs",
+    "category": "Glassware",
+    "id": "glw-9aebb022"
+  },
+  {
+    "name": "Iron ring w/ clamp",
+    "quantity": 15.0,
+    "unit": "pcs",
+    "category": "Glassware",
+    "id": "glw-377329ff"
+  },
+  {
+    "name": "Iron stand",
+    "quantity": 30.0,
+    "unit": "pcs",
+    "category": "Glassware",
+    "id": "glw-069937ef"
+  },
+  {
+    "name": "Kjeldahl flask (250ml)",
+    "quantity": 6.0,
+    "unit": "pcs",
+    "category": "Glassware",
+    "id": "glw-7e8284f8"
+  },
+  {
+    "name": "Kjeldahl flask (500ml)",
+    "quantity": 6.0,
+    "unit": "pcs",
+    "category": "Glassware",
+    "id": "glw-82badd69"
+  },
+  {
+    "name": "Mortar and pestle",
+    "quantity": 60.0,
+    "unit": "pcs",
+    "category": "Glassware",
+    "id": "glw-84775f27"
+  },
+  {
+    "name": "Oswald viscometer",
+    "quantity": 1.0,
+    "unit": "pcs",
+    "category": "Glassware",
+    "id": "glw-dddb30ab"
+  },
+  {
+    "name": "Perculator cups",
+    "quantity": 6.0,
+    "unit": "pcs",
+    "category": "Glassware",
+    "id": "glw-41564986"
+  },
+  {
+    "name": "Petri dishes (glass)",
+    "quantity": 60.0,
+    "unit": "pcs",
+    "category": "Glassware",
+    "id": "glw-cf8366e9"
+  },
+  {
+    "name": "Pile",
+    "quantity": 0,
+    "unit": "pcs",
+    "category": "Glassware",
+    "id": "glw-0d9e580f"
+  },
+  {
+    "name": "Pill tile",
+    "quantity": 22.0,
+    "unit": "pcs",
+    "category": "Glassware",
+    "id": "glw-4032d5c3"
+  },
+  {
+    "name": "Pycnometer (25ml)",
+    "quantity": 15.0,
+    "unit": "pcs",
+    "category": "Glassware",
+    "id": "glw-abf9823f"
+  },
+  {
+    "name": "Pycnometer (50ml)",
+    "quantity": 4.0,
+    "unit": "pcs",
+    "category": "Glassware",
+    "id": "glw-aae7aa61"
+  },
+  {
+    "name": "Pipette (0.5ml)",
+    "quantity": 0,
+    "unit": "pcs",
+    "category": "Glassware",
+    "id": "glw-88fe70d0"
+  },
+  {
+    "name": "Pipette (1ml)",
+    "quantity": 2.0,
+    "unit": "pcs",
+    "category": "Glassware",
+    "id": "glw-fd0134e8"
+  },
+  {
+    "name": "Pipette (2ml)",
+    "quantity": 12.0,
+    "unit": "pcs",
+    "category": "Glassware",
+    "id": "glw-74589aaf"
+  },
+  {
+    "name": "Pipette (5ml)",
+    "quantity": 61.0,
+    "unit": "pcs",
+    "category": "Glassware",
+    "id": "glw-b3393e0e"
+  },
+  {
+    "name": "Pipette (10ml)",
+    "quantity": 36.0,
+    "unit": "pcs",
+    "category": "Glassware",
+    "id": "glw-fe737031"
+  },
+  {
+    "name": "Round bottom flask(250ml)",
+    "quantity": 13.0,
+    "unit": "pcs",
+    "category": "Glassware",
+    "id": "glw-0d3bfa3e"
+  },
+  {
+    "name": "Round bottom flask(500ml)",
+    "quantity": 3.0,
+    "unit": "pcs",
+    "category": "Glassware",
+    "id": "glw-b8015419"
+  },
+  {
+    "name": "Round bottom flask(1000ml)",
+    "quantity": 1.0,
+    "unit": "pcs",
+    "category": "Glassware",
+    "id": "glw-e24a14df"
+  },
+  {
+    "name": "S-clamp",
+    "quantity": 26.0,
+    "unit": "pcs",
+    "category": "Glassware",
+    "id": "glw-e7f67aec"
+  },
+  {
+    "name": "Separatory funnel",
+    "quantity": 20.0,
+    "unit": "pcs",
+    "category": "Glassware",
+    "id": "glw-9dcb2367"
+  },
+  {
+    "name": "Spatula (porcelain)",
+    "quantity": 32.0,
+    "unit": "pcs",
+    "category": "Glassware",
+    "id": "glw-f7ade46a"
+  },
+  {
+    "name": "Spatula (stainless)",
+    "quantity": 27.0,
+    "unit": "pcs",
+    "category": "Glassware",
+    "id": "glw-8c8b8093"
+  },
+  {
+    "name": "Spot plate by '6",
+    "quantity": 11.0,
+    "unit": "pcs",
+    "category": "Glassware",
+    "id": "glw-076720e3"
+  },
+  {
+    "name": "Spot plate by '12",
+    "quantity": 5.0,
+    "unit": "pcs",
+    "category": "Glassware",
+    "id": "glw-5c905d1d"
+  },
+  {
+    "name": "Stalagmometer",
+    "quantity": 1.0,
+    "unit": "pcs",
+    "category": "Glassware",
+    "id": "glw-3c2c2d11"
+  },
+  {
+    "name": "Stirring rod (glass)",
+    "quantity": 74.0,
+    "unit": "pcs",
+    "category": "Glassware",
+    "id": "glw-828fa2c7"
+  },
+  {
+    "name": "Stirring rod (stainless)",
+    "quantity": 2.0,
+    "unit": "pcs",
+    "category": "Glassware",
+    "id": "glw-0b5d8304"
+  },
+  {
+    "name": "Suction flask (4000ml)",
+    "quantity": 1.0,
+    "unit": "pcs",
+    "category": "Glassware",
+    "id": "glw-d1dfdf12"
+  },
+  {
+    "name": "Suction flask (1000ml)",
+    "quantity": 1.0,
+    "unit": "pcs",
+    "category": "Glassware",
+    "id": "glw-18b5a3be"
+  },
+  {
+    "name": "Suction flask (500ml)",
+    "quantity": 2.0,
+    "unit": "pcs",
+    "category": "Glassware",
+    "id": "glw-7a561785"
+  },
+  {
+    "name": "Suppository mold",
+    "quantity": 3.0,
+    "unit": "pcs",
+    "category": "Glassware",
+    "id": "glw-e94899fb"
+  },
+  {
+    "name": "Test tube holder",
+    "quantity": 95.0,
+    "unit": "pcs",
+    "category": "Glassware",
+    "id": "glw-a7033d8c"
+  },
+  {
+    "name": "Test tube rack",
+    "quantity": 115.0,
+    "unit": "pcs",
+    "category": "Glassware",
+    "id": "glw-67cb6507"
+  },
+  {
+    "name": "Test tube (small)",
+    "quantity": 140.0,
+    "unit": "pcs",
+    "category": "Glassware",
+    "id": "glw-e9e831a3"
+  },
+  {
+    "name": "Testube (Big)",
+    "quantity": 123.0,
+    "unit": "pcs",
+    "category": "Glassware",
+    "id": "glw-6a937dff"
+  },
+  {
+    "name": "Thermometer (digital)",
+    "quantity": 2.0,
+    "unit": "pcs",
+    "category": "Glassware",
+    "id": "glw-0a12f5d8"
+  },
+  {
+    "name": "Thermometer (oral)",
+    "quantity": 3.0,
+    "unit": "pcs",
+    "category": "Glassware",
+    "id": "glw-004152d8"
+  },
+  {
+    "name": "Thermometer (rectal)",
+    "quantity": 3.0,
+    "unit": "pcs",
+    "category": "Glassware",
+    "id": "glw-6786cb3c"
+  },
+  {
+    "name": "Thermometer (alcohol)",
+    "quantity": 11.0,
+    "unit": "pcs",
+    "category": "Glassware",
+    "id": "glw-720c764c"
+  },
+  {
+    "name": "Thermometer (Refrigerator)",
+    "quantity": 2.0,
+    "unit": "pcs",
+    "category": "Glassware",
+    "id": "glw-23d33f63"
+  },
+  {
+    "name": "Thermostat",
+    "quantity": 4.0,
+    "unit": "pcs",
+    "category": "Glassware",
+    "id": "glw-18cebcea"
+  },
+  {
+    "name": "Thistle tube",
+    "quantity": 4.0,
+    "unit": "pcs",
+    "category": "Glassware",
+    "id": "glw-f2e75cf3"
+  },
+  {
+    "name": "Three prong extension clamp",
+    "quantity": 25.0,
+    "unit": "pcs",
+    "category": "Glassware",
+    "id": "glw-e051f655"
+  },
+  {
+    "name": "Tripod",
+    "quantity": 14.0,
+    "unit": "pcs",
+    "category": "Glassware",
+    "id": "glw-28854d76"
+  },
+  {
+    "name": "Volumetric flask (10ml)",
+    "quantity": 1.0,
+    "unit": "pcs",
+    "category": "Glassware",
+    "id": "glw-0c950a82"
+  },
+  {
+    "name": "Volumetric flask (25ml)",
+    "quantity": 6.0,
+    "unit": "pcs",
+    "category": "Glassware",
+    "id": "glw-4b48be7e"
+  },
+  {
+    "name": "Volumetric flask (50ml)",
+    "quantity": 10.0,
+    "unit": "pcs",
+    "category": "Glassware",
+    "id": "glw-658c8705"
+  },
+  {
+    "name": "Volumetric flask (100ml)",
+    "quantity": 16.0,
+    "unit": "pcs",
+    "category": "Glassware",
+    "id": "glw-366eea60"
+  },
+  {
+    "name": "Volumetric flask (250ml)",
+    "quantity": 15.0,
+    "unit": "pcs",
+    "category": "Glassware",
+    "id": "glw-106da999"
+  },
+  {
+    "name": "Volumetric flask (500ml)",
+    "quantity": 1.0,
+    "unit": "pcs",
+    "category": "Glassware",
+    "id": "glw-23027c5c"
+  },
+  {
+    "name": "Volumetric flask (1000ml)",
+    "quantity": 1.0,
+    "unit": "pcs",
+    "category": "Glassware",
+    "id": "glw-07f82c60"
+  },
+  {
+    "name": "Volumetric flask (2000ml)",
+    "quantity": 1.0,
+    "unit": "pcs",
+    "category": "Glassware",
+    "id": "glw-8ea02d42"
+  },
+  {
+    "name": "Volumetric pipette (2ml)",
+    "quantity": 9.0,
+    "unit": "pcs",
+    "category": "Glassware",
+    "id": "glw-4f42c376"
+  },
+  {
+    "name": "Volumetric pipette (5ml)",
+    "quantity": 1.0,
+    "unit": "pcs",
+    "category": "Glassware",
+    "id": "glw-d1115b16"
+  },
+  {
+    "name": "Volumetric pipette (10ml)",
+    "quantity": 10.0,
+    "unit": "pcs",
+    "category": "Glassware",
+    "id": "glw-f06078da"
+  },
+  {
+    "name": "Volumetric pipette (25ml)",
+    "quantity": 8.0,
+    "unit": "pcs",
+    "category": "Glassware",
+    "id": "glw-e9420494"
+  },
+  {
+    "name": "Watch glass",
+    "quantity": 44.0,
+    "unit": "pcs",
+    "category": "Glassware",
+    "id": "glw-9454d008"
+  },
+  {
+    "name": "Weighing bottle",
+    "quantity": 14.0,
+    "unit": "pcs",
+    "category": "Glassware",
+    "id": "glw-4f67de92"
+  },
+  {
+    "name": "Prepared By:",
+    "quantity": 0,
+    "unit": "pcs",
+    "category": "Glassware",
+    "id": "glw-b581ecbf"
+  },
+  {
+    "name": "Queendolyn Garcia",
+    "quantity": 0,
+    "unit": "pcs",
+    "category": "Glassware",
+    "id": "glw-3e67cf4a"
+  },
+  {
+    "name": "Laboratory Technician",
+    "quantity": 0,
+    "unit": "pcs",
+    "category": "Glassware",
+    "id": "glw-291da147"
+  },
+  {
+    "name": "Mary June Aldunar",
+    "quantity": 0,
+    "unit": "pcs",
+    "category": "Glassware",
+    "id": "glw-435da1f4"
+  },
+  {
+    "name": "Laboratory Technician",
+    "quantity": 0,
+    "unit": "pcs",
+    "category": "Glassware",
+    "id": "glw-291da147"
+  },
+  {
+    "name": "Ampule Filler",
+    "quantity": 1.0,
+    "unit": "pcs",
+    "category": "Equipment",
+    "id": "eqp-8c900223"
+  },
+  {
+    "name": "Autoclave",
+    "quantity": 1.0,
+    "unit": "pcs",
+    "category": "Equipment",
+    "id": "eqp-f8d529a2"
+  },
+  {
+    "name": "Toploading balance",
+    "quantity": 5.0,
+    "unit": "pcs",
+    "category": "Equipment",
+    "id": "eqp-342703dd"
+  },
+  {
+    "name": "Analytical digital machine (OHAUS)",
+    "quantity": 5.0,
+    "unit": "pcs",
+    "category": "Equipment",
+    "id": "eqp-52952fda"
+  },
+  {
+    "name": "Capsuling machine",
+    "quantity": 1.0,
+    "unit": "pcs",
+    "category": "Equipment",
+    "id": "eqp-89df788a"
+  },
+  {
+    "name": "Centrifuge",
+    "quantity": 6.0,
+    "unit": "pcs",
+    "category": "Equipment",
+    "id": "eqp-eea6af64"
+  },
+  {
+    "name": "Chiller",
+    "quantity": 1.0,
+    "unit": "pcs",
+    "category": "Equipment",
+    "id": "eqp-c455c50f"
+  },
+  {
+    "name": "Circulating oven/Drying oven",
+    "quantity": 5.0,
+    "unit": "pcs",
+    "category": "Equipment",
+    "id": "eqp-4345ee46"
+  },
+  {
+    "name": "Clavenger apparatus Heavy",
+    "quantity": 2.0,
+    "unit": "pcs",
+    "category": "Equipment",
+    "id": "eqp-16f4417e"
+  },
+  {
+    "name": "Clavenger apparatus  Light",
+    "quantity": 1.0,
+    "unit": "pcs",
+    "category": "Equipment",
+    "id": "eqp-21c72d4a"
+  },
+  {
+    "name": "Cordless Corescope 2 w/ Monocular head stage",
+    "quantity": 12.0,
+    "unit": "pcs",
+    "category": "Equipment",
+    "id": "eqp-1fb44531"
+  },
+  {
+    "name": "Coating Pan, Local Fabrication",
+    "quantity": 1.0,
+    "unit": "pcs",
+    "category": "Equipment",
+    "id": "eqp-5c306697"
+  },
+  {
+    "name": "Cuvettes",
+    "quantity": 2.0,
+    "unit": "pcs",
+    "category": "Equipment",
+    "id": "eqp-51139f60"
+  },
+  {
+    "name": "Dissolution Apparatus (2 Vessel)",
+    "quantity": 1.0,
+    "unit": "pcs",
+    "category": "Equipment",
+    "id": "eqp-3c075040"
+  },
+  {
+    "name": "Dissolution Apparatus (6 Vessel)",
+    "quantity": 1.0,
+    "unit": "pcs",
+    "category": "Equipment",
+    "id": "eqp-e0208226"
+  },
+  {
+    "name": "Disintegration Apparatus",
+    "quantity": 2.0,
+    "unit": "pcs",
+    "category": "Equipment",
+    "id": "eqp-72756efd"
+  },
+  {
+    "name": "Fourier-Transform Infrared Spectrophotometer",
+    "quantity": 1.0,
+    "unit": "pcs",
+    "category": "Equipment",
+    "id": "eqp-8bc04352"
+  },
+  {
+    "name": "Friabilator",
+    "quantity": 2.0,
+    "unit": "pcs",
+    "category": "Equipment",
+    "id": "eqp-9b530cf2"
+  },
+  {
+    "name": "Freezer",
+    "quantity": 1.0,
+    "unit": "pcs",
+    "category": "Equipment",
+    "id": "eqp-60846954"
+  },
+  {
+    "name": "Glucometer",
+    "quantity": 6.0,
+    "unit": "pcs",
+    "category": "Equipment",
+    "id": "eqp-3575df02"
+  },
+  {
+    "name": "Granulator",
+    "quantity": 2.0,
+    "unit": "pcs",
+    "category": "Equipment",
+    "id": "eqp-ea39b7a3"
+  },
+  {
+    "name": "Hardness tester (Stoke's Monsanto)",
+    "quantity": 2.0,
+    "unit": "pcs",
+    "category": "Equipment",
+    "id": "eqp-74548908"
+  },
+  {
+    "name": "High performance liquid chromatography (HPLC)",
+    "quantity": 1.0,
+    "unit": "pcs",
+    "category": "Equipment",
+    "id": "eqp-e595b317"
+  },
+  {
+    "name": "Incubator",
+    "quantity": 2.0,
+    "unit": "pcs",
+    "category": "Equipment",
+    "id": "eqp-62161515"
+  },
+  {
+    "name": "Lipstick mold",
+    "quantity": 4.0,
+    "unit": "pcs",
+    "category": "Equipment",
+    "id": "eqp-07639c6c"
+  },
+  {
+    "name": "Lyophilizer (FD5 - series)",
+    "quantity": 1.0,
+    "unit": "pcs",
+    "category": "Equipment",
+    "id": "eqp-2df6d418"
+  },
+  {
+    "name": "Liquid Filling Machine",
+    "quantity": 1.0,
+    "unit": "pcs",
+    "category": "Equipment",
+    "id": "eqp-2ffe58c3"
+  },
+  {
+    "name": "Magnetic stirrer",
+    "quantity": 1.0,
+    "unit": "pcs",
+    "category": "Equipment",
+    "id": "eqp-bb89d9f0"
+  },
+  {
+    "name": "Melting point apparatus",
+    "quantity": 2.0,
+    "unit": "pcs",
+    "category": "Equipment",
+    "id": "eqp-f2cb4e59"
+  },
+  {
+    "name": "Mechanical stirrer",
+    "quantity": 1.0,
+    "unit": "pcs",
+    "category": "Equipment",
+    "id": "eqp-d5dc0a23"
+  },
+  {
+    "name": "Metabolic cage",
+    "quantity": 4.0,
+    "unit": "pcs",
+    "category": "Equipment",
+    "id": "eqp-b1c52bdb"
+  },
+  {
+    "name": "Micropipette",
+    "quantity": 5.0,
+    "unit": "pcs",
+    "category": "Equipment",
+    "id": "eqp-300d930a"
+  },
+  {
+    "name": "Trinocular Compound Microscope",
+    "quantity": 1.0,
+    "unit": "pcs",
+    "category": "Equipment",
+    "id": "eqp-83bfaa59"
+  },
+  {
+    "name": "Mini Electric Liquid  Filler( YDF-10-10ml, vial)",
+    "quantity": 1.0,
+    "unit": "pcs",
+    "category": "Equipment",
+    "id": "eqp-b4b2c640"
+  },
+  {
+    "name": "Mixer",
+    "quantity": 1.0,
+    "unit": "pcs",
+    "category": "Equipment",
+    "id": "eqp-588fa75e"
+  },
+  {
+    "name": "Microplate reader",
+    "quantity": 1.0,
+    "unit": "pcs",
+    "category": "Equipment",
+    "id": "eqp-f906ff29"
+  },
+  {
+    "name": "Mohr-Westphal balance",
+    "quantity": 1.0,
+    "unit": "pcs",
+    "category": "Equipment",
+    "id": "eqp-0cc483df"
+  },
+  {
+    "name": "Moisture analyzer (OHAUS)",
+    "quantity": 1.0,
+    "unit": "pcs",
+    "category": "Equipment",
+    "id": "eqp-f10dfbf4"
+  },
+  {
+    "name": "Muffle furnace",
+    "quantity": 1.0,
+    "unit": "pcs",
+    "category": "Equipment",
+    "id": "eqp-0c94bc96"
+  },
+  {
+    "name": "Ointment crimper",
+    "quantity": 1.0,
+    "unit": "pcs",
+    "category": "Equipment",
+    "id": "eqp-f2ec3ac9"
+  },
+  {
+    "name": "Ointment filler",
+    "quantity": 1.0,
+    "unit": "pcs",
+    "category": "Equipment",
+    "id": "eqp-421494f6"
+  },
+  {
+    "name": "Plantar Apparatus",
+    "quantity": 1.0,
+    "unit": "pcs",
+    "category": "Equipment",
+    "id": "eqp-16148db6"
+  },
+  {
+    "name": "Plethysmometer",
+    "quantity": 1.0,
+    "unit": "pcs",
+    "category": "Equipment",
+    "id": "eqp-d3f354a6"
+  },
+  {
+    "name": "Polarimeter",
+    "quantity": 1.0,
+    "unit": "pcs",
+    "category": "Equipment",
+    "id": "eqp-12ac9a10"
+  },
+  {
+    "name": "pH meter",
+    "quantity": 2.0,
+    "unit": "pcs",
+    "category": "Equipment",
+    "id": "eqp-c7d25979"
+  },
+  {
+    "name": "Refractometer",
+    "quantity": 2.0,
+    "unit": "pcs",
+    "category": "Equipment",
+    "id": "eqp-86d5c68b"
+  },
+  {
+    "name": "Refrigerator",
+    "quantity": 0,
+    "unit": "pcs",
+    "category": "Equipment",
+    "id": "eqp-2de78f08"
+  },
+  {
+    "name": "Refrgerator chiller thermometer",
+    "quantity": 2.0,
+    "unit": "pcs",
+    "category": "Equipment",
+    "id": "eqp-290624b1"
+  },
+  {
+    "name": "Rotary evaporator",
+    "quantity": 3.0,
+    "unit": "pcs",
+    "category": "Equipment",
+    "id": "eqp-22fcd816"
+  },
+  {
+    "name": "Sieve shaker",
+    "quantity": 2.0,
+    "unit": "pcs",
+    "category": "Equipment",
+    "id": "eqp-8f1a13c1"
+  },
+  {
+    "name": "Sieves (20)",
+    "quantity": 2.0,
+    "unit": "pcs",
+    "category": "Equipment",
+    "id": "eqp-96631534"
+  },
+  {
+    "name": "Sieves (40)",
+    "quantity": 2.0,
+    "unit": "pcs",
+    "category": "Equipment",
+    "id": "eqp-a0b1bdd5"
+  },
+  {
+    "name": "Sieves (60)",
+    "quantity": 2.0,
+    "unit": "pcs",
+    "category": "Equipment",
+    "id": "eqp-6cf1389d"
+  },
+  {
+    "name": "Sieves (80)",
+    "quantity": 2.0,
+    "unit": "pcs",
+    "category": "Equipment",
+    "id": "eqp-0a269144"
+  },
+  {
+    "name": "Sonicator bath",
+    "quantity": 1.0,
+    "unit": "pcs",
+    "category": "Equipment",
+    "id": "eqp-7b7ab5f8"
+  },
+  {
+    "name": "Suction apparatus",
+    "quantity": 1.0,
+    "unit": "pcs",
+    "category": "Equipment",
+    "id": "eqp-95976eab"
+  },
+  {
+    "name": "Tablet  hardness tester",
+    "quantity": 2.0,
+    "unit": "pcs",
+    "category": "Equipment",
+    "id": "eqp-6dd69226"
+  },
+  {
+    "name": "Tableting machine",
+    "quantity": 1.0,
+    "unit": "pcs",
+    "category": "Equipment",
+    "id": "eqp-91627275"
+  },
+  {
+    "name": "Telethermometer,Digital",
+    "quantity": 1.0,
+    "unit": "pcs",
+    "category": "Equipment",
+    "id": "eqp-3b1e536e"
+  },
+  {
+    "name": "Tensiometer ( Model JZHY-180)",
+    "quantity": 1.0,
+    "unit": "pcs",
+    "category": "Equipment",
+    "id": "eqp-bf2ecdce"
+  },
+  {
+    "name": "TLC chamber",
+    "quantity": 2.0,
+    "unit": "pcs",
+    "category": "Equipment",
+    "id": "eqp-72125b9d"
+  },
+  {
+    "name": "Urinometer",
+    "quantity": 4.0,
+    "unit": "pcs",
+    "category": "Equipment",
+    "id": "eqp-915ed4a9"
+  },
+  {
+    "name": "UV light",
+    "quantity": 1.0,
+    "unit": "pcs",
+    "category": "Equipment",
+    "id": "eqp-4178bd8c"
+  },
+  {
+    "name": "UPS",
+    "quantity": 2.0,
+    "unit": "pcs",
+    "category": "Equipment",
+    "id": "eqp-f6947ca3"
+  },
+  {
+    "name": "UV-Vis spectrophotometer",
+    "quantity": 2.0,
+    "unit": "pcs",
+    "category": "Equipment",
+    "id": "eqp-1487df41"
+  },
+  {
+    "name": "Viscometer",
+    "quantity": 1.0,
+    "unit": "pcs",
+    "category": "Equipment",
+    "id": "eqp-79338e30"
+  },
+  {
+    "name": "Water bath",
+    "quantity": 5.0,
+    "unit": "pcs",
+    "category": "Equipment",
+    "id": "eqp-3dd44d9f"
+  },
+  {
+    "name": "Weights (12's/ set)",
+    "quantity": 2.0,
+    "unit": "pcs",
+    "category": "Equipment",
+    "id": "eqp-42edf376"
+  },
+  {
+    "name": "Prepared By:",
+    "quantity": 0,
+    "unit": "pcs",
+    "category": "Equipment",
+    "id": "eqp-b581ecbf"
+  },
+  {
+    "name": "Queendolyn Garcia",
+    "quantity": 0,
+    "unit": "pcs",
+    "category": "Equipment",
+    "id": "eqp-3e67cf4a"
+  },
+  {
+    "name": "Laboratory Technician",
+    "quantity": 0,
+    "unit": "pcs",
+    "category": "Equipment",
+    "id": "eqp-291da147"
+  },
+  {
+    "name": "Mary June Aldunar",
+    "quantity": 0,
+    "unit": "pcs",
+    "category": "Equipment",
+    "id": "eqp-435da1f4"
+  },
+  {
+    "name": "Laboratory Technician",
+    "quantity": 0,
+    "unit": "pcs",
+    "category": "Equipment",
+    "id": "eqp-291da147"
+  },
+  {
+    "name": "Amoxicillin",
+    "quantity": 8.0,
+    "unit": "cart",
+    "category": "Antibiotic Disc",
+    "id": "abt-832bfd1f"
+  },
+  {
+    "name": "Bacitracin (Taxo A)",
+    "quantity": 10.0,
+    "unit": "cart",
+    "category": "Antibiotic Disc",
+    "id": "abt-c5f5a4f9"
+  },
+  {
+    "name": "Ciprofloxacin",
+    "quantity": 10.0,
+    "unit": "cart",
+    "category": "Antibiotic Disc",
+    "id": "abt-0c8d549f"
+  },
+  {
+    "name": "Clindamycin",
+    "quantity": 0,
+    "unit": "cart",
+    "category": "Antibiotic Disc",
+    "id": "abt-4ff3b8b0"
+  },
+  {
+    "name": "Chloramphenicol",
+    "quantity": 0,
+    "unit": "cart",
+    "category": "Antibiotic Disc",
+    "id": "abt-46187750"
+  },
+  {
+    "name": "Erythromycin",
+    "quantity": 8.0,
+    "unit": "cart",
+    "category": "Antibiotic Disc",
+    "id": "abt-9de53760"
+  },
+  {
+    "name": "Gentamycin",
+    "quantity": 10.0,
+    "unit": "cart",
+    "category": "Antibiotic Disc",
+    "id": "abt-b7e00c75"
+  },
+  {
+    "name": "Imipenem",
+    "quantity": 0,
+    "unit": "cart",
+    "category": "Antibiotic Disc",
+    "id": "abt-7228bfba"
+  },
+  {
+    "name": "Novobiocin",
+    "quantity": 10.0,
+    "unit": "cart",
+    "category": "Antibiotic Disc",
+    "id": "abt-9f81f41d"
+  },
+  {
+    "name": "Optochin",
+    "quantity": 10.0,
+    "unit": "cart",
+    "category": "Antibiotic Disc",
+    "id": "abt-42d83a9e"
+  },
+  {
+    "name": "Piperacillin",
+    "quantity": 0,
+    "unit": "cart",
+    "category": "Antibiotic Disc",
+    "id": "abt-c6c9967d"
+  },
+  {
+    "name": "Trimethroprim/Cotrimoxazole",
+    "quantity": 0,
+    "unit": "cart",
+    "category": "Antibiotic Disc",
+    "id": "abt-921ab9d6"
+  },
+  {
+    "name": "Vancomycin",
+    "quantity": 9.0,
+    "unit": "cart",
+    "category": "Antibiotic Disc",
+    "id": "abt-c68e131f"
+  },
+  {
+    "name": "Prepared By:",
+    "quantity": 0,
+    "unit": "pcs",
+    "category": "Antibiotic Disc",
+    "id": "abt-b581ecbf"
+  },
+  {
+    "name": "Queendolyn Garcia",
+    "quantity": 0,
+    "unit": "pcs",
+    "category": "Antibiotic Disc",
+    "id": "abt-3e67cf4a"
+  },
+  {
+    "name": "Laboratory Technician",
+    "quantity": 0,
+    "unit": "pcs",
+    "category": "Antibiotic Disc",
+    "id": "abt-291da147"
+  },
+  {
+    "name": "Mary June Aldunar",
+    "quantity": 0,
+    "unit": "pcs",
+    "category": "Antibiotic Disc",
+    "id": "abt-435da1f4"
+  },
+  {
+    "name": "Laboratory Technician",
+    "quantity": 0,
+    "unit": "pcs",
+    "category": "Antibiotic Disc",
+    "id": "abt-291da147"
+  }
+]
