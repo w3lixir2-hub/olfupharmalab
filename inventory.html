@@ -114,6 +114,7 @@
             <div style="display: flex; gap: 12px; flex-wrap: wrap;">
                 <button type="button" class="btn btn-export" id="btn-import" title="Bulk import from JSON">📥 Import</button>
                 <button type="button" class="btn btn-export" id="btn-export">📊 Export CSV</button>
+                <button type="button" class="btn btn-export" id="btn-delete" title="Bulk delete items" style="color:#ef4444;">🗑️ Delete</button>
                 <button type="button" class="btn btn-primary" id="btn-add-chemical">➕ Add Chemical</button>
             </div>
         </div>
@@ -220,6 +221,30 @@
                     <div class="lab-modal-actions">
                         <button type="button" class="btn btn-primary" id="import-start" disabled>Start Import</button>
                         <button type="button" class="btn btn-secondary" id="import-cancel">Cancel</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Delete Modal -->
+        <div id="delete-modal-overlay" class="lab-modal-overlay" aria-hidden="true">
+            <div class="lab-modal" role="dialog" aria-labelledby="delete-modal-title" aria-modal="true" style="max-width: 700px; max-height: 80vh; overflow-y: auto;">
+                <div class="lab-modal-header" style="position: sticky; top: 0; background: white; z-index: 10;">
+                    <h2 id="delete-modal-title" class="lab-modal-title">Delete Items</h2>
+                    <button type="button" class="lab-modal-close" id="delete-modal-close" aria-label="Close">&times;</button>
+                </div>
+                <div class="lab-modal-body" id="delete-modal-body">
+                    <div style="margin-bottom: 12px; padding: 12px; background: var(--lab-bg-secondary); border-radius: 8px;">
+                        <label style="display: flex; align-items: center; gap: 8px; cursor: pointer; font-weight: 600;">
+                            <input type="checkbox" id="delete-select-all" style="cursor: pointer; width: 18px; height: 18px;">
+                            Select All (<span id="delete-count">0</span>)
+                        </label>
+                    </div>
+                    <div id="delete-items-list" style="max-height: 400px; overflow-y: auto; border: 1px solid var(--lab-border); border-radius: 8px; padding: 8px;">
+                        <!-- Items will be rendered here -->
+                    </div>
+                    <div class="lab-modal-actions" style="margin-top: 16px;">
+                        <button type="button" class="btn btn-danger" id="delete-confirm" style="background: #ef4444;">🗑️ Delete Selected</button>
+                        <button type="button" class="btn btn-secondary" id="delete-cancel">Cancel</button>
                     </div>
                 </div>
             </div>
@@ -555,6 +580,97 @@
                 btn.textContent = 'Done';
                 await addAuditEntry('bulk_import', 'Imported ' + done + ' inventory items from school Excel file');
                 renderInventory();
+            });
+
+            /* ── Bulk Delete ───────────────────────────────────── */
+            var deleteState = { allItems: [], selectedIds: new Set() };
+
+            async function openDeleteModal() {
+                var list = await getChemicals();
+                deleteState.allItems = list;
+                deleteState.selectedIds.clear();
+
+                var itemsList = document.getElementById('delete-items-list');
+                itemsList.innerHTML = list.map(function (c) {
+                    return '<label style="display: flex; align-items: center; gap: 8px; padding: 6px; cursor: pointer; border-radius: 4px; hover: background: var(--lab-bg-secondary);">' +
+                        '<input type="checkbox" class="delete-item-checkbox" data-id="' + (c.id || '') + '" style="cursor: pointer; width: 16px; height: 16px;">' +
+                        '<span style="flex: 1; font-size: 13px;">' + (c.name || '—') + ' <span style="color: #999;">(' + (c.category || 'uncategorized') + ')</span></span>' +
+                        '</label>';
+                }).join('');
+
+                // Add event listeners to checkboxes
+                document.querySelectorAll('.delete-item-checkbox').forEach(function (cb) {
+                    cb.addEventListener('change', function () {
+                        if (this.checked) deleteState.selectedIds.add(this.dataset.id);
+                        else deleteState.selectedIds.delete(this.dataset.id);
+                        updateDeleteCount();
+                    });
+                });
+
+                var overlay = document.getElementById('delete-modal-overlay');
+                overlay.classList.add('show');
+                overlay.setAttribute('aria-hidden', 'false');
+                updateDeleteCount();
+            }
+
+            function updateDeleteCount() {
+                var count = deleteState.selectedIds.size;
+                document.getElementById('delete-count').textContent = count;
+                document.getElementById('delete-select-all').checked = count > 0 && count === deleteState.allItems.length;
+            }
+
+            function closeDeleteModal() {
+                var overlay = document.getElementById('delete-modal-overlay');
+                overlay.classList.remove('show');
+                overlay.setAttribute('aria-hidden', 'true');
+            }
+
+            document.getElementById('btn-delete').addEventListener('click', openDeleteModal);
+            document.getElementById('delete-modal-close').addEventListener('click', closeDeleteModal);
+            document.getElementById('delete-cancel').addEventListener('click', closeDeleteModal);
+            document.getElementById('delete-modal-overlay').addEventListener('click', function (ev) {
+                if (ev.target === this) closeDeleteModal();
+            });
+
+            document.getElementById('delete-select-all').addEventListener('change', function () {
+                document.querySelectorAll('.delete-item-checkbox').forEach(function (cb) {
+                    cb.checked = this.checked;
+                    if (cb.checked) deleteState.selectedIds.add(cb.dataset.id);
+                    else deleteState.selectedIds.delete(cb.dataset.id);
+                }.bind(this));
+                updateDeleteCount();
+            });
+
+            document.getElementById('delete-confirm').addEventListener('click', async function () {
+                if (deleteState.selectedIds.size === 0) {
+                    alert('No items selected.');
+                    return;
+                }
+                var confirmMsg = 'Delete ' + deleteState.selectedIds.size + ' item(s)? This cannot be undone.';
+                if (!confirm(confirmMsg)) return;
+
+                var btn = this;
+                btn.disabled = true;
+                btn.textContent = 'Deleting...';
+
+                var deleted = 0;
+                var errors = 0;
+                for (var id of deleteState.selectedIds) {
+                    try {
+                        await deleteChemical(id);
+                        deleted++;
+                    } catch (err) {
+                        console.error('Delete error:', err);
+                        errors++;
+                    }
+                }
+
+                await addAuditEntry('bulk_delete', 'Deleted ' + deleted + ' inventory items');
+                alert('Deleted ' + deleted + ' item(s)' + (errors ? ' (' + errors + ' errors)' : '') + '.');
+                closeDeleteModal();
+                renderInventory();
+                btn.disabled = false;
+                btn.textContent = '🗑️ Delete Selected';
             });
 
             /* ── Filters ─────────────────────────────────────────── */
