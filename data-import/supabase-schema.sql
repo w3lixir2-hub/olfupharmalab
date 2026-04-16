@@ -207,12 +207,23 @@ $$;
 
 
 -- ── 13. REALTIME ──────────────────────────────────────────────
--- Enable realtime for tables that need live updates
+-- Enable realtime for tables that need live updates (skip if already added)
 
-ALTER publication supabase_realtime ADD TABLE chemicals;
-ALTER publication supabase_realtime ADD TABLE equipment;
-ALTER publication supabase_realtime ADD TABLE requests;
-ALTER publication supabase_realtime ADD TABLE room_schedule;
+DO $$
+DECLARE
+    t text;
+BEGIN
+    FOR t IN SELECT unnest(ARRAY['chemicals','equipment','requests','room_schedule'])
+    LOOP
+        IF NOT EXISTS (
+            SELECT 1 FROM pg_publication_tables
+            WHERE pubname = 'supabase_realtime' AND tablename = t
+        ) THEN
+            EXECUTE format('ALTER publication supabase_realtime ADD TABLE %I', t);
+        END IF;
+    END LOOP;
+END
+$$;
 
 
 -- ============================================================
