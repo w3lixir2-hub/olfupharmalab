@@ -186,6 +186,7 @@ ALTER TABLE instructors   ENABLE ROW LEVEL SECURITY;
 ALTER TABLE room_schedule ENABLE ROW LEVEL SECURITY;
 
 -- Allow full access for anon role (adjust as needed for production)
+-- Drop existing policies first, then recreate
 DO $$
 DECLARE
     t text;
@@ -195,8 +196,9 @@ BEGIN
         'sections','courses','subjects','experiments','instructors','room_schedule'
     ])
     LOOP
+        EXECUTE format('DROP POLICY IF EXISTS "Allow anon full access on %I" ON %I', t, t);
         EXECUTE format(
-            'CREATE POLICY IF NOT EXISTS "Allow anon full access on %I" ON %I FOR ALL TO anon USING (true) WITH CHECK (true)',
+            'CREATE POLICY "Allow anon full access on %I" ON %I FOR ALL TO anon USING (true) WITH CHECK (true)',
             t, t
         );
     END LOOP;
