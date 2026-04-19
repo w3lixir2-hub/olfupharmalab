@@ -46,6 +46,7 @@
         .log-item-badge { display:inline-block; padding:2px 8px; border-radius:12px; font-size:11px; font-weight:600; }
         .log-equip { background:#dbeafe; color:#1d4ed8; }
         .log-glass { background:#e0f2fe; color:#0369a1; }
+        .log-return { background:#d1fae5; color:#065f46; }
 
         /* Modal */
         .modal-overlay { display:none; position:fixed; inset:0; background:rgba(0,0,0,0.5); z-index:1000; align-items:center; justify-content:center; padding:20px; }
@@ -225,10 +226,12 @@
                     <thead>
                         <tr>
                             <th>Date & Time</th>
+                            <th>Action</th>
                             <th>Item</th>
                             <th>Type</th>
                             <th>Qty</th>
                             <th>Borrower</th>
+                            <th>Condition</th>
                             <th>Logged By</th>
                         </tr>
                     </thead>
@@ -461,7 +464,7 @@
             const tbody = document.getElementById('borrow-tbody');
             const { data } = await db.from('audit_log')
                 .select('*')
-                .eq('action', 'Borrow')
+                .in('action', ['Borrow', 'Return'])
                 .order('created_at', { ascending: false })
                 .limit(200);
 
@@ -474,24 +477,32 @@
             document.getElementById('stat-borrows').textContent = monthCount;
 
             if (logs.length === 0) {
-                tbody.innerHTML = '<tr><td colspan="6" class="empty-state">No borrow records yet.</td></tr>';
+                tbody.innerHTML = '<tr><td colspan="8" class="empty-state">No borrow or return records yet.</td></tr>';
                 return;
             }
 
             tbody.innerHTML = logs.map(log => {
-                // details format: "ItemName | Type | Qty pcs | Borrower: Name | Remarks"
-                const parts = (log.details || '').split(' | ');
+                // details format: "ItemName | Category | Qty pcs | Borrower: Name | Condition: X | ..."
+                const parts     = (log.details || '').split(' | ');
                 const itemName  = parts[0] || '—';
                 const itemType  = parts[1] || '—';
                 const qty       = parts[2] || '—';
                 const borrower  = (parts[3] || '').replace('Borrower: ', '') || '—';
+                const condPart  = parts.find(p => p.startsWith('Condition:')) || '';
+                const condition = condPart.replace('Condition: ', '') || '—';
                 const typeCls   = itemType === 'Equipment' ? 'log-equip' : 'log-glass';
+                const isReturn  = log.action === 'Return';
+                const actionBadge = isReturn
+                    ? `<span class="log-item-badge log-return">Return</span>`
+                    : `<span class="log-item-badge" style="background:#fee2e2;color:#991b1b;">Borrow</span>`;
                 return `<tr>
                     <td style="white-space:nowrap;color:#718096;font-size:13px;">${fmtDateTime(log.created_at)}</td>
+                    <td>${actionBadge}</td>
                     <td style="font-weight:500;">${itemName}</td>
                     <td><span class="log-item-badge ${typeCls}">${itemType}</span></td>
                     <td>${qty}</td>
                     <td>${borrower}</td>
+                    <td style="font-size:13px;color:${condition==='Good'?'#065f46':condition==='Damaged'?'#92400e':'#991b1b'};">${condition}</td>
                     <td style="color:#718096;font-size:13px;">${log.user_name || '—'}</td>
                 </tr>`;
             }).join('');

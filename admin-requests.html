@@ -304,7 +304,34 @@
                 <button class="btn btn-danger" onclick="rejectRequest()">Reject Request</button>
                 <button class="btn btn-secondary" onclick="closeModal()">Save Draft</button>
                 <button class="btn btn-warning" id="release-btn" onclick="releaseRequest()" style="display:none;background:#f59e0b;color:white;border:none;">Mark as Released</button>
+                <button class="btn btn-primary" id="return-btn" onclick="openReturnModal()" style="display:none;background:#8b5cf6;border:none;">Process Return</button>
                 <button class="btn btn-success" id="approve-btn" onclick="approveRequest()">Approve Request</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Return Modal -->
+    <div class="modal" id="returnModal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.55);z-index:2000;align-items:center;justify-content:center;padding:20px;">
+        <div style="background:white;border-radius:16px;padding:32px;width:100%;max-width:580px;max-height:90vh;overflow-y:auto;box-shadow:0 20px 60px rgba(0,0,0,0.2);">
+            <h2 style="font-size:20px;font-weight:700;color:#1a202c;margin-bottom:8px;">Process Return</h2>
+            <p style="font-size:14px;color:#718096;margin-bottom:20px;">Check off items being returned. Quantities will be added back to inventory.</p>
+
+            <div id="return-checklist" style="margin-bottom:20px;"></div>
+
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px;">
+                <div>
+                    <label style="display:block;font-size:13px;font-weight:600;color:#2d3748;margin-bottom:6px;">Return Date & Time</label>
+                    <input type="datetime-local" id="return-datetime" style="width:100%;padding:10px 12px;border:2px solid #e2e8f0;border-radius:8px;font-size:14px;">
+                </div>
+                <div>
+                    <label style="display:block;font-size:13px;font-weight:600;color:#2d3748;margin-bottom:6px;">Received By</label>
+                    <input type="text" id="return-received-by" placeholder="Lab tech name" style="width:100%;padding:10px 12px;border:2px solid #e2e8f0;border-radius:8px;font-size:14px;">
+                </div>
+            </div>
+
+            <div style="display:flex;justify-content:flex-end;gap:10px;margin-top:8px;">
+                <button onclick="closeReturnModal()" style="padding:10px 20px;background:#e2e8f0;color:#4a5568;border:none;border-radius:8px;font-size:14px;font-weight:600;cursor:pointer;">Cancel</button>
+                <button onclick="confirmReturn()" style="padding:10px 20px;background:#8b5cf6;color:white;border:none;border-radius:8px;font-size:14px;font-weight:600;cursor:pointer;">Confirm Return</button>
             </div>
         </div>
     </div>
@@ -419,6 +446,8 @@
                     actionButton = `<button class="btn btn-primary btn-sm" onclick="event.stopPropagation(); openRequestDetail('${request.requestId}')">Review</button>`;
                 } else if (statusClass === 'approved') {
                     actionButton = `<button class="btn btn-warning btn-sm" style="background:#f59e0b;color:white;border:none;" onclick="event.stopPropagation(); openRequestDetail('${request.requestId}')">Release</button>`;
+                } else if (statusClass === 'released') {
+                    actionButton = `<button class="btn btn-sm" style="background:#8b5cf6;color:white;border:none;" onclick="event.stopPropagation(); openRequestDetail('${request.requestId}')">Return</button>`;
                 } else {
                     actionButton = `<button class="btn btn-secondary btn-sm" onclick="event.stopPropagation(); openRequestDetail('${request.requestId}')">View</button>`;
                 }
@@ -559,6 +588,7 @@
             const status = request.status || 'pending';
             document.getElementById('approve-btn').style.display  = status === 'pending'  ? '' : 'none';
             document.getElementById('release-btn').style.display  = status === 'approved' ? '' : 'none';
+            document.getElementById('return-btn').style.display   = status === 'released' ? '' : 'none';
             document.querySelector('.btn.btn-danger').style.display = (status === 'pending' || status === 'approved') ? '' : 'none';
 
             document.getElementById('requestModal').classList.add('active');
@@ -644,6 +674,106 @@
                 closeModal();
             } catch (err) {
                 alert('Error releasing request: ' + (err.message || err));
+            }
+        }
+
+        function openReturnModal() {
+            if (!currentRequestData) return;
+            const borrowCategories = ['Glassware', 'Equipment'];
+            const items = (currentRequestData.items || []).filter(it => borrowCategories.includes(it.category));
+
+            if (items.length === 0) {
+                alert('No Glassware or Equipment items in this request to return.');
+                return;
+            }
+
+            // Set default return datetime to now
+            const now = new Date();
+            const pad = n => String(n).padStart(2,'0');
+            document.getElementById('return-datetime').value =
+                `${now.getFullYear()}-${pad(now.getMonth()+1)}-${pad(now.getDate())}T${pad(now.getHours())}:${pad(now.getMinutes())}`;
+            document.getElementById('return-received-by').value = getCurrentUser() || '';
+
+            // Build checklist
+            document.getElementById('return-checklist').innerHTML = `
+                <div style="background:#f7fafc;border-radius:10px;padding:16px;">
+                    <div style="font-size:13px;font-weight:600;color:#2d3748;margin-bottom:12px;">Items to Return</div>
+                    ${items.map((it, i) => `
+                        <div style="display:grid;grid-template-columns:auto 1fr auto auto;gap:12px;align-items:center;padding:10px 0;border-bottom:1px solid #e2e8f0;">
+                            <input type="checkbox" id="ret-chk-${i}" checked style="width:18px;height:18px;cursor:pointer;">
+                            <div>
+                                <div style="font-weight:500;font-size:14px;color:#1a202c;">${it.name}</div>
+                                <div style="font-size:12px;color:#718096;">${it.category} — Original: ${it.quantity} ${it.unit}</div>
+                            </div>
+                            <input type="number" id="ret-qty-${i}" value="${it.quantity}" min="0" max="${it.quantity}"
+                                style="width:70px;padding:6px 10px;border:2px solid #e2e8f0;border-radius:6px;font-size:14px;text-align:center;">
+                            <select id="ret-cond-${i}" style="padding:6px 8px;border:2px solid #e2e8f0;border-radius:6px;font-size:13px;">
+                                <option value="Good">Good</option>
+                                <option value="Damaged">Damaged</option>
+                                <option value="Missing">Missing</option>
+                            </select>
+                        </div>
+                    `).join('')}
+                </div>`;
+
+            // Store items ref for confirmReturn
+            document.getElementById('returnModal')._items = items;
+            document.getElementById('returnModal').style.display = 'flex';
+        }
+
+        function closeReturnModal() {
+            document.getElementById('returnModal').style.display = 'none';
+        }
+
+        async function confirmReturn() {
+            const receivedBy = document.getElementById('return-received-by').value.trim();
+            const returnDt   = document.getElementById('return-datetime').value;
+            if (!receivedBy) { alert('Enter the name of who received the items.'); return; }
+            if (!returnDt)   { alert('Set the return date and time.'); return; }
+
+            const items  = document.getElementById('returnModal')._items || [];
+            const borrower = currentRequestData.studentName || 'Unknown';
+            const reqId  = currentRequestData.requestId;
+
+            try {
+                // Fetch chemicals once for ID lookup
+                const { data: chemicals } = await db.from('chemicals').select('id,name,category,quantity,unit');
+                const borrowCategories = ['Glassware', 'Equipment'];
+
+                for (let i = 0; i < items.length; i++) {
+                    const checked   = document.getElementById(`ret-chk-${i}`)?.checked;
+                    const qtyRet    = parseInt(document.getElementById(`ret-qty-${i}`)?.value || '0', 10);
+                    const condition = document.getElementById(`ret-cond-${i}`)?.value || 'Good';
+                    const it        = items[i];
+
+                    if (!checked || qtyRet <= 0) continue;
+
+                    // Add quantity back to inventory
+                    const match = (chemicals || []).find(c =>
+                        c.name.toLowerCase() === it.name.toLowerCase() &&
+                        borrowCategories.includes(c.category)
+                    );
+                    if (match) {
+                        const restored = Number(match.quantity || 0) + qtyRet;
+                        await db.from('chemicals').update({ quantity: restored }).eq('id', match.id);
+                    }
+
+                    // Log return to audit_log
+                    const details = `${it.name} | ${it.category} | ${qtyRet} ${it.unit} | Borrower: ${borrower} | Condition: ${condition} | Received by: ${receivedBy} | Req: ${reqId}`;
+                    await addAuditEntry('Return', details);
+                }
+
+                // Update request status to returned
+                await updateRequestStatus(reqId, 'returned');
+                await addAuditEntry('Request Returned',
+                    `${reqId} — ${borrower} — returned at ${new Date(returnDt).toLocaleString('en-PH', { timeZone:'Asia/Manila' })}`);
+
+                closeReturnModal();
+                await loadRequests();
+                closeModal();
+                alert('Return processed successfully!');
+            } catch (err) {
+                alert('Error processing return: ' + (err.message || err));
             }
         }
 
