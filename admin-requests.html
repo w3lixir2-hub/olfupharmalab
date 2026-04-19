@@ -250,6 +250,7 @@
                     <table class="items-table">
                         <thead>
                             <tr>
+                                <th>Category</th>
                                 <th>Item Name</th>
                                 <th>Quantity</th>
                                 <th>Unit</th>
@@ -523,12 +524,18 @@
                 </div>
             `;
 
-            // Update items table
+            // Update items table — sorted by category
+            const CAT_ORDER = ['Liquid Reagent','Solid Reagent','Glassware','Equipment','Antibiotic Disc'];
+            const sortedItems = [...(request.items || [])].sort((a, b) => {
+                const ai = CAT_ORDER.indexOf(a.category); const bi = CAT_ORDER.indexOf(b.category);
+                return (ai === -1 ? 99 : ai) - (bi === -1 ? 99 : bi);
+            });
             const itemsTableBody = document.querySelectorAll('.info-section')[2].querySelector('tbody');
             itemsTableBody.innerHTML = '';
-            request.items.forEach(item => {
+            sortedItems.forEach(item => {
                 const row = document.createElement('tr');
                 row.innerHTML = `
+                    <td style="color:#6b7280;font-size:13px;">${item.category || '—'}</td>
                     <td>${item.name}</td>
                     <td>${item.quantity}</td>
                     <td>${item.unit}</td>

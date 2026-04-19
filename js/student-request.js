@@ -256,18 +256,20 @@ async function submitForm() {
     const roomVal  = roomEl ? roomEl.value : '';
     const roomName = roomEl && roomEl.selectedIndex > 0 ? roomEl.options[roomEl.selectedIndex].text : '';
 
+    const CAT_ORDER_SUBMIT = ['Liquid Reagent','Solid Reagent','Glassware','Equipment','Antibiotic Disc'];
     const items = [];
-    let firstCategory = '';
     document.querySelectorAll('.item-row').forEach(item => {
         const category = item.querySelector('.item-category')?.value || '';
         const name     = (item.querySelector('.item-name')?.value || '').trim();
         const qty      = item.querySelector('.item-quantity')?.value;
         const unit     = item.querySelector('.item-unit')?.value;
-        if (name && qty && unit) {
-            items.push({ name, quantity: qty, unit, category });
-            if (!firstCategory) firstCategory = category;
-        }
+        if (name && qty && unit) items.push({ name, quantity: qty, unit, category });
     });
+    items.sort((a, b) => {
+        const ai = CAT_ORDER_SUBMIT.indexOf(a.category); const bi = CAT_ORDER_SUBMIT.indexOf(b.category);
+        return (ai === -1 ? 99 : ai) - (bi === -1 ? 99 : bi);
+    });
+    const firstCategory = items[0]?.category || '';
 
     const formData = {
         requestId:          referenceNumber,
@@ -430,23 +432,31 @@ function updateReviewSummary() {
     document.getElementById('review-room').textContent =
         roomEl && roomEl.selectedIndex > 0 ? roomEl.options[roomEl.selectedIndex].text : '-';
 
-    const itemsTableBody = document.getElementById('items-table-body');
-    itemsTableBody.innerHTML = '';
-    let hasItems = false;
+    const CAT_ORDER = ['Liquid Reagent','Solid Reagent','Glassware','Equipment','Antibiotic Disc'];
+    const collectedItems = [];
     document.querySelectorAll('.item-row').forEach(item => {
         const cat = item.querySelector('.item-category')?.value || '';
         const n   = item.querySelector('.item-name')?.value.trim() || '';
         const q   = item.querySelector('.item-quantity')?.value || '';
         const u   = item.querySelector('.item-unit')?.value || '';
-        if (n && q && u) {
-            hasItems = true;
+        if (n && q && u) collectedItems.push({ cat, n, q, u });
+    });
+    collectedItems.sort((a, b) => {
+        const ai = CAT_ORDER.indexOf(a.cat); const bi = CAT_ORDER.indexOf(b.cat);
+        return (ai === -1 ? 99 : ai) - (bi === -1 ? 99 : bi);
+    });
+    const itemsTableBody = document.getElementById('items-table-body');
+    itemsTableBody.innerHTML = '';
+    if (collectedItems.length === 0) {
+        itemsTableBody.innerHTML = '<tr><td colspan="3" style="padding:12px;color:#718096;text-align:center;">No items added yet</td></tr>';
+    } else {
+        collectedItems.forEach(({ cat, n, q, u }) => {
             const row = document.createElement('tr');
             row.style.borderBottom = '1px solid #e2e8f0';
             row.innerHTML = `<td style="padding:12px;color:#2d3748;">${n}</td><td style="padding:12px;color:#718096;font-size:13px;">${cat}</td><td style="text-align:right;padding:12px;color:#2d3748;">${q} ${u}</td>`;
             itemsTableBody.appendChild(row);
-        }
-    });
-    if (!hasItems) itemsTableBody.innerHTML = '<tr><td colspan="3" style="padding:12px;color:#718096;text-align:center;">No items added yet</td></tr>';
+        });
+    }
 
     const remarks = document.getElementById('remarks').value.trim();
     const remarksReview = document.getElementById('remarks-review');
