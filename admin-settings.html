@@ -67,7 +67,7 @@
             </a>
             <a href="inventory.html" class="menu-item">
                 <svg class="menu-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path></svg>
-                Chemical Inventory
+                LabTech Inventory
             </a>
             <a href="equipment.html" class="menu-item">
                 <svg class="menu-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><circle cx="12" cy="12" r="4"></circle><line x1="4.93" y1="4.93" x2="9.17" y2="9.17"></line><line x1="14.83" y1="14.83" x2="19.07" y2="19.07"></line><line x1="14.83" y1="9.17" x2="19.07" y2="4.93"></line><line x1="4.93" y1="19.07" x2="9.17" y2="14.83"></line></svg>
@@ -290,7 +290,9 @@
         </div>
     </div>
 
-    <script src="js/data.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="js/supabase-client.js"></script>
+    <script src="js/supabase-data.js"></script>
     <script src="js/auth-guard.js"></script>
     <script>
         const tabs = document.querySelectorAll('.settings-tab');
@@ -306,9 +308,9 @@
 
         function openModal(id) {
             const m = document.getElementById(id);
-            if (id === 'modal-subject') { populateModalSubjectCourse(); }
-            if (id === 'modal-experiment') { populateModalExperimentSubject(); }
-            if (id === 'modal-instructor') { populateModalInstructorSubjects(); }
+            if (id === 'modal-subject') populateModalSubjectCourse();
+            if (id === 'modal-experiment') populateModalExperimentSubject();
+            if (id === 'modal-instructor') populateModalInstructorSubjects();
             m.classList.add('active');
         }
         function closeModal(id) {
@@ -320,160 +322,163 @@
             });
         });
 
-        function populateModalSubjectCourse() {
+        async function populateModalSubjectCourse() {
             const sel = document.getElementById('modal-subject-course');
-            sel.innerHTML = '<option value="">Select Course</option>' + getCourses().map(c => `<option value="${c.id}">${c.name}</option>`).join('');
+            const courses = await getCourses();
+            sel.innerHTML = '<option value="">Select Course</option>' + courses.map(c => `<option value="${c.id}">${c.name}</option>`).join('');
         }
-        function populateModalExperimentSubject() {
+        async function populateModalExperimentSubject() {
             const sel = document.getElementById('modal-experiment-subject');
-            sel.innerHTML = '<option value="">Select Subject</option>' + getSubjects().map(s => `<option value="${s.id}">${s.name}</option>`).join('');
+            const subjects = await getSubjects();
+            sel.innerHTML = '<option value="">Select Subject</option>' + subjects.map(s => `<option value="${s.id}">${s.name}</option>`).join('');
         }
-        function populateModalInstructorSubjects() {
-            document.getElementById('modal-instructor-subjects').innerHTML = getSubjects().map(s =>
+        async function populateModalInstructorSubjects() {
+            const subjects = await getSubjects();
+            document.getElementById('modal-instructor-subjects').innerHTML = subjects.map(s =>
                 `<label><input type="checkbox" value="${s.id}"> ${s.name}</label>`
             ).join('');
         }
 
-        function submitSection() {
+        /* ── Sections ── */
+        async function submitSection() {
             const name = (document.getElementById('modal-section-name').value || '').trim();
             if (!name) { alert('Enter section name.'); return; }
-            const list = getSections();
-            list.push({ id: 'sec-' + Date.now(), name });
-            saveSections(list);
+            const { error } = await db.from('sections').insert({ id: 'sec-' + Date.now(), name });
+            if (error) { alert('Error: ' + error.message); return; }
             document.getElementById('modal-section-name').value = '';
             closeModal('modal-section');
             renderSections();
         }
-        function removeSection(id) {
+        async function removeSection(id) {
             if (!confirm('Remove this section?')) return;
-            const list = getSections().filter(s => s.id !== id);
-            saveSections(list);
+            await db.from('sections').delete().eq('id', id);
             renderSections();
         }
-        function renderSections() {
+        async function renderSections() {
             const el = document.getElementById('sections-list');
-            const list = getSections();
+            el.innerHTML = '<p style="color:#718096;font-size:14px;">Loading...</p>';
+            const list = await getSections();
             el.innerHTML = list.length === 0 ? '<p style="color:#718096;font-size:14px;">No sections yet. Add above.</p>' :
                 list.map(s => `<div class="settings-item"><div><div class="name">${s.name}</div></div><button onclick="removeSection('${s.id}')">Remove</button></div>`).join('');
         }
 
-        function submitCourse() {
+        /* ── Courses ── */
+        async function submitCourse() {
             const name = (document.getElementById('modal-course-name').value || '').trim();
             if (!name) { alert('Enter course name.'); return; }
-            const list = getCourses();
-            list.push({ id: 'course-' + Date.now(), name });
-            saveCourses(list);
+            const { error } = await db.from('courses').insert({ id: 'course-' + Date.now(), name });
+            if (error) { alert('Error: ' + error.message); return; }
             document.getElementById('modal-course-name').value = '';
             closeModal('modal-course');
             renderCourses();
-            populateModalSubjectCourse();
         }
-        function removeCourse(id) {
+        async function removeCourse(id) {
             if (!confirm('Remove this course?')) return;
-            const list = getCourses().filter(c => c.id !== id);
-            saveCourses(list);
+            await db.from('courses').delete().eq('id', id);
             renderCourses();
         }
-        function renderCourses() {
+        async function renderCourses() {
             const el = document.getElementById('courses-list');
-            const list = getCourses();
+            el.innerHTML = '<p style="color:#718096;font-size:14px;">Loading...</p>';
+            const list = await getCourses();
             el.innerHTML = list.length === 0 ? '<p style="color:#718096;font-size:14px;">No courses yet. Add above.</p>' :
                 list.map(c => `<div class="settings-item"><div><div class="name">${c.name}</div></div><button onclick="removeCourse('${c.id}')">Remove</button></div>`).join('');
         }
 
-        function submitSubject() {
+        /* ── Subjects ── */
+        async function submitSubject() {
             const name = (document.getElementById('modal-subject-name').value || '').trim();
             if (!name) { alert('Enter subject name.'); return; }
             const courseId = document.getElementById('modal-subject-course').value || null;
-            const list = getSubjects();
-            list.push({ id: 'subj-' + Date.now(), name, courseId: courseId || undefined });
-            saveSubjects(list);
+            const { error } = await db.from('subjects').insert({ id: 'subj-' + Date.now(), name, course_id: courseId });
+            if (error) { alert('Error: ' + error.message); return; }
             document.getElementById('modal-subject-name').value = '';
             document.getElementById('modal-subject-course').value = '';
             closeModal('modal-subject');
             renderSubjects();
-            populateModalExperimentSubject();
         }
-        function removeSubject(id) {
+        async function removeSubject(id) {
             if (!confirm('Remove this subject?')) return;
-            const list = getSubjects().filter(s => s.id !== id);
-            saveSubjects(list);
+            await db.from('subjects').delete().eq('id', id);
             renderSubjects();
         }
-        function renderSubjects() {
+        async function renderSubjects() {
             const el = document.getElementById('subjects-list');
-            const list = getSubjects();
-            const courses = getCourses();
+            el.innerHTML = '<p style="color:#718096;font-size:14px;">Loading...</p>';
+            const [list, courses] = await Promise.all([getSubjects(), getCourses()]);
             el.innerHTML = list.length === 0 ? '<p style="color:#718096;font-size:14px;">No subjects yet. Add above.</p>' :
                 list.map(s => {
-                    const course = courses.find(c => c.id === s.courseId);
+                    const course = courses.find(c => c.id === s.course_id);
                     return `<div class="settings-item"><div><div class="name">${s.name}</div><div class="meta">${course ? course.name : '—'}</div></div><button onclick="removeSubject('${s.id}')">Remove</button></div>`;
                 }).join('');
         }
-        function submitExperiment() {
+
+        /* ── Experiments ── */
+        async function submitExperiment() {
             const name = (document.getElementById('modal-experiment-name').value || '').trim();
             if (!name) { alert('Enter experiment/activity name.'); return; }
             const subjectId = document.getElementById('modal-experiment-subject').value || null;
             if (!subjectId) { alert('Select a subject.'); return; }
-            const list = getExperiments();
-            list.push({ id: 'exp-' + Date.now(), name, subjectId });
-            saveExperiments(list);
+            const { error } = await db.from('experiments').insert({ id: 'exp-' + Date.now(), name, subject_id: subjectId });
+            if (error) { alert('Error: ' + error.message); return; }
             document.getElementById('modal-experiment-name').value = '';
             document.getElementById('modal-experiment-subject').value = '';
             closeModal('modal-experiment');
             renderExperiments();
         }
-        function removeExperiment(id) {
+        async function removeExperiment(id) {
             if (!confirm('Remove this experiment/activity?')) return;
-            const list = getExperiments().filter(e => e.id !== id);
-            saveExperiments(list);
+            await db.from('experiments').delete().eq('id', id);
             renderExperiments();
         }
-        function renderExperiments() {
+        async function renderExperiments() {
             const el = document.getElementById('experiments-list');
-            const list = getExperiments();
-            const subjects = getSubjects();
+            el.innerHTML = '<p style="color:#718096;font-size:14px;">Loading...</p>';
+            const [list, subjects] = await Promise.all([getExperiments(), getSubjects()]);
             el.innerHTML = list.length === 0 ? '<p style="color:#718096;font-size:14px;">No experiments yet. Add above.</p>' :
                 list.map(e => {
-                    const subj = subjects.find(s => s.id === e.subjectId);
+                    const subj = subjects.find(s => s.id === e.subject_id);
                     return `<div class="settings-item"><div><div class="name">${e.name}</div><div class="meta">Subject: ${subj ? subj.name : '—'}</div></div><button onclick="removeExperiment('${e.id}')">Remove</button></div>`;
                 }).join('');
         }
-        function submitInstructor() {
+
+        /* ── Instructors ── */
+        async function submitInstructor() {
             const name = (document.getElementById('modal-instructor-name').value || '').trim();
             if (!name) { alert('Enter instructor name.'); return; }
             const checkboxes = document.querySelectorAll('#modal-instructor-subjects input:checked');
-            const subjectIds = Array.from(checkboxes).map(cb => cb.value);
-            const list = getInstructors();
-            list.push({ id: 'inst-' + Date.now(), name, subjectIds });
-            saveInstructors(list);
+            const subject_ids = Array.from(checkboxes).map(cb => cb.value);
+            const { error } = await db.from('instructors').insert({ id: 'inst-' + Date.now(), name, subject_ids });
+            if (error) { alert('Error: ' + error.message); return; }
             document.getElementById('modal-instructor-name').value = '';
             document.querySelectorAll('#modal-instructor-subjects input').forEach(i => i.checked = false);
             closeModal('modal-instructor');
             renderInstructors();
         }
-        function removeInstructor(id) {
+        async function removeInstructor(id) {
             if (!confirm('Remove this instructor?')) return;
-            const list = getInstructors().filter(i => i.id !== id);
-            saveInstructors(list);
+            await db.from('instructors').delete().eq('id', id);
             renderInstructors();
         }
-        function renderInstructors() {
+        async function renderInstructors() {
             const el = document.getElementById('instructors-list');
-            const list = getInstructors();
-            const subjects = getSubjects();
+            el.innerHTML = '<p style="color:#718096;font-size:14px;">Loading...</p>';
+            const [list, subjects] = await Promise.all([getInstructors(), getSubjects()]);
             el.innerHTML = list.length === 0 ? '<p style="color:#718096;font-size:14px;">No instructors yet. Add above.</p>' :
                 list.map(i => {
-                    const names = (i.subjectIds || []).map(sid => subjects.find(s => s.id === sid)?.name || sid).join(', ') || '—';
+                    const names = (i.subject_ids || []).map(sid => subjects.find(s => s.id === sid)?.name || sid).join(', ') || '—';
                     return `<div class="settings-item"><div><div class="name">${i.name}</div><div class="instructor-subjects">${names}</div></div><button onclick="removeInstructor('${i.id}')">Remove</button></div>`;
                 }).join('');
         }
-        function init() {
-            renderSections();
-            renderCourses();
-            renderSubjects();
-            renderExperiments();
-            renderInstructors();
+
+        async function init() {
+            await Promise.all([
+                renderSections(),
+                renderCourses(),
+                renderSubjects(),
+                renderExperiments(),
+                renderInstructors()
+            ]);
         }
         init();
     </script>
