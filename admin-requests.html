@@ -303,7 +303,8 @@
             <div class="modal-actions">
                 <button class="btn btn-danger" onclick="rejectRequest()">Reject Request</button>
                 <button class="btn btn-secondary" onclick="closeModal()">Save Draft</button>
-                <button class="btn btn-success" onclick="approveRequest()">Approve Request</button>
+                <button class="btn btn-warning" id="release-btn" onclick="releaseRequest()" style="display:none;background:#f59e0b;color:white;border:none;">Mark as Released</button>
+                <button class="btn btn-success" id="approve-btn" onclick="approveRequest()">Approve Request</button>
             </div>
         </div>
     </div>
@@ -417,7 +418,7 @@
                 if (statusClass === 'pending') {
                     actionButton = `<button class="btn btn-primary btn-sm" onclick="event.stopPropagation(); openRequestDetail('${request.requestId}')">Review</button>`;
                 } else if (statusClass === 'approved') {
-                    actionButton = `<button class="btn btn-success btn-sm" onclick="event.stopPropagation(); window.open('print-checklist.html?requestId=${request.requestId}', '_blank')">Print</button>`;
+                    actionButton = `<button class="btn btn-warning btn-sm" style="background:#f59e0b;color:white;border:none;" onclick="event.stopPropagation(); openRequestDetail('${request.requestId}')">Release</button>`;
                 } else {
                     actionButton = `<button class="btn btn-secondary btn-sm" onclick="event.stopPropagation(); openRequestDetail('${request.requestId}')">View</button>`;
                 }
@@ -554,6 +555,12 @@
                 remarksSection.style.display = 'none';
             }
 
+            // Show/hide action buttons based on status
+            const status = request.status || 'pending';
+            document.getElementById('approve-btn').style.display  = status === 'pending'  ? '' : 'none';
+            document.getElementById('release-btn').style.display  = status === 'approved' ? '' : 'none';
+            document.querySelector('.btn.btn-danger').style.display = (status === 'pending' || status === 'approved') ? '' : 'none';
+
             document.getElementById('requestModal').classList.add('active');
         }
 
@@ -595,6 +602,48 @@
                 closeModal();
             } catch (err) {
                 alert('Error approving request: ' + (err.message || err));
+            }
+        }
+
+        async function releaseRequest() {
+            if (!currentRequestData) return;
+            if (!confirm('Mark this request as Released? This will log borrowed glassware and equipment.')) return;
+
+            try {
+                await updateRequestStatus(currentRequestData.requestId, 'released');
+                await addAuditEntry('Request Released', currentRequestData.requestId + ' — ' + (currentRequestData.studentName || ''));
+
+                // Auto-log glassware and equipment borrows
+                const borrower = currentRequestData.studentName || 'Unknown';
+                const items = currentRequestData.items || [];
+                const borrowCategories = ['Glassware', 'Equipment'];
+
+                const borrowItems = items.filter(it => borrowCategories.includes(it.category));
+                if (borrowItems.length > 0) {
+                    // Fetch all chemicals once to match by name
+                    const { data: chemicals } = await db.from('chemicals').select('id,name,category,quantity,unit');
+                    for (const item of borrowItems) {
+                        const match = (chemicals || []).find(c =>
+                            c.name.toLowerCase() === item.name.toLowerCase() &&
+                            borrowCategories.includes(c.category)
+                        );
+                        const qty = Number(item.quantity) || 0;
+                        const unit = item.unit || (match?.unit) || 'pcs';
+
+                        if (match && qty > 0) {
+                            const newQty = Math.max(0, Number(match.quantity || 0) - qty);
+                            await db.from('chemicals').update({ quantity: newQty }).eq('id', match.id);
+                        }
+
+                        const details = `${item.name} | ${item.category} | ${qty} ${unit} | Borrower: ${borrower} | Req: ${currentRequestData.requestId}`;
+                        await addAuditEntry('Borrow', details);
+                    }
+                }
+
+                await loadRequests();
+                closeModal();
+            } catch (err) {
+                alert('Error releasing request: ' + (err.message || err));
             }
         }
 
