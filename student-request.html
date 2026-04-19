@@ -197,10 +197,18 @@
 
         .item-row {
             display: grid;
-            grid-template-columns: 2fr 1fr 1fr auto;
+            grid-template-columns: 1.2fr 2fr 0.8fr 0.7fr auto;
             gap: 12px;
             margin-bottom: 16px;
             align-items: end;
+        }
+
+        /* Mobile-friendly date/time inputs */
+        input[type="date"],
+        input[type="time"] {
+            font-size: 16px; /* prevents iOS auto-zoom */
+            min-height: 48px;
+            cursor: pointer;
         }
 
         .btn {
@@ -372,6 +380,9 @@
             .item-row {
                 grid-template-columns: 1fr;
             }
+            .item-row .btn-remove {
+                justify-self: end;
+            }
 
             .request-form {
                 padding: 24px;
@@ -528,32 +539,32 @@
             <div class="form-section" id="step-3">
                 <h2 class="section-title">Requested Items</h2>
 
-                <div class="form-group">
-                    <label class="form-label">Request Type <span class="required">*</span></label>
-                    <select class="form-select" id="request-type" required>
-                        <option value="">Select Type</option>
-                        <option value="chemical">Chemicals</option>
-                        <option value="equipment">Equipment</option>
-                        <option value="glassware">Glassware</option>
-                        <option value="consumables">Consumables</option>
-                    </select>
-                </div>
-
                 <div class="items-list" id="items-container">
                     <div class="item-row">
                         <div class="form-group">
+                            <label class="form-label">Category <span class="required">*</span></label>
+                            <select class="form-select item-category" required>
+                                <option value="">Select Category</option>
+                                <option value="Liquid Reagent">Liquid Reagent</option>
+                                <option value="Solid Reagent">Solid Reagent</option>
+                                <option value="Glassware">Glassware</option>
+                                <option value="Equipment">Equipment</option>
+                                <option value="Antibiotic Disc">Antibiotic Disc</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
                             <label class="form-label">Item Name <span class="required">*</span></label>
-                            <select class="form-select item-name" required>
-                                <option value="">Select Item</option>
+                            <select class="form-select item-name" required disabled>
+                                <option value="">Select Category First</option>
                             </select>
                         </div>
                         <div class="form-group">
                             <label class="form-label">Quantity <span class="required">*</span></label>
-                            <input type="number" class="form-input item-quantity" placeholder="e.g., 500" required>
+                            <input type="number" class="form-input item-quantity" placeholder="Qty" min="1" required>
                         </div>
                         <div class="form-group">
-                            <label class="form-label">Unit <span class="required">*</span></label>
-                            <select class="form-select item-unit" required>
+                            <label class="form-label">Unit</label>
+                            <select class="form-select item-unit">
                                 <option value="mL">mL</option>
                                 <option value="L">L</option>
                                 <option value="g">g</option>
@@ -561,7 +572,7 @@
                                 <option value="pcs">pcs</option>
                             </select>
                         </div>
-                        <button type="button" class="btn btn-remove" onclick="this.parentElement.remove()" title="Remove item">✕</button>
+                        <button type="button" class="btn btn-remove" onclick="this.closest('.item-row').remove()" title="Remove item">✕</button>
                     </div>
                 </div>
 
@@ -644,12 +655,13 @@
                             <thead>
                                 <tr style="border-bottom: 2px solid #e2e8f0;">
                                     <th style="text-align: left; padding: 12px; color: #718096; font-size: 13px;">Item</th>
+                                    <th style="text-align: left; padding: 12px; color: #718096; font-size: 13px;">Category</th>
                                     <th style="text-align: right; padding: 12px; color: #718096; font-size: 13px;">Quantity</th>
                                 </tr>
                             </thead>
                             <tbody id="items-table-body">
                                 <tr>
-                                    <td colspan="2" style="padding: 12px; color: #718096; text-align: center;">No items added yet</td>
+                                    <td colspan="3" style="padding: 12px; color: #718096; text-align: center;">No items added yet</td>
                                 </tr>
                             </tbody>
                         </table>

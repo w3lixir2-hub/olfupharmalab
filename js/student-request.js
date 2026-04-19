@@ -5,6 +5,23 @@
 let currentStep = 1;
 const totalSteps = 4;
 
+let _chemicals = null;
+
+async function getChemicalsForForm() {
+    if (!_chemicals) _chemicals = await getChemicals();
+    return _chemicals;
+}
+
+const CATEGORY_OPTS = `
+<option value="">Select Category</option>
+<option value="Liquid Reagent">Liquid Reagent</option>
+<option value="Solid Reagent">Solid Reagent</option>
+<option value="Glassware">Glassware</option>
+<option value="Equipment">Equipment</option>
+<option value="Antibiotic Disc">Antibiotic Disc</option>`.trim();
+
+const UNIT_OPTS = `<option value="mL">mL</option><option value="L">L</option><option value="g">g</option><option value="kg">kg</option><option value="pcs">pcs</option>`;
+
 /* ── Dropdown population ──────────────────────────────────── */
 
 async function populateDropdowns() {
@@ -23,7 +40,8 @@ async function populateDropdowns() {
     }
 
     await populateSubjectDropdown();
-    await populateItemDropdowns();
+    // Pre-fetch chemicals into cache so first category change is instant
+    getChemicalsForForm();
 }
 
 async function populateSubjectDropdown() {
@@ -70,22 +88,79 @@ async function populateInstructorDropdown() {
     }
 }
 
-async function populateItemDropdowns() {
-    const items = await getRequestItemsForDropdown();
-    const opts = '<option value="" data-unit="">Select Item</option>' +
-        items.map(it => `<option value="${it.name}" data-unit="${it.unit || 'pcs'}">${it.name} (${it.unit})</option>`).join('');
+/* ── Category-first item row ──────────────────────────────── */
 
-    document.querySelectorAll('.item-name').forEach(sel => {
-        const currentVal = sel.value;
-        sel.innerHTML = opts;
-        if (currentVal) sel.value = currentVal;
-    });
+async function onCategoryChange(categorySelect) {
+    const row = categorySelect.closest('.item-row');
+    const itemSel = row.querySelector('.item-name');
+    const category = categorySelect.value;
+
+    if (!category) {
+        itemSel.innerHTML = '<option value="">Select Category First</option>';
+        itemSel.disabled = true;
+        return;
+    }
+
+    itemSel.innerHTML = '<option value="">Loading...</option>';
+    itemSel.disabled = true;
+
+    const chemicals = await getChemicalsForForm();
+    const filtered = chemicals.filter(c => c.category === category);
+
+    itemSel.innerHTML = '<option value="">Select Item</option>' +
+        filtered.map(c => `<option value="${c.name}" data-unit="${c.unit || 'pcs'}">${c.name}</option>`).join('');
+    itemSel.disabled = false;
 }
 
-async function buildItemNameSelectHtml() {
-    const items = await getRequestItemsForDropdown();
-    return '<option value="">Select Item</option>' +
-        items.map(it => `<option value="${it.name}" data-unit="${it.unit || 'pcs'}">${it.name} (${it.unit})</option>`).join('');
+function autoSetUnit(itemSelect) {
+    const unit = itemSelect.selectedOptions?.[0]?.dataset?.unit;
+    const row = itemSelect.closest('.item-row');
+    const unitSel = row?.querySelector('.item-unit');
+    if (unit && unitSel) {
+        if (!unitSel.querySelector(`option[value="${unit}"]`)) {
+            const o = document.createElement('option');
+            o.value = unit; o.textContent = unit;
+            unitSel.appendChild(o);
+        }
+        unitSel.value = unit;
+    }
+}
+
+function buildItemRowHtml() {
+    return `<div class="item-row">
+        <div class="form-group">
+            <label class="form-label">Category <span class="required">*</span></label>
+            <select class="form-select item-category" required onchange="onCategoryChange(this)">
+                ${CATEGORY_OPTS}
+            </select>
+        </div>
+        <div class="form-group">
+            <label class="form-label">Item Name <span class="required">*</span></label>
+            <select class="form-select item-name" required disabled>
+                <option value="">Select Category First</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label class="form-label">Quantity <span class="required">*</span></label>
+            <input type="number" class="form-input item-quantity" placeholder="Qty" min="1" required>
+        </div>
+        <div class="form-group">
+            <label class="form-label">Unit</label>
+            <select class="form-select item-unit">${UNIT_OPTS}</select>
+        </div>
+        <button type="button" class="btn btn-remove" onclick="this.closest('.item-row').remove()" title="Remove">✕</button>
+    </div>`;
+}
+
+async function addItem() {
+    const container = document.getElementById('items-container');
+    const div = document.createElement('div');
+    div.innerHTML = buildItemRowHtml();
+    const newRow = div.firstElementChild;
+    container.appendChild(newRow);
+    newRow.querySelector('.item-name').addEventListener('change', function () {
+        autoSetUnit(this);
+    });
 }
 
 /* ── Step progress ────────────────────────────────────────── */
@@ -112,11 +187,11 @@ function updateProgress() {
 
 async function nextStep() {
     if (currentStep === 1) {
-        const name      = document.getElementById('student-name').value.trim();
+        const name       = document.getElementById('student-name').value.trim();
         const studentNum = document.getElementById('student-number').value.trim();
-        const contact   = document.getElementById('contact-number').value.trim();
-        const course    = document.getElementById('course').value;
-        const yearLevel = document.getElementById('year-level').value;
+        const contact    = document.getElementById('contact-number').value.trim();
+        const course     = document.getElementById('course').value;
+        const yearLevel  = document.getElementById('year-level').value;
         if (!name || !studentNum || !contact || !course || !yearLevel) {
             alert('Please fill in all required fields in Student Information.');
             return;
@@ -138,20 +213,15 @@ async function nextStep() {
             return;
         }
     } else if (currentStep === 3) {
-        const requestType = document.getElementById('request-type').value;
-        if (!requestType) {
-            alert('Please select a Request Type.');
-            return;
-        }
         let hasValidItem = false;
         document.querySelectorAll('.item-row').forEach(item => {
-            const name = (item.querySelector('.item-name')?.value || '').trim();
-            const qty  = item.querySelector('.item-quantity')?.value;
-            const unit = item.querySelector('.item-unit')?.value;
-            if (name && qty && unit) hasValidItem = true;
+            const category = item.querySelector('.item-category')?.value || '';
+            const name     = (item.querySelector('.item-name')?.value || '').trim();
+            const qty      = item.querySelector('.item-quantity')?.value;
+            if (category && name && qty) hasValidItem = true;
         });
         if (!hasValidItem) {
-            alert('Please add at least one item with complete details.');
+            alert('Please add at least one item with a category, name, and quantity.');
             return;
         }
     }
@@ -187,11 +257,16 @@ async function submitForm() {
     const roomName = roomEl && roomEl.selectedIndex > 0 ? roomEl.options[roomEl.selectedIndex].text : '';
 
     const items = [];
+    let firstCategory = '';
     document.querySelectorAll('.item-row').forEach(item => {
-        const name = (item.querySelector('.item-name')?.value || '').trim();
-        const qty  = item.querySelector('.item-quantity')?.value;
-        const unit = item.querySelector('.item-unit')?.value;
-        if (name && qty && unit) items.push({ name, quantity: qty, unit });
+        const category = item.querySelector('.item-category')?.value || '';
+        const name     = (item.querySelector('.item-name')?.value || '').trim();
+        const qty      = item.querySelector('.item-quantity')?.value;
+        const unit     = item.querySelector('.item-unit')?.value;
+        if (name && qty && unit) {
+            items.push({ name, quantity: qty, unit, category });
+            if (!firstCategory) firstCategory = category;
+        }
     });
 
     const formData = {
@@ -210,7 +285,7 @@ async function submitForm() {
         timeEnd:            document.getElementById('time-end').value,
         roomAssignment:     roomVal,
         roomAssignmentName: roomName || 'AMS 204',
-        requestType:        document.getElementById('request-type').value,
+        requestType:        firstCategory || 'mixed',
         remarks:            document.getElementById('remarks').value.trim(),
         items,
         status:             'pending',
@@ -259,7 +334,7 @@ function printSuccessPage() {
     const roomEl      = document.getElementById('room-assignment');
     const roomDisplay = roomEl && roomEl.selectedIndex > 0 ? roomEl.options[roomEl.selectedIndex].text : '-';
 
-    let courseDisplay = course + (yearLevel ? ' - ' + yearLevel : '') + (section ? ', Section ' + section : '');
+    const courseDisplay = course + (yearLevel ? ' - ' + yearLevel : '') + (section ? ', Section ' + section : '');
 
     function fmtDate(s) {
         if (!s) return '-';
@@ -274,10 +349,11 @@ function printSuccessPage() {
 
     let itemsHTML = '';
     document.querySelectorAll('.item-row').forEach(item => {
-        const n = item.querySelector('.item-name').value.trim();
-        const q = item.querySelector('.item-quantity').value;
-        const u = item.querySelector('.item-unit').value;
-        if (n && q && u) itemsHTML += `<tr><td style="padding:12px;">${n}</td><td style="text-align:right;padding:12px;">${q} ${u}</td></tr>`;
+        const cat = item.querySelector('.item-category')?.value || '';
+        const n   = item.querySelector('.item-name')?.value.trim() || '';
+        const q   = item.querySelector('.item-quantity')?.value || '';
+        const u   = item.querySelector('.item-unit')?.value || '';
+        if (n && q && u) itemsHTML += `<tr><td style="padding:12px;">${n}</td><td style="padding:12px;color:#718096;font-size:13px;">${cat}</td><td style="text-align:right;padding:12px;">${q} ${u}</td></tr>`;
     });
 
     const printWindow = window.open('', '_blank');
@@ -307,8 +383,8 @@ table{width:100%;border-collapse:collapse;}th{text-align:left;padding:10px;backg
 <p>Time: <strong>${fmtTime12(timeNeeded)} – ${fmtTime12(timeEndVal)}</strong></p>
 <p>Room: <strong>${roomDisplay}</strong></p></div>
 <div class="section"><h3>Requested Items</h3>
-<table><thead><tr><th>Item</th><th style="text-align:right;">Qty</th></tr></thead>
-<tbody>${itemsHTML || '<tr><td colspan="2" style="text-align:center;color:#a0aec0;">No items</td></tr>'}</tbody></table>
+<table><thead><tr><th>Item</th><th>Category</th><th style="text-align:right;">Qty</th></tr></thead>
+<tbody>${itemsHTML || '<tr><td colspan="3" style="text-align:center;color:#a0aec0;">No items</td></tr>'}</tbody></table>
 </div></body></html>`);
     printWindow.document.close();
     setTimeout(() => { printWindow.focus(); printWindow.print(); }, 250);
@@ -316,47 +392,20 @@ table{width:100%;border-collapse:collapse;}th{text-align:left;padding:10px;backg
 
 function printReviewSummary() { window.print(); }
 
-/* ── Add item row ─────────────────────────────────────────── */
-
-async function addItem() {
-    const container = document.getElementById('items-container');
-    const itemSelectHtml = await buildItemNameSelectHtml();
-    const newItem = document.createElement('div');
-    newItem.className = 'item-row';
-    newItem.innerHTML =
-        `<div class="form-group"><label class="form-label">Item Name <span class="required">*</span></label><select class="form-select item-name" required>${itemSelectHtml}</select></div>` +
-        `<div class="form-group"><label class="form-label">Quantity <span class="required">*</span></label><input type="number" class="form-input item-quantity" placeholder="e.g., 500" min="1" required></div>` +
-        `<div class="form-group"><label class="form-label">Unit <span class="required">*</span></label><select class="form-select item-unit" required><option value="mL">mL</option><option value="L">L</option><option value="g">g</option><option value="kg">kg</option><option value="pcs">pcs</option></select></div>` +
-        `<button type="button" class="btn btn-remove" onclick="this.parentElement.remove()" title="Remove">✕</button>`;
-    container.appendChild(newItem);
-    newItem.querySelector('.item-name').addEventListener('change', function () {
-        const unit = this.selectedOptions[0]?.dataset?.unit;
-        const unitSel = newItem.querySelector('.item-unit');
-        if (unit && unitSel) {
-            if (!unitSel.querySelector(`option[value="${unit}"]`)) {
-                const o = document.createElement('option');
-                o.value = unit; o.textContent = unit;
-                unitSel.appendChild(o);
-            }
-            unitSel.value = unit;
-        }
-    });
-}
-
 /* ── Review summary (step 4) ──────────────────────────────── */
 
 function updateReviewSummary() {
-    const name      = document.getElementById('student-name').value.trim() || '-';
+    const name       = document.getElementById('student-name').value.trim() || '-';
     const studentNum = document.getElementById('student-number').value.trim() || '-';
-    const contact   = document.getElementById('contact-number').value.trim() || '-';
-    const course    = document.getElementById('course').value || '-';
-    const yearLevel = document.getElementById('year-level').value || '-';
-    const section   = document.getElementById('section').value?.trim() || '';
+    const contact    = document.getElementById('contact-number').value.trim() || '-';
+    const course     = document.getElementById('course').value || '-';
+    const yearLevel  = document.getElementById('year-level').value || '-';
+    const section    = document.getElementById('section').value?.trim() || '';
 
-    document.getElementById('review-name').textContent          = name;
+    document.getElementById('review-name').textContent           = name;
     document.getElementById('review-student-number').textContent = studentNum;
-    document.getElementById('review-contact').textContent       = contact;
-    document.getElementById('review-course').textContent        =
+    document.getElementById('review-contact').textContent        = contact;
+    document.getElementById('review-course').textContent         =
         course + (yearLevel !== '-' ? ' - ' + yearLevel : '') + (section ? ', Section ' + section : '');
 
     document.getElementById('review-subject').textContent    = document.getElementById('subject').value.trim()    || '-';
@@ -385,18 +434,19 @@ function updateReviewSummary() {
     itemsTableBody.innerHTML = '';
     let hasItems = false;
     document.querySelectorAll('.item-row').forEach(item => {
-        const n = item.querySelector('.item-name').value.trim();
-        const q = item.querySelector('.item-quantity').value;
-        const u = item.querySelector('.item-unit').value;
+        const cat = item.querySelector('.item-category')?.value || '';
+        const n   = item.querySelector('.item-name')?.value.trim() || '';
+        const q   = item.querySelector('.item-quantity')?.value || '';
+        const u   = item.querySelector('.item-unit')?.value || '';
         if (n && q && u) {
             hasItems = true;
             const row = document.createElement('tr');
             row.style.borderBottom = '1px solid #e2e8f0';
-            row.innerHTML = `<td style="padding:12px;color:#2d3748;">${n}</td><td style="text-align:right;padding:12px;color:#2d3748;">${q} ${u}</td>`;
+            row.innerHTML = `<td style="padding:12px;color:#2d3748;">${n}</td><td style="padding:12px;color:#718096;font-size:13px;">${cat}</td><td style="text-align:right;padding:12px;color:#2d3748;">${q} ${u}</td>`;
             itemsTableBody.appendChild(row);
         }
     });
-    if (!hasItems) itemsTableBody.innerHTML = '<tr><td colspan="2" style="padding:12px;color:#718096;text-align:center;">No items added yet</td></tr>';
+    if (!hasItems) itemsTableBody.innerHTML = '<tr><td colspan="3" style="padding:12px;color:#718096;text-align:center;">No items added yet</td></tr>';
 
     const remarks = document.getElementById('remarks').value.trim();
     const remarksReview = document.getElementById('remarks-review');
@@ -418,19 +468,19 @@ document.addEventListener('DOMContentLoaded', async function () {
         populateInstructorDropdown();
     });
 
-    // Auto-set unit when item is selected
+    // Auto-set unit when item is selected (for initial row)
     document.getElementById('items-container')?.addEventListener('change', function (e) {
-        if (!e.target.classList.contains('item-name')) return;
-        const unit = e.target.selectedOptions?.[0]?.dataset?.unit;
-        const row  = e.target.closest('.item-row');
-        const unitSel = row?.querySelector('.item-unit');
-        if (unit && unitSel) {
-            if (!unitSel.querySelector(`option[value="${unit}"]`)) {
-                const o = document.createElement('option');
-                o.value = unit; o.textContent = unit;
-                unitSel.appendChild(o);
-            }
-            unitSel.value = unit;
+        if (e.target.classList.contains('item-name')) {
+            autoSetUnit(e.target);
         }
+    });
+
+    // Wire up category change for the initial pre-rendered row
+    document.querySelector('.item-category')?.addEventListener('change', function () {
+        onCategoryChange(this);
+    });
+    // Wire up item-name unit sync for the initial pre-rendered row
+    document.querySelector('.item-name')?.addEventListener('change', function () {
+        autoSetUnit(this);
     });
 });
