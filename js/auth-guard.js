@@ -1,29 +1,43 @@
 /**
- * Auth guard for admin/lab tech pages. Include after data.js.
- * Redirects to login if no current user. Updates user profile in nav.
+ * Auth guard for admin/lab tech pages. Include after supabase-data.js.
+ * Validates session via Supabase auth, redirects to login if not signed in.
  */
-function requireAuth() {
-  // getCurrentUser is defined in supabase-data.js (uses sessionStorage)
-  if (typeof getCurrentUser !== 'function') return;
-  if (!getCurrentUser()) {
+
+// Hide hardcoded nav profile immediately to prevent flash
+(function() {
+  var style = document.createElement('style');
+  style.textContent = '.user-profile { visibility: hidden; }';
+  document.head.appendChild(style);
+})();
+
+async function requireAuth() {
+  var result = await db.auth.getUser();
+  var user = result.data && result.data.user;
+  if (!user) {
     var redirect = (window.location.pathname.split('/').pop() || 'index.html');
     window.location.replace('login.html?redirect=' + encodeURIComponent(redirect));
     return;
   }
-  initAuthUI();
+  var displayName = user.user_metadata && user.user_metadata.full_name
+    ? user.user_metadata.full_name
+    : user.email;
+  setCurrentUser(displayName);
+  initAuthUI(displayName);
 }
-function initAuthUI() {
-  var name = getCurrentUser();
+
+function initAuthUI(name) {
+  name = name || getCurrentUser();
   if (!name) return;
   var profile = document.querySelector('.user-profile');
   if (profile) {
-    var initials = name.split(/\s+/).map(function(s){ return s[0]; }).join('').toUpperCase().slice(0, 2);
+    var parts = name.includes('@') ? name.split('@')[0].split(/[._]/) : name.split(/\s+/);
+    var initials = parts.map(function(s){ return s[0]; }).join('').toUpperCase().slice(0, 2);
     var avatar = profile.querySelector('.user-avatar');
     if (avatar) avatar.textContent = initials;
     var nameEl = profile.querySelector('.user-name');
     if (nameEl) nameEl.textContent = name;
     var roleEl = profile.querySelector('.user-role');
-    if (roleEl) roleEl.textContent = 'Lab Tech';
+    if (roleEl) roleEl.textContent = 'Lab Staff';
     var wrap = profile.querySelector('.user-info');
     if (wrap && !wrap.querySelector('.logout-link')) {
       var logout = document.createElement('a');
@@ -34,23 +48,15 @@ function initAuthUI() {
       logout.onclick = function(e){ e.preventDefault(); doLogout(); };
       wrap.appendChild(logout);
     }
-    // Reveal after update to prevent flash of hardcoded values
     profile.style.visibility = 'visible';
   }
 }
 
-// Hide hardcoded nav profile immediately to prevent flash
-(function() {
-  var style = document.createElement('style');
-  style.textContent = '.user-profile { visibility: hidden; }';
-  document.head.appendChild(style);
-})();
-function doLogout() {
-  if (typeof addAuditEntry === 'function' && typeof getCurrentUser === 'function') {
-    var who = getCurrentUser();
-    if (who) addAuditEntry('Logout', who + ' signed out');
-  }
-  if (typeof clearCurrentUser === 'function') clearCurrentUser();
+async function doLogout() {
+  var who = getCurrentUser();
+  try { if (who) await addAuditEntry('Logout', who + ' signed out'); } catch(_) {}
+  await db.auth.signOut();
+  clearCurrentUser();
   window.location.href = 'login.html';
 }
 document.addEventListener('DOMContentLoaded', function(){
