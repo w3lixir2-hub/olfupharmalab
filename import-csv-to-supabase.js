@@ -21,6 +21,7 @@ const FILES = [
   { csv: 'Untitled spreadsheet - GLASSWARES.csv',      category: 'Glassware',       nameCol: 0 },
   { csv: 'Untitled spreadsheet - EQUIPMENT .csv',      category: 'Equipment',       nameCol: 1 },
   { csv: 'Untitled spreadsheet - ANTIBIOTIC DISC.csv', category: 'Antibiotic Disc', nameCol: 1 },
+  { csv: 'Untitled spreadsheet - OFFICE SUPPLIES .csv',category: 'Office Supplies', nameCol: 0 },
 ];
 
 // Words that identify a header row (not a data row)
