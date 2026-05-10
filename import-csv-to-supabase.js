@@ -101,13 +101,20 @@ async function main() {
     // Find key columns
     var balJune2026Col = findCol(headerRow, 'june 2026');
     var expiryCol      = findCol(headerRow, 'expiration');
-    var uomJuneCol     = balJune2026Col + 1; // UOM is always right after balance
 
     if (balJune2026Col === -1) {
-      // fallback: try "balance as of june"
       balJune2026Col = findCol(headerRow, 'balance');
-      uomJuneCol = balJune2026Col + 1;
     }
+
+    // Find UOM column AFTER balance (could be multiple columns apart)
+    var uomJuneCol = -1;
+    for (var c = balJune2026Col + 1; c < Math.min(balJune2026Col + 5, headerRow.length); c++) {
+      if (String(headerRow[c] || '').toLowerCase() === 'uom') {
+        uomJuneCol = c;
+        break;
+      }
+    }
+    if (uomJuneCol === -1) uomJuneCol = balJune2026Col + 1; // fallback
 
     console.log('\nProcessing: ' + f.csv);
     console.log('  Header row ' + hIdx + ', name col ' + f.nameCol +

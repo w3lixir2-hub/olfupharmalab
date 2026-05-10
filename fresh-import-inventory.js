@@ -97,12 +97,20 @@ async function main() {
     var headerRow = rows[hIdx];
     var balCol = findCol(headerRow, 'june 2026');
     var expiryCol = findCol(headerRow, 'expiration');
-    var uomCol = balCol + 1;
 
     if (balCol === -1) {
       balCol = findCol(headerRow, 'balance');
-      uomCol = balCol + 1;
     }
+
+    // Find UOM column AFTER balance (could be multiple columns apart)
+    var uomCol = -1;
+    for (var c = balCol + 1; c < Math.min(balCol + 5, headerRow.length); c++) {
+      if (String(headerRow[c] || '').toLowerCase() === 'uom') {
+        uomCol = c;
+        break;
+      }
+    }
+    if (uomCol === -1) uomCol = balCol + 1; // fallback
 
     console.log('Processing: ' + f.csv);
     console.log('  Header row ' + hIdx + ', balance col ' + balCol);
