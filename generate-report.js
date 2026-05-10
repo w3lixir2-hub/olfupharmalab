@@ -66,26 +66,8 @@ FILES.forEach(function(f) {
   // Find max columns
   const maxCols = rows.reduce(function(m, r) { return Math.max(m, r.length); }, 0);
 
-  // Build sheet data
+  // Pass all CSV rows as-is (CSV already has school headers + data)
   var wsData = [];
-  var merges = [];
-
-  function addMergedRow(text) {
-    var r = Array(maxCols).fill('');
-    r[0] = text;
-    wsData.push(r);
-    var i = wsData.length - 1;
-    merges.push({ s: { r: i, c: 0 }, e: { r: i, c: maxCols - 1 } });
-  }
-
-  // School header
-  addMergedRow('OUR LADY OF FATIMA UNIVERSITY');
-  addMergedRow('INVENTORY OF REAGENTS/APPARATUS FOR S.Y. 2025-2026');
-  addMergedRow('COLLEGE OF PHARMACY');
-  addMergedRow(f.label);
-  wsData.push(Array(maxCols).fill(''));
-
-  // All CSV rows (includes their own headers and data)
   rows.forEach(function(row) {
     var padded = row.slice();
     while (padded.length < maxCols) padded.push('');
@@ -93,7 +75,6 @@ FILES.forEach(function(f) {
   });
 
   var ws = XLSX.utils.aoa_to_sheet(wsData);
-  ws['!merges'] = merges;
 
   // Auto column widths (max 50)
   var colWidths = Array(maxCols).fill(10);
