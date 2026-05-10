@@ -452,27 +452,93 @@
             document.getElementById('chemical-modal-overlay').addEventListener('click', function (ev) { if (ev.target === this) closeChemicalModal(); });
             document.getElementById('btn-add-chemical').addEventListener('click', function () { openChemicalModal(null, true); });
 
-            /* ── Excel Export — full CSV data from inventory-data.json ── */
+            /* ── Excel Export — live Supabase qty overlaid on CSV template ── */
             document.getElementById('btn-export').addEventListener('click', async function () {
                 var btn = this;
                 btn.textContent = '⏳ Generating...';
                 btn.disabled = true;
 
                 try {
+                    // 1. Load the CSV template (historical columns + structure)
                     var resp = await fetch('inventory-data.json');
                     if (!resp.ok) throw new Error('inventory-data.json not found');
                     var data = await resp.json();
 
-                    var wb = XLSX.utils.book_new();
-                    var TAB_ORDER = ['LIQUIDS','SOLIDS','GLASSWARES','EQUIPMENT','ANTIBIOTIC DISC','OFFICE SUPPLIES'];
+                    // 2. Fetch ALL live items from Supabase
+                    var sbResp = await fetch(
+                        window.SUPABASE_URL + '/rest/v1/chemicals?select=name,category,quantity,unit&limit=2000',
+                        { headers: { 'apikey': window.SUPABASE_ANON, 'Authorization': 'Bearer ' + window.SUPABASE_ANON } }
+                    );
+                    var liveItems = sbResp.ok ? await sbResp.json() : [];
 
-                    TAB_ORDER.forEach(function(tab) {
-                        if (!data[tab]) return;
-                        var rows = data[tab].rows;
+                    // Build lookup: normalised_name -> {qty, unit}
+                    var liveMap = {};
+                    liveItems.forEach(function(item) {
+                        var key = String(item.name || '').toLowerCase().trim();
+                        liveMap[key] = { qty: item.quantity, unit: item.unit };
+                    });
+
+                    // Category → sheet tab mapping + config
+                    var TAB_CONFIG = [
+                        { tab: 'LIQUIDS',         nameCol: 0, balKeyword: 'june 2026' },
+                        { tab: 'SOLIDS',          nameCol: 0, balKeyword: 'june 2026' },
+                        { tab: 'GLASSWARES',      nameCol: 0, balKeyword: 'june 2026' },
+                        { tab: 'EQUIPMENT',       nameCol: 1, balKeyword: 'june 2026' },
+                        { tab: 'ANTIBIOTIC DISC', nameCol: 1, balKeyword: 'june 2026' },
+                        { tab: 'OFFICE SUPPLIES', nameCol: 0, balKeyword: 'june 2026' },
+                    ];
+
+                    var wb = XLSX.utils.book_new();
+
+                    TAB_CONFIG.forEach(function(cfg) {
+                        if (!data[cfg.tab]) return;
+                        var rows = data[cfg.tab].rows;
                         if (!rows || rows.length === 0) return;
 
-                        var maxCols = rows.reduce(function(m, r) { return Math.max(m, r.length); }, 0);
-                        var wsData = rows.map(function(row) {
+                        // Deep copy rows so we can mutate
+                        var wsData = rows.map(function(r) { return r.slice(); });
+
+                        // Find header row: first row where nameCol cell is 'item' or category keyword
+                        var hIdx = -1;
+                        var balCol = -1;
+                        var uomCol = -1;
+                        for (var i = 0; i < wsData.length; i++) {
+                            var cell = String(wsData[i][cfg.nameCol] || '').toLowerCase();
+                            if (cell === 'item' || cell.includes('chemical') || cell.includes('liquid') ||
+                                cell.includes('solid') || cell.includes('glassware') ||
+                                cell.includes('equipment') || cell.includes('antibiotic') || cell.includes('office')) {
+                                hIdx = i;
+                                // Find balance column
+                                for (var c = 0; c < wsData[i].length; c++) {
+                                    var h = String(wsData[i][c] || '').toLowerCase();
+                                    if (h.includes(cfg.balKeyword)) { balCol = c; break; }
+                                }
+                                if (balCol === -1) {
+                                    // fallback: last column containing 'balance'
+                                    for (var c = 0; c < wsData[i].length; c++) {
+                                        if (String(wsData[i][c] || '').toLowerCase().includes('balance')) balCol = c;
+                                    }
+                                }
+                                uomCol = balCol + 1;
+                                break;
+                            }
+                        }
+
+                        // Overlay live quantities on data rows
+                        if (hIdx >= 0 && balCol >= 0) {
+                            for (var i = hIdx + 1; i < wsData.length; i++) {
+                                var name = String(wsData[i][cfg.nameCol] || '').trim();
+                                if (!name) continue;
+                                var live = liveMap[name.toLowerCase().trim()];
+                                if (live) {
+                                    wsData[i][balCol] = live.qty !== null && live.qty !== undefined ? live.qty : wsData[i][balCol];
+                                    if (live.unit && uomCol < wsData[i].length) wsData[i][uomCol] = live.unit;
+                                }
+                            }
+                        }
+
+                        var maxCols = wsData.reduce(function(m, r) { return Math.max(m, r.length); }, 0);
+                        wsData = wsData.map(function(row) {
                             var r = row.slice();
                             while (r.length < maxCols) r.push('');
                             return r;
@@ -480,7 +546,6 @@
 
                         var ws = XLSX.utils.aoa_to_sheet(wsData);
 
-                        // Auto column widths
                         var colW = Array(maxCols).fill(10);
                         wsData.forEach(function(row) {
                             row.forEach(function(cell, ci) {
@@ -490,7 +555,7 @@
                         });
                         ws['!cols'] = colW.map(function(w) { return { wch: w }; });
 
-                        XLSX.utils.book_append_sheet(wb, ws, tab);
+                        XLSX.utils.book_append_sheet(wb, ws, cfg.tab);
                     });
 
                     XLSX.writeFile(wb, 'Inventory-Report-' + new Date().toISOString().slice(0,10) + '.xlsx');
