@@ -284,6 +284,37 @@ body {
   padding-top: var(--lab-space-3);
 }
 
+/* In-page top tabs (Lab Tech / Inventory / Rooms / Activity Log sections) */
+.page-tabs {
+  display: flex;
+  gap: 4px;
+  border-bottom: 1px solid var(--lab-border);
+  margin-bottom: var(--lab-space-6);
+  padding: 0;
+}
+.page-tab {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--lab-space-2);
+  padding: 12px 20px;
+  color: var(--lab-text-muted);
+  text-decoration: none;
+  font-size: var(--lab-text-sm);
+  font-weight: 500;
+  border-bottom: 2px solid transparent;
+  margin-bottom: -1px;
+  transition: color 0.15s, border-color 0.15s;
+  white-space: nowrap;
+}
+.page-tab:hover {
+  color: var(--lab-text);
+}
+.page-tab.active {
+  color: var(--lab-primary);
+  border-bottom-color: var(--lab-primary);
+  font-weight: 600;
+}
+
 .sidebar-footer {
   padding: var(--lab-space-4) var(--lab-space-6);
   border-top: 1px solid var(--lab-border);
