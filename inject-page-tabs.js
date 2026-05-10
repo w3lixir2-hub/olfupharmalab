@@ -16,10 +16,6 @@ const path = require('path');
 
 // Each tab group renders the same markup on both paired pages; JS sets .active.
 const TAB_GROUPS = {
-    labtech: [
-        { href: 'labtech-dashboard.html', label: 'Lab Tech' },
-        { href: 'admin-requests.html',    label: 'Requests & Acquisitions' }
-    ],
     inventory: [
         { href: 'inventory.html', label: 'Lab Tech Inventory' },
         { href: 'equipment.html', label: 'Glasswares' }
@@ -36,8 +32,6 @@ const TAB_GROUPS = {
 
 // Map each page → which tab group to inject
 const PAGE_GROUP = {
-    'labtech-dashboard.html': 'labtech',
-    'admin-requests.html':    'labtech',
     'inventory.html':         'inventory',
     'equipment.html':         'inventory',
     'lecture-rooms.html':     'rooms',
@@ -45,6 +39,12 @@ const PAGE_GROUP = {
     'activity-log.html':      'activity',
     'room-logs.html':         'activity'
 };
+
+// Pages that previously had tabs but should now be stripped of them
+const STRIP_TABS_FROM = [
+    'labtech-dashboard.html',
+    'admin-requests.html'
+];
 
 function renderTabs(groupKey) {
     var tabs = TAB_GROUPS[groupKey];
@@ -58,7 +58,20 @@ const BREADCRUMB_REGEX = /(<div class="breadcrumb"[^>]*>[\s\S]*?<\/div>)/;
 // Page-tabs has only flat <a> children, so the first </div> closes it. Don't consume neighbors.
 const EXISTING_TABS_REGEX = /\n?[ \t]*<div class="page-tabs">[\s\S]*?<\/div>\n?/;
 
-let updated = 0, skipped = 0;
+let updated = 0, skipped = 0, stripped = 0;
+
+// First: strip page-tabs from any page that should no longer have them
+STRIP_TABS_FROM.forEach(function (file) {
+    var filePath = path.join(__dirname, file);
+    if (!fs.existsSync(filePath)) return;
+    var content = fs.readFileSync(filePath, 'utf8');
+    if (EXISTING_TABS_REGEX.test(content)) {
+        content = content.replace(EXISTING_TABS_REGEX, '\n');
+        fs.writeFileSync(filePath, content, 'utf8');
+        console.log('STRIPPED: ' + file);
+        stripped++;
+    }
+});
 
 Object.keys(PAGE_GROUP).forEach(function (file) {
     var filePath = path.join(__dirname, file);
@@ -86,4 +99,4 @@ Object.keys(PAGE_GROUP).forEach(function (file) {
     updated++;
 });
 
-console.log('\nDone. Updated: ' + updated + ', Skipped: ' + skipped);
+console.log('\nDone. Updated: ' + updated + ', Stripped: ' + stripped + ', Skipped: ' + skipped);

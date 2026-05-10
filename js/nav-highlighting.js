@@ -12,7 +12,6 @@
         // Map each page → which sidebar item (data-page) gets .active
         var pageMap = {
             'index.html':              'dashboard',
-            'labtech-dashboard.html':  'labtech',
             'admin-requests.html':     'labtech',
             'inventory.html':          'inventory',
             'equipment.html':          'inventory',
