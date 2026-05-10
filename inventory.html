@@ -495,51 +495,95 @@
                     var wsData = [];
                     var merges = [];
                     var label = CATEGORY_LABEL[cat] || cat.toUpperCase();
+                    var COLS = 13; // total columns
 
-                    // ── Header ──────────────────────────────────
-                    wsData.push(['OUR LADY OF FATIMA UNIVERSITY', '', '', '', '', '']);
-                    merges.push({ s: { r: 0, c: 0 }, e: { r: 0, c: 5 } });
-                    wsData.push(['COLLEGE OF PHARMACY', '', '', '', '', '']);
-                    merges.push({ s: { r: 1, c: 0 }, e: { r: 1, c: 5 } });
-                    wsData.push([label, '', '', '', '', '']);
-                    merges.push({ s: { r: 2, c: 0 }, e: { r: 2, c: 5 } });
-                    wsData.push(['As of: ' + today, '', '', '', '', '']);
-                    merges.push({ s: { r: 3, c: 0 }, e: { r: 3, c: 5 } });
-                    wsData.push([]);
+                    function mrow(row, text) {
+                        var r = Array(COLS).fill('');
+                        r[0] = text;
+                        wsData.push(r);
+                        var i = wsData.length - 1;
+                        merges.push({ s: { r: i, c: 0 }, e: { r: i, c: COLS - 1 } });
+                    }
 
-                    // ── Column headers ───────────────────────────
-                    wsData.push([label, 'BALANCE', 'UOM', 'EXPIRY DATE', 'STORAGE', 'SUPPLIER']);
+                    // ── School header ────────────────────────────
+                    mrow(0, 'OUR LADY OF FATIMA UNIVERSITY');
+                    mrow(1, 'INVENTORY OF REAGENTS/APPARATUS');
+                    mrow(2, 'COLLEGE OF PHARMACY');
+                    wsData.push(Array(COLS).fill(''));
+
+                    // ── Column headers (2 rows like the original) ─
+                    // Row 1 — group labels
+                    var h1 = [
+                        label,
+                        'BALANCE AS OF January 2026', 'UOM',
+                        'Request for 2nd SEM 25-26', 'UOM',
+                        'ACQUISITION as of 2nd SEM 25-26', 'UOM',
+                        'Date of Acquisition as of 2nd sem 25-26',
+                        'Ref. No. (OR/DR)',
+                        'CONSUMPTION as of 2nd SEM 25-26',
+                        'BALANCE AS OF June 2026',
+                        'Request for 1st SEM 26-27', 'UOM'
+                    ];
+                    wsData.push(h1);
 
                     // ── Items ────────────────────────────────────
                     items.sort(function(a, b) { return (a.name || '').localeCompare(b.name || ''); });
                     items.forEach(function(c) {
+                        var qty = c.quantity !== undefined && c.quantity !== null ? c.quantity : 0;
+                        var unit = c.unit || '';
                         wsData.push([
-                            c.name || '',
-                            c.quantity !== undefined && c.quantity !== null ? c.quantity : 0,
-                            c.unit || '',
-                            c.expiry || '',
-                            c.storage || c.location || '',
-                            c.supplier || ''
+                            c.name || '',  // Item name
+                            qty,           // BALANCE AS OF January 2026
+                            unit,          // UOM
+                            '',            // Request for 2nd SEM 25-26
+                            unit,          // UOM
+                            '',            // ACQUISITION as of 2nd SEM 25-26
+                            unit,          // UOM
+                            '',            // Date of Acquisition
+                            '',            // Ref. No.
+                            '',            // CONSUMPTION
+                            '',            // BALANCE AS OF June 2026
+                            '',            // Request for 1st SEM 26-27
+                            unit           // UOM
                         ]);
                     });
 
                     // ── Footer ───────────────────────────────────
-                    wsData.push([]);
-                    wsData.push([]);
-                    wsData.push(['Prepared By:', '', 'Reviewed By:', '', 'Noted By:', '']);
-                    wsData.push([]);
-                    wsData.push(['Queendolyn A. Garcia', '', 'Cristina G. Sabroso RPh, MSPharm', '', 'Olive M. De Vera RPh, MSPharm', '']);
-                    wsData.push(['Laboratory Technician', '', 'Laboratory Coordinator', '', 'Dean', '']);
+                    wsData.push(Array(COLS).fill(''));
+                    wsData.push(Array(COLS).fill(''));
+                    var ftr = Array(COLS).fill('');
+                    ftr[0] = 'Prepared By:';
+                    ftr[4] = 'Reviewed By:';
+                    ftr[8] = 'Noted By:';
+                    wsData.push(ftr);
+                    wsData.push(Array(COLS).fill(''));
+                    var names = Array(COLS).fill('');
+                    names[0] = 'Queendolyn A. Garcia';
+                    names[4] = 'Cristina G. Sabroso RPh, MSPharm';
+                    names[8] = 'Olive M. De Vera RPh, MSPharm';
+                    wsData.push(names);
+                    var roles = Array(COLS).fill('');
+                    roles[0] = 'Laboratory Technician';
+                    roles[4] = 'Laboratory Coordinator';
+                    roles[8] = 'Dean';
+                    wsData.push(roles);
 
                     var ws = XLSX.utils.aoa_to_sheet(wsData);
                     ws['!merges'] = merges;
                     ws['!cols'] = [
-                        { wch: 45 },
-                        { wch: 12 },
-                        { wch: 8 },
-                        { wch: 14 },
-                        { wch: 20 },
-                        { wch: 20 }
+                        { wch: 40 }, // Item name
+                        { wch: 14 }, // Balance Jan 2026
+                        { wch: 6  }, // UOM
+                        { wch: 14 }, // Request 2nd SEM
+                        { wch: 6  }, // UOM
+                        { wch: 16 }, // Acquisition
+                        { wch: 6  }, // UOM
+                        { wch: 16 }, // Date of Acquisition
+                        { wch: 14 }, // Ref No
+                        { wch: 14 }, // Consumption
+                        { wch: 14 }, // Balance June 2026
+                        { wch: 14 }, // Request 1st SEM 26-27
+                        { wch: 6  }  // UOM
                     ];
                     return ws;
                 }
