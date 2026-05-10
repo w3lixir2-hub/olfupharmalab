@@ -558,7 +558,12 @@
                             }
                         }
 
-                        var maxCols = wsData.reduce(function(m, r) { return Math.max(m, r.length); }, 0);
+                        // Remove columns P–AF (indices 15–31) — duplicated data
+                        wsData = wsData.map(function(row) {
+                            return row.slice(0, 15);
+                        });
+
+                        var maxCols = 15;
                         wsData = wsData.map(function(row) {
                             var r = row.slice();
                             while (r.length < maxCols) r.push('');
