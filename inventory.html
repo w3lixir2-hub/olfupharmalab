@@ -580,20 +580,21 @@
                             });
                         });
 
-                        // Column widths matching Google Sheets layout
+                        // Column widths + hide columns B–T (indices 1–19)
                         var colWidths = [];
                         for (var c = 0; c < maxCols; c++) {
                             var hdr = hIdx >= 0 ? String(wsData[hIdx][c] || '').toLowerCase() : '';
+                            var hide = (c >= 1 && c <= 19);
                             var w = 10;
-                            if (c === cfg.nameCol)                                          w = 28;
-                            else if (hdr === 'uom')                                         w = 6;
-                            else if (hdr.includes('date'))                                  w = 14;
-                            else if (hdr.includes('ref'))                                   w = 13;
-                            else if (hdr.includes('balance'))                               w = 12;
-                            else if (hdr.includes('request'))                               w = 11;
+                            if (c === cfg.nameCol)                                               w = 28;
+                            else if (hdr === 'uom')                                              w = 6;
+                            else if (hdr.includes('date'))                                       w = 14;
+                            else if (hdr.includes('ref'))                                        w = 13;
+                            else if (hdr.includes('balance'))                                    w = 12;
+                            else if (hdr.includes('request'))                                    w = 11;
                             else if (hdr.includes('acquisition') || hdr.includes('consumption')) w = 13;
-                            else if (hdr.includes('expir'))                                 w = 12;
-                            colWidths.push({ wch: w });
+                            else if (hdr.includes('expir'))                                      w = 12;
+                            colWidths.push({ wch: w, hidden: hide });
                         }
                         ws['!cols'] = colWidths;
 
