@@ -523,17 +523,24 @@
                             }
                         }
 
-                        // Overlay live Supabase quantities
+                        // Overlay live Supabase quantities + deduplicate by name
+                        var seenNames = new Set();
+                        var cleanRows = hIdx >= 0 ? wsData.slice(0, hIdx + 1) : wsData.slice();
                         if (hIdx >= 0 && balCol >= 0) {
                             for (var i = hIdx + 1; i < wsData.length; i++) {
                                 var name = String(wsData[i][cfg.nameCol] || '').trim();
-                                if (!name) continue;
-                                var live = liveMap[name.toLowerCase()];
+                                if (!name) { cleanRows.push(wsData[i]); continue; }
+                                var key = name.toLowerCase();
+                                if (seenNames.has(key)) continue; // skip duplicate
+                                seenNames.add(key);
+                                var live = liveMap[key];
                                 if (live) {
                                     if (live.qty !== null && live.qty !== undefined) wsData[i][balCol] = live.qty;
                                     if (live.unit && uomCol < wsData[i].length) wsData[i][uomCol] = live.unit;
                                 }
+                                cleanRows.push(wsData[i]);
                             }
+                            wsData = cleanRows;
                         }
 
                         // Convert Excel serial numbers in date columns to readable strings
