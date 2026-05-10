@@ -567,7 +567,7 @@
 
                         var ws = XLSX.utils.aoa_to_sheet(wsData);
 
-                        // Apply cell styles — text wrap + font size on every cell
+                        // Apply cell styles — centered, wrapped text, matching Google Sheets
                         wsData.forEach(function(row, ri) {
                             var isColHeader = (ri === hIdx);
                             row.forEach(function(_, ci) {
@@ -575,7 +575,7 @@
                                 if (!ws[addr]) ws[addr] = { t: 's', v: '' };
                                 ws[addr].s = {
                                     font: { sz: 10, bold: isColHeader },
-                                    alignment: { wrapText: true, vertical: 'center', horizontal: isColHeader ? 'center' : 'left' }
+                                    alignment: { wrapText: true, vertical: 'center', horizontal: 'center' }
                                 };
                             });
                         });
@@ -598,11 +598,15 @@
                         }
                         ws['!cols'] = colWidths;
 
-                        // Row heights
-                        ws['!rows'] = wsData.map(function(_, ri) {
-                            if (ri === hIdx)   return { hpt: 52 }; // column headers — tall for wrap
-                            if (ri < hIdx)     return { hpt: 20 }; // school/title rows
-                            return             { hpt: 18 };        // data rows
+                        // Row heights — auto-fit with minimum for headers
+                        ws['!rows'] = wsData.map(function(row, ri) {
+                            if (ri === hIdx) {
+                                // Column header: calculate height based on longest header text
+                                var maxLen = Math.max.apply(Math, row.map(function(c) { return String(c || '').length; }));
+                                return { hpt: Math.min(Math.max(35, Math.ceil(maxLen / 15) * 15), 60) };
+                            }
+                            if (ri < hIdx) return { hpt: 20 };   // school/title rows
+                            return { hpt: 20 };                    // data rows
                         });
 
                         XLSX.utils.book_append_sheet(wb, ws, cfg.tab);
