@@ -106,20 +106,6 @@
                         <option value="rejected">Rejected</option>
                     </select>
                 </div>
-                <div class="filter-group">
-                    <label class="filter-label">Request Type</label>
-                    <select id="filter-type" class="filter-select">
-                        <option value="">All Types</option>
-                        <option value="chemical">Chemicals</option>
-                        <option value="equipment">Equipment</option>
-                        <option value="glassware">Glassware</option>
-                        <option value="consumables">Consumables</option>
-                    </select>
-                </div>
-                <div class="filter-group">
-                    <label class="filter-label">Date Needed</label>
-                    <input type="date" id="filter-date" class="filter-input">
-                </div>
             </div>
         </div>
 
@@ -317,8 +303,6 @@
         function getFilteredRequests() {
             const search = (document.getElementById('filter-search').value || '').toLowerCase();
             const status = document.getElementById('filter-status').value;
-            const type   = document.getElementById('filter-type').value;
-            const date   = document.getElementById('filter-date').value;
 
             return allRequests.filter(r => {
                 if (search && !(
@@ -327,9 +311,7 @@
                     (r.studentNumber|| '').toLowerCase().includes(search) ||
                     (r.subject      || '').toLowerCase().includes(search)
                 )) return false;
-                if (status && r.status      !== status) return false;
-                if (type   && r.requestType !== type)   return false;
-                if (date   && r.dateNeeded  !== date)   return false;
+                if (status && r.status !== status) return false;
                 return true;
             });
         }
@@ -763,8 +745,6 @@
         // Wire up filters
         document.getElementById('filter-search').addEventListener('input', renderRequests);
         document.getElementById('filter-status').addEventListener('change', renderRequests);
-        document.getElementById('filter-type').addEventListener('change', renderRequests);
-        document.getElementById('filter-date').addEventListener('change', renderRequests);
 
         // Load on page start + real-time subscription
         loadRequests();
