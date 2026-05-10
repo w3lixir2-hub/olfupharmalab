@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>LabTech Inventory - PharmaLab IMS</title>
     <link rel="stylesheet" href="css/lab-ui.css">
+    <script src="https://cdn.sheetjs.com/xlsx-latest/package/dist/xlsx.full.min.js"></script>
     <style>
         /* Page-specific: expiry in table */
         .expiry-warning { color: var(--lab-warning); font-weight: 600; }
@@ -113,7 +114,7 @@
             </div>
             <div style="display: flex; gap: 12px; flex-wrap: wrap;">
                 <button type="button" class="btn btn-export" id="btn-import" title="Bulk import from JSON">📥 Import</button>
-                <button type="button" class="btn btn-export" id="btn-export">📊 Export CSV</button>
+                <button type="button" class="btn btn-export" id="btn-export">📊 Export Excel</button>
                 <button type="button" class="btn btn-export" id="btn-delete" title="Bulk delete items" style="color:#ef4444;">🗑️ Delete</button>
                 <button type="button" class="btn btn-primary" id="btn-add-chemical">➕ Add Chemical</button>
             </div>
@@ -451,32 +452,107 @@
             document.getElementById('chemical-modal-overlay').addEventListener('click', function (ev) { if (ev.target === this) closeChemicalModal(); });
             document.getElementById('btn-add-chemical').addEventListener('click', function () { openChemicalModal(null, true); });
 
-            /* ── CSV Export ──────────────────────────────────────── */
+            /* ── Excel Export ────────────────────────────────────── */
             document.getElementById('btn-export').addEventListener('click', async function () {
                 var list = await getChemicals();
                 if (list.length === 0) { alert('No items to export.'); return; }
-                var headers = ['Name', 'Category', 'Quantity', 'Unit', 'Storage', 'Supplier', 'Delivery Date', 'Expiry', 'MSDS'];
-                var rows = list.map(function(c) {
-                    return [
-                        c.name || '',
-                        c.category || '',
-                        c.quantity !== undefined ? c.quantity : '',
-                        c.unit || '',
-                        c.storage || c.location || '',
-                        c.supplier || '',
-                        c.deliveryDate || c.delivery_date || '',
-                        c.expiry || '',
-                        c.msds || ''
-                    ].map(function(v) { return '"' + String(v).replace(/"/g, '""') + '"'; }).join(',');
+
+                var CATEGORY_ORDER = [
+                    'Liquid Reagent',
+                    'Solid Reagent',
+                    'Glassware',
+                    'Equipment',
+                    'Antibiotic Disc'
+                ];
+                var CATEGORY_LABEL = {
+                    'Liquid Reagent':  'CHEMICALS (LIQUID REAGENTS)',
+                    'Solid Reagent':   'CHEMICALS (SOLID REAGENTS)',
+                    'Glassware':       'GLASSWARES / SUPPLIES',
+                    'Equipment':       'EQUIPMENT',
+                    'Antibiotic Disc': 'ANTIBIOTIC DISCS'
+                };
+
+                // Group by category
+                var groups = {};
+                CATEGORY_ORDER.forEach(function(cat) { groups[cat] = []; });
+                list.forEach(function(c) {
+                    var cat = c.category || 'Uncategorized';
+                    if (!groups[cat]) groups[cat] = [];
+                    groups[cat].push(c);
                 });
-                var csv = [headers.join(',')].concat(rows).join('\n');
-                var blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
-                var url = URL.createObjectURL(blob);
-                var a = document.createElement('a');
-                a.href = url;
-                a.download = 'inventory-' + new Date().toISOString().slice(0, 10) + '.csv';
-                a.click();
-                URL.revokeObjectURL(url);
+
+                var wb = XLSX.utils.book_new();
+                var wsData = [];
+                var merges = [];
+                var rowStyles = {}; // track row types for styling hints
+
+                var today = new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+
+                // ── School header ─────────────────────────────────
+                wsData.push(['OUR LADY OF FATIMA UNIVERSITY', '', '', '', '', '']);
+                merges.push({ s: { r: 0, c: 0 }, e: { r: 0, c: 5 } });
+
+                wsData.push(['COLLEGE OF PHARMACY', '', '', '', '', '']);
+                merges.push({ s: { r: 1, c: 0 }, e: { r: 1, c: 5 } });
+
+                wsData.push(['LABORATORY INVENTORY REPORT', '', '', '', '', '']);
+                merges.push({ s: { r: 2, c: 0 }, e: { r: 2, c: 5 } });
+
+                wsData.push(['As of: ' + today, '', '', '', '', '']);
+                merges.push({ s: { r: 3, c: 0 }, e: { r: 3, c: 5 } });
+
+                wsData.push([]); // blank row
+
+                // ── Categories ───────────────────────────────────
+                CATEGORY_ORDER.forEach(function(cat) {
+                    var items = groups[cat];
+                    if (!items || items.length === 0) return;
+
+                    var catRow = wsData.length;
+
+                    // Category header
+                    wsData.push([CATEGORY_LABEL[cat] || cat.toUpperCase(), 'BALANCE', 'UOM', 'EXPIRY DATE', 'STORAGE', 'SUPPLIER']);
+                    rowStyles[catRow] = 'category';
+
+                    // Items
+                    items.sort(function(a, b) { return (a.name || '').localeCompare(b.name || ''); });
+                    items.forEach(function(c) {
+                        wsData.push([
+                            c.name || '',
+                            c.quantity !== undefined && c.quantity !== null ? c.quantity : 0,
+                            c.unit || '',
+                            c.expiry || '',
+                            c.storage || c.location || '',
+                            c.supplier || ''
+                        ]);
+                    });
+
+                    wsData.push([]); // blank row between categories
+                });
+
+                // ── Footer ────────────────────────────────────────
+                wsData.push([]);
+                var footerRow = wsData.length;
+                wsData.push(['Prepared By:', '', 'Reviewed By:', '', 'Noted By:', '']);
+                wsData.push([]);
+                wsData.push(['Queendolyn A. Garcia', '', 'Cristina G. Sabroso RPh, MSPharm', '', 'Olive M. De Vera RPh, MSPharm', '']);
+                wsData.push(['Laboratory Technician', '', 'Laboratory Coordinator', '', 'Dean', '']);
+
+                var ws = XLSX.utils.aoa_to_sheet(wsData);
+                ws['!merges'] = merges;
+
+                // Column widths
+                ws['!cols'] = [
+                    { wch: 45 }, // Item name
+                    { wch: 12 }, // Balance
+                    { wch: 8 },  // UOM
+                    { wch: 14 }, // Expiry
+                    { wch: 20 }, // Storage
+                    { wch: 20 }  // Supplier
+                ];
+
+                XLSX.utils.book_append_sheet(wb, ws, 'Inventory Report');
+                XLSX.writeFile(wb, 'Inventory-Report-' + new Date().toISOString().slice(0, 10) + '.xlsx');
             });
 
             /* ── Bulk Import ─────────────────────────────────────── */
