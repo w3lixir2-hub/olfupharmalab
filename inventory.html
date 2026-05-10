@@ -452,40 +452,45 @@
             document.getElementById('chemical-modal-overlay').addEventListener('click', function (ev) { if (ev.target === this) closeChemicalModal(); });
             document.getElementById('btn-add-chemical').addEventListener('click', function () { openChemicalModal(null, true); });
 
-            /* ── Excel Export — live Supabase qty overlaid on CSV template ── */
+            /* ── Excel Export — live Supabase qty + OLFU formatting ── */
+            function excelSerialToDateStr(v) {
+                // Excel date serials start at 1 = Jan 1 1900; JS epoch offset = 25569 days
+                if (typeof v !== 'number' || v < 2000 || v > 80000) return v;
+                var d = new Date(Math.round((v - 25569) * 86400000));
+                var mm = d.getUTCMonth() + 1;
+                var dd = d.getUTCDate();
+                var yyyy = d.getUTCFullYear();
+                return (mm < 10 ? '0' + mm : mm) + '/' + (dd < 10 ? '0' + dd : dd) + '/' + yyyy;
+            }
+
             document.getElementById('btn-export').addEventListener('click', async function () {
                 var btn = this;
                 btn.textContent = '⏳ Generating...';
                 btn.disabled = true;
 
                 try {
-                    // 1. Load the CSV template (historical columns + structure)
                     var resp = await fetch('inventory-data.json');
                     if (!resp.ok) throw new Error('inventory-data.json not found');
                     var data = await resp.json();
 
-                    // 2. Fetch ALL live items from Supabase
                     var sbResp = await fetch(
-                        window.SUPABASE_URL + '/rest/v1/chemicals?select=name,category,quantity,unit&limit=2000',
-                        { headers: { 'apikey': window.SUPABASE_ANON, 'Authorization': 'Bearer ' + window.SUPABASE_ANON } }
+                        SUPABASE_URL + '/rest/v1/chemicals?select=name,category,quantity,unit&limit=2000',
+                        { headers: { 'apikey': SUPABASE_ANON, 'Authorization': 'Bearer ' + SUPABASE_ANON } }
                     );
                     var liveItems = sbResp.ok ? await sbResp.json() : [];
 
-                    // Build lookup: normalised_name -> {qty, unit}
                     var liveMap = {};
                     liveItems.forEach(function(item) {
-                        var key = String(item.name || '').toLowerCase().trim();
-                        liveMap[key] = { qty: item.quantity, unit: item.unit };
+                        liveMap[String(item.name || '').toLowerCase().trim()] = { qty: item.quantity, unit: item.unit };
                     });
 
-                    // Category → sheet tab mapping + config
                     var TAB_CONFIG = [
-                        { tab: 'LIQUIDS',         nameCol: 0, balKeyword: 'june 2026' },
-                        { tab: 'SOLIDS',          nameCol: 0, balKeyword: 'june 2026' },
-                        { tab: 'GLASSWARES',      nameCol: 0, balKeyword: 'june 2026' },
-                        { tab: 'EQUIPMENT',       nameCol: 1, balKeyword: 'june 2026' },
-                        { tab: 'ANTIBIOTIC DISC', nameCol: 1, balKeyword: 'june 2026' },
-                        { tab: 'OFFICE SUPPLIES', nameCol: 0, balKeyword: 'june 2026' },
+                        { tab: 'LIQUIDS',         nameCol: 0 },
+                        { tab: 'SOLIDS',          nameCol: 0 },
+                        { tab: 'GLASSWARES',      nameCol: 0 },
+                        { tab: 'EQUIPMENT',       nameCol: 1 },
+                        { tab: 'ANTIBIOTIC DISC', nameCol: 1 },
+                        { tab: 'OFFICE SUPPLIES', nameCol: 0 },
                     ];
 
                     var wb = XLSX.utils.book_new();
@@ -495,28 +500,22 @@
                         var rows = data[cfg.tab].rows;
                         if (!rows || rows.length === 0) return;
 
-                        // Deep copy rows so we can mutate
                         var wsData = rows.map(function(r) { return r.slice(); });
 
-                        // Find header row: first row where nameCol cell is 'item' or category keyword
-                        var hIdx = -1;
-                        var balCol = -1;
-                        var uomCol = -1;
+                        // Find header row (column-name row) and balance column
+                        var hIdx = -1, balCol = -1, uomCol = -1;
                         for (var i = 0; i < wsData.length; i++) {
-                            var cell = String(wsData[i][cfg.nameCol] || '').toLowerCase();
-                            if (cell === 'item' || cell.includes('chemical') || cell.includes('liquid') ||
-                                cell.includes('solid') || cell.includes('glassware') ||
-                                cell.includes('equipment') || cell.includes('antibiotic') || cell.includes('office')) {
+                            var c0 = String(wsData[i][cfg.nameCol] || '').toLowerCase();
+                            if (c0 === 'item' || c0.includes('chemical') || c0.includes('liquid') ||
+                                c0.includes('solid') || c0.includes('glassware') ||
+                                c0.includes('equipment') || c0.includes('antibiotic') || c0.includes('office')) {
                                 hIdx = i;
-                                // Find balance column
                                 for (var c = 0; c < wsData[i].length; c++) {
-                                    var h = String(wsData[i][c] || '').toLowerCase();
-                                    if (h.includes(cfg.balKeyword)) { balCol = c; break; }
+                                    if (String(wsData[i][c] || '').toLowerCase().includes('june 2026')) { balCol = c; break; }
                                 }
                                 if (balCol === -1) {
-                                    // fallback: last column containing 'balance'
-                                    for (var c = 0; c < wsData[i].length; c++) {
-                                        if (String(wsData[i][c] || '').toLowerCase().includes('balance')) balCol = c;
+                                    for (var c = wsData[i].length - 1; c >= 0; c--) {
+                                        if (String(wsData[i][c] || '').toLowerCase().includes('balance')) { balCol = c; break; }
                                     }
                                 }
                                 uomCol = balCol + 1;
@@ -524,16 +523,31 @@
                             }
                         }
 
-                        // Overlay live quantities on data rows
+                        // Overlay live Supabase quantities
                         if (hIdx >= 0 && balCol >= 0) {
                             for (var i = hIdx + 1; i < wsData.length; i++) {
                                 var name = String(wsData[i][cfg.nameCol] || '').trim();
                                 if (!name) continue;
-                                var live = liveMap[name.toLowerCase().trim()];
+                                var live = liveMap[name.toLowerCase()];
                                 if (live) {
-                                    wsData[i][balCol] = live.qty !== null && live.qty !== undefined ? live.qty : wsData[i][balCol];
+                                    if (live.qty !== null && live.qty !== undefined) wsData[i][balCol] = live.qty;
                                     if (live.unit && uomCol < wsData[i].length) wsData[i][uomCol] = live.unit;
                                 }
+                            }
+                        }
+
+                        // Convert Excel serial numbers in date columns to readable strings
+                        var dateCols = [];
+                        if (hIdx >= 0) {
+                            wsData[hIdx].forEach(function(h, c) {
+                                if (String(h || '').toLowerCase().includes('date')) dateCols.push(c);
+                            });
+                        }
+                        if (dateCols.length) {
+                            for (var i = hIdx + 1; i < wsData.length; i++) {
+                                dateCols.forEach(function(c) {
+                                    wsData[i][c] = excelSerialToDateStr(wsData[i][c]);
+                                });
                             }
                         }
 
@@ -546,14 +560,42 @@
 
                         var ws = XLSX.utils.aoa_to_sheet(wsData);
 
-                        var colW = Array(maxCols).fill(10);
-                        wsData.forEach(function(row) {
-                            row.forEach(function(cell, ci) {
-                                var len = String(cell || '').length;
-                                if (len > colW[ci]) colW[ci] = Math.min(len + 2, 50);
+                        // Apply cell styles — text wrap + font size on every cell
+                        wsData.forEach(function(row, ri) {
+                            var isColHeader = (ri === hIdx);
+                            row.forEach(function(_, ci) {
+                                var addr = XLSX.utils.encode_cell({ r: ri, c: ci });
+                                if (!ws[addr]) ws[addr] = { t: 's', v: '' };
+                                ws[addr].s = {
+                                    font: { sz: 10, bold: isColHeader },
+                                    alignment: { wrapText: true, vertical: 'center', horizontal: isColHeader ? 'center' : 'left' }
+                                };
                             });
                         });
-                        ws['!cols'] = colW.map(function(w) { return { wch: w }; });
+
+                        // Column widths matching Google Sheets layout
+                        var colWidths = [];
+                        for (var c = 0; c < maxCols; c++) {
+                            var hdr = hIdx >= 0 ? String(wsData[hIdx][c] || '').toLowerCase() : '';
+                            var w = 10;
+                            if (c === cfg.nameCol)                                          w = 28;
+                            else if (hdr === 'uom')                                         w = 6;
+                            else if (hdr.includes('date'))                                  w = 14;
+                            else if (hdr.includes('ref'))                                   w = 13;
+                            else if (hdr.includes('balance'))                               w = 12;
+                            else if (hdr.includes('request'))                               w = 11;
+                            else if (hdr.includes('acquisition') || hdr.includes('consumption')) w = 13;
+                            else if (hdr.includes('expir'))                                 w = 12;
+                            colWidths.push({ wch: w });
+                        }
+                        ws['!cols'] = colWidths;
+
+                        // Row heights
+                        ws['!rows'] = wsData.map(function(_, ri) {
+                            if (ri === hIdx)   return { hpt: 52 }; // column headers — tall for wrap
+                            if (ri < hIdx)     return { hpt: 20 }; // school/title rows
+                            return             { hpt: 18 };        // data rows
+                        });
 
                         XLSX.utils.book_append_sheet(wb, ws, cfg.tab);
                     });
