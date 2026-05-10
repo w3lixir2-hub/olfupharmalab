@@ -452,7 +452,7 @@
             document.getElementById('chemical-modal-overlay').addEventListener('click', function (ev) { if (ev.target === this) closeChemicalModal(); });
             document.getElementById('btn-add-chemical').addEventListener('click', function () { openChemicalModal(null, true); });
 
-            /* ── Excel Export ────────────────────────────────────── */
+            /* ── Excel Export (per tab per category) ────────────── */
             document.getElementById('btn-export').addEventListener('click', async function () {
                 var list = await getChemicals();
                 if (list.length === 0) { alert('No items to export.'); return; }
@@ -471,6 +471,13 @@
                     'Equipment':       'EQUIPMENT',
                     'Antibiotic Disc': 'ANTIBIOTIC DISCS'
                 };
+                var TAB_NAME = {
+                    'Liquid Reagent':  'LIQUIDS',
+                    'Solid Reagent':   'SOLIDS',
+                    'Glassware':       'GLASSWARES',
+                    'Equipment':       'EQUIPMENT',
+                    'Antibiotic Disc': 'ANTIBIOTIC DISC'
+                };
 
                 // Group by category
                 var groups = {};
@@ -482,39 +489,28 @@
                 });
 
                 var wb = XLSX.utils.book_new();
-                var wsData = [];
-                var merges = [];
-                var rowStyles = {}; // track row types for styling hints
-
                 var today = new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
 
-                // ── School header ─────────────────────────────────
-                wsData.push(['OUR LADY OF FATIMA UNIVERSITY', '', '', '', '', '']);
-                merges.push({ s: { r: 0, c: 0 }, e: { r: 0, c: 5 } });
+                function buildSheet(cat, items) {
+                    var wsData = [];
+                    var merges = [];
+                    var label = CATEGORY_LABEL[cat] || cat.toUpperCase();
 
-                wsData.push(['COLLEGE OF PHARMACY', '', '', '', '', '']);
-                merges.push({ s: { r: 1, c: 0 }, e: { r: 1, c: 5 } });
+                    // ── Header ──────────────────────────────────
+                    wsData.push(['OUR LADY OF FATIMA UNIVERSITY', '', '', '', '', '']);
+                    merges.push({ s: { r: 0, c: 0 }, e: { r: 0, c: 5 } });
+                    wsData.push(['COLLEGE OF PHARMACY', '', '', '', '', '']);
+                    merges.push({ s: { r: 1, c: 0 }, e: { r: 1, c: 5 } });
+                    wsData.push([label, '', '', '', '', '']);
+                    merges.push({ s: { r: 2, c: 0 }, e: { r: 2, c: 5 } });
+                    wsData.push(['As of: ' + today, '', '', '', '', '']);
+                    merges.push({ s: { r: 3, c: 0 }, e: { r: 3, c: 5 } });
+                    wsData.push([]);
 
-                wsData.push(['LABORATORY INVENTORY REPORT', '', '', '', '', '']);
-                merges.push({ s: { r: 2, c: 0 }, e: { r: 2, c: 5 } });
+                    // ── Column headers ───────────────────────────
+                    wsData.push([label, 'BALANCE', 'UOM', 'EXPIRY DATE', 'STORAGE', 'SUPPLIER']);
 
-                wsData.push(['As of: ' + today, '', '', '', '', '']);
-                merges.push({ s: { r: 3, c: 0 }, e: { r: 3, c: 5 } });
-
-                wsData.push([]); // blank row
-
-                // ── Categories ───────────────────────────────────
-                CATEGORY_ORDER.forEach(function(cat) {
-                    var items = groups[cat];
-                    if (!items || items.length === 0) return;
-
-                    var catRow = wsData.length;
-
-                    // Category header
-                    wsData.push([CATEGORY_LABEL[cat] || cat.toUpperCase(), 'BALANCE', 'UOM', 'EXPIRY DATE', 'STORAGE', 'SUPPLIER']);
-                    rowStyles[catRow] = 'category';
-
-                    // Items
+                    // ── Items ────────────────────────────────────
                     items.sort(function(a, b) { return (a.name || '').localeCompare(b.name || ''); });
                     items.forEach(function(c) {
                         wsData.push([
@@ -527,31 +523,35 @@
                         ]);
                     });
 
-                    wsData.push([]); // blank row between categories
+                    // ── Footer ───────────────────────────────────
+                    wsData.push([]);
+                    wsData.push([]);
+                    wsData.push(['Prepared By:', '', 'Reviewed By:', '', 'Noted By:', '']);
+                    wsData.push([]);
+                    wsData.push(['Queendolyn A. Garcia', '', 'Cristina G. Sabroso RPh, MSPharm', '', 'Olive M. De Vera RPh, MSPharm', '']);
+                    wsData.push(['Laboratory Technician', '', 'Laboratory Coordinator', '', 'Dean', '']);
+
+                    var ws = XLSX.utils.aoa_to_sheet(wsData);
+                    ws['!merges'] = merges;
+                    ws['!cols'] = [
+                        { wch: 45 },
+                        { wch: 12 },
+                        { wch: 8 },
+                        { wch: 14 },
+                        { wch: 20 },
+                        { wch: 20 }
+                    ];
+                    return ws;
+                }
+
+                // ── One sheet per category ───────────────────────
+                CATEGORY_ORDER.forEach(function(cat) {
+                    var items = groups[cat];
+                    if (!items || items.length === 0) return;
+                    var ws = buildSheet(cat, items);
+                    XLSX.utils.book_append_sheet(wb, ws, TAB_NAME[cat] || cat);
                 });
 
-                // ── Footer ────────────────────────────────────────
-                wsData.push([]);
-                var footerRow = wsData.length;
-                wsData.push(['Prepared By:', '', 'Reviewed By:', '', 'Noted By:', '']);
-                wsData.push([]);
-                wsData.push(['Queendolyn A. Garcia', '', 'Cristina G. Sabroso RPh, MSPharm', '', 'Olive M. De Vera RPh, MSPharm', '']);
-                wsData.push(['Laboratory Technician', '', 'Laboratory Coordinator', '', 'Dean', '']);
-
-                var ws = XLSX.utils.aoa_to_sheet(wsData);
-                ws['!merges'] = merges;
-
-                // Column widths
-                ws['!cols'] = [
-                    { wch: 45 }, // Item name
-                    { wch: 12 }, // Balance
-                    { wch: 8 },  // UOM
-                    { wch: 14 }, // Expiry
-                    { wch: 20 }, // Storage
-                    { wch: 20 }  // Supplier
-                ];
-
-                XLSX.utils.book_append_sheet(wb, ws, 'Inventory Report');
                 XLSX.writeFile(wb, 'Inventory-Report-' + new Date().toISOString().slice(0, 10) + '.xlsx');
             });
 
