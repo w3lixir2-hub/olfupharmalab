@@ -287,32 +287,47 @@ body {
 /* In-page top tabs (Lab Tech / Inventory / Rooms / Activity Log sections) */
 .page-tabs {
   display: flex;
-  gap: 4px;
-  border-bottom: 1px solid var(--lab-border);
-  margin-bottom: var(--lab-space-6);
+  gap: 0;
+  border-bottom: 2px solid var(--lab-border);
+  margin-bottom: var(--lab-space-8);
   padding: 0;
+  position: relative;
 }
 .page-tab {
   display: inline-flex;
   align-items: center;
   gap: var(--lab-space-2);
-  padding: 12px 20px;
+  padding: 16px 28px;
   color: var(--lab-text-muted);
   text-decoration: none;
-  font-size: var(--lab-text-sm);
-  font-weight: 500;
-  border-bottom: 2px solid transparent;
-  margin-bottom: -1px;
-  transition: color 0.15s, border-color 0.15s;
+  font-size: var(--lab-text-lg);
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  border-bottom: 3px solid transparent;
+  margin-bottom: -2px;
+  transition: color 0.15s, border-color 0.15s, background 0.15s;
   white-space: nowrap;
+  position: relative;
 }
 .page-tab:hover {
   color: var(--lab-text);
+  background: var(--lab-border-light);
 }
 .page-tab.active {
   color: var(--lab-primary);
   border-bottom-color: var(--lab-primary);
-  font-weight: 600;
+  font-weight: 700;
+}
+.page-tab.active::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  bottom: -5px;
+  width: 6px;
+  height: 6px;
+  background: var(--lab-primary);
+  border-radius: 50%;
+  transform: translateX(-50%);
 }
 
 .sidebar-footer {
