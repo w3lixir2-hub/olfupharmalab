@@ -1,29 +1,15 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Activity Log - PharmaLab IMS</title>
-    <link rel="stylesheet" href="css/lab-ui.css">
-</head>
-<body>
-    <nav class="top-nav">
-        <div class="top-nav-left">
-            <div class="logo-placeholder">PL</div>
-            <div class="system-name">PharmaLab IMS</div>
-        </div>
-        <div class="top-nav-right">
-            <div class="user-profile">
-                <div class="user-avatar">AD</div>
-                <div class="user-info">
-                    <div class="user-name">Admin User</div>
-                    <div class="user-role">Lab Tech</div>
-                </div>
-            </div>
-        </div>
-    </nav>
+/**
+ * Unify sidebar across all pages.
+ * Replaces the entire <aside class="sidebar">...</aside> block
+ * with a single canonical version so navigation is identical everywhere.
+ *
+ * Run: node unify-sidebar.js
+ */
 
-    <aside class="sidebar">
+const fs = require('fs');
+const path = require('path');
+
+const SIDEBAR = `    <aside class="sidebar">
         <nav class="sidebar-menu">
             <!-- 1. Dashboard -->
             <a href="index.html" class="menu-item" data-page="index">
@@ -100,52 +86,65 @@
             <div id="sidebar-datetime">—</div>
             <div style="margin-top:4px;font-size:11px;">Philippine Time (PHT)</div>
         </div>
-    </aside>
+    </aside>`;
 
-    <main class="main-content">
-        <div class="breadcrumb"><a href="index.html">Home</a><span>/</span><span>Activity Log</span></div>
-        <div class="page-header">
-            <h1 class="page-title">Activity Log</h1>
-            <p class="page-subtitle">Track who did what — Login, Logout, Equipment Return, and other system actions</p>
-        </div>
+const FILES = [
+    'index.html',
+    'labtech-dashboard.html',
+    'inventory.html',
+    'equipment.html',
+    'admin-requests.html',
+    'activity-log.html',
+    'admin-settings.html',
+    'add-schedule.html',
+    'lecture-rooms.html',
+    'laboratory-rooms.html',
+    'room-logs.html'
+];
 
-        <div class="table-container">
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th>Date & Time</th>
-                        <th>User</th>
-                        <th>Action</th>
-                        <th>Details</th>
-                    </tr>
-                </thead>
-                <tbody id="activity-table-body"></tbody>
-            </table>
-        </div>
-        <p id="activity-empty" style="display:none;text-align:center;color:#718096;padding:40px;">No activity recorded yet.</p>
-    </main>
+// Matches <aside class="sidebar"> ... </aside> (greedy but stops at first </aside>)
+const SIDEBAR_REGEX = /[ \t]*<aside class="sidebar">[\s\S]*?<\/aside>/m;
 
-    <script src="js/data.js"></script>
-    <script src="js/auth-guard.js"></script>
-    <script src="js/nav-highlighting.js"></script>
-    <script>
-        (function(){
-            var log = typeof getAuditLog === 'function' ? getAuditLog() : [];
-            var tbody = document.getElementById('activity-table-body');
-            var empty = document.getElementById('activity-empty');
-            if (log.length === 0) {
-                tbody.innerHTML = '';
-                empty.style.display = 'block';
-            } else {
-                empty.style.display = 'none';
-                tbody.innerHTML = log.map(function(e){
-                    var d = e.date ? new Date(e.date) : new Date();
-                    var dateStr = d.toLocaleString('en-PH', { timeZone: 'Asia/Manila', dateStyle: 'short', timeStyle: 'medium' });
-                    return '<tr><td>' + dateStr + '</td><td><strong>' + (e.user || '—') + '</strong></td><td>' + (e.action || '—') + '</td><td>' + (e.details || '—') + '</td></tr>';
-                }).join('');
-            }
-        })();
-    </script>
-    <script>(function(){function u(){var e=document.getElementById('sidebar-datetime');if(e)e.textContent=new Date().toLocaleString('en-PH',{timeZone:'Asia/Manila',weekday:'short',year:'numeric',month:'short',day:'numeric',hour:'2-digit',minute:'2-digit',second:'2-digit'});}u();setInterval(u,1000);})();</script>
-</body>
-</html>
+let updated = 0, skipped = 0;
+
+FILES.forEach(function(file) {
+    var filePath = path.join(__dirname, file);
+    if (!fs.existsSync(filePath)) {
+        console.log('SKIP (missing): ' + file);
+        skipped++;
+        return;
+    }
+
+    var content = fs.readFileSync(filePath, 'utf8');
+    if (!SIDEBAR_REGEX.test(content)) {
+        console.log('SKIP (no sidebar match): ' + file);
+        skipped++;
+        return;
+    }
+
+    var next = content.replace(SIDEBAR_REGEX, SIDEBAR);
+
+    // Strip page-local .menu-tab / .menu-settings inline styles since they're now in lab-ui.css
+    next = next.replace(/\n?\s*\/\* Sidebar tabbed sections \*\/[\s\S]*?\.menu-settings\s*\{[^}]*\}\s*/g, '\n');
+
+    // Ensure nav-highlighting.js is referenced
+    if (!/js\/nav-highlighting\.js/.test(next)) {
+        next = next.replace(
+            /(<script src="js\/auth-guard\.js"><\/script>)/,
+            '$1\n    <script src="js/nav-highlighting.js"></script>'
+        );
+        // Fallback: if no auth-guard, insert before first inline <script> after supabase-data
+        if (!/js\/nav-highlighting\.js/.test(next)) {
+            next = next.replace(
+                /(<script src="js\/supabase-data\.js"><\/script>)/,
+                '$1\n    <script src="js/nav-highlighting.js"></script>'
+            );
+        }
+    }
+
+    fs.writeFileSync(filePath, next, 'utf8');
+    console.log('OK: ' + file);
+    updated++;
+});
+
+console.log('\nDone. Updated: ' + updated + ', Skipped: ' + skipped);

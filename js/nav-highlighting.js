@@ -1,54 +1,46 @@
 /**
  * Unified Navigation Highlighting
- * Manages active states across all menu items and tabs uniformly
+ * Single source of truth for which sidebar item is "active" on each page.
+ * Sidebar HTML is identical on every page; this script just applies .active.
  */
-
-(function() {
+(function () {
     function initNavHighlighting() {
-        // Get current page filename
-        var currentPage = window.location.pathname.split('/').pop() || 'index.html';
+        var currentPage = (window.location.pathname.split('/').pop() || 'index.html').toLowerCase();
+        if (!currentPage || currentPage.indexOf('.html') === -1) currentPage = 'index.html';
 
-        // Map pages to their active tab/menu item
+        // Page → which sidebar element gets .active
+        // type 'menu' = top-level <a class="menu-item">, matched by data-page
+        // type 'tab'  = nested <a class="menu-tab"> inside a .menu-section
         var pageMap = {
-            'index.html': { type: 'menu', selector: 'a[href="index.html"]' },
-            'labtech-dashboard.html': { type: 'menu', selector: 'a[href="labtech-dashboard.html"]' },
-            'inventory.html': { type: 'tab', tab: 'inventory' },
-            'equipment.html': { type: 'tab', tab: 'equipment' },
-            'admin-requests.html': { type: 'menu', selector: 'a[href="admin-requests.html"]' },
-            'activity-log.html': { type: 'menu', selector: 'a[href="activity-log.html"]' },
-            'admin-settings.html': { type: 'menu', selector: 'a[href="admin-settings.html"]' },
-            'add-schedule.html': { type: 'tab', tab: 'schedule' },
-            'lecture-rooms.html': { type: 'tab', tab: 'lecture' },
-            'laboratory-rooms.html': { type: 'tab', tab: 'lab' },
-            'room-logs.html': { type: 'tab', tab: 'logs' }
+            'index.html':              { type: 'menu', key: 'index' },
+            'labtech-dashboard.html':  { type: 'tab',  key: 'labtech' },
+            'admin-requests.html':     { type: 'tab',  key: 'requests' },
+            'inventory.html':          { type: 'tab',  key: 'inventory' },
+            'equipment.html':          { type: 'tab',  key: 'equipment' },
+            'add-schedule.html':       { type: 'tab',  key: 'schedule' },
+            'lecture-rooms.html':      { type: 'tab',  key: 'lecture' },
+            'laboratory-rooms.html':   { type: 'tab',  key: 'lab' },
+            'room-logs.html':          { type: 'tab',  key: 'logs' },
+            'activity-log.html':       { type: 'menu', key: 'activity-log' },
+            'admin-settings.html':     { type: 'menu', key: 'admin-settings' }
         };
 
         var config = pageMap[currentPage];
         if (!config) return;
 
-        // Clear all active states first
-        document.querySelectorAll('.menu-item.active').forEach(function(el) {
-            el.classList.remove('active');
-        });
-        document.querySelectorAll('.menu-tab.active').forEach(function(el) {
-            el.classList.remove('active');
-        });
+        // Clear any stale active states
+        document.querySelectorAll('.sidebar .menu-item.active, .sidebar .menu-tab.active')
+            .forEach(function (el) { el.classList.remove('active'); });
 
-        // Set active state based on page
+        var target = null;
         if (config.type === 'menu') {
-            var menuItem = document.querySelector(config.selector);
-            if (menuItem) {
-                menuItem.classList.add('active');
-            }
-        } else if (config.type === 'tab') {
-            var tab = document.querySelector('[data-tab="' + config.tab + '"]');
-            if (tab) {
-                tab.classList.add('active');
-            }
+            target = document.querySelector('.sidebar .menu-item[data-page="' + config.key + '"]');
+        } else {
+            target = document.querySelector('.sidebar .menu-tab[data-tab="' + config.key + '"]');
         }
+        if (target) target.classList.add('active');
     }
 
-    // Run when DOM is ready
     if (document.readyState === 'loading') {
         document.addEventListener('DOMContentLoaded', initNavHighlighting);
     } else {

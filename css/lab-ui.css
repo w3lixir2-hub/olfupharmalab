@@ -192,6 +192,8 @@ body {
   padding: var(--lab-space-4) 0;
   flex: 1;
   overflow-y: auto;
+  display: flex;
+  flex-direction: column;
 }
 
 .menu-item {
@@ -238,6 +240,49 @@ body {
   margin-bottom: var(--lab-space-2);
 }
 .menu-section .menu-item { padding-left: 36px; }
+
+/* Tabbed menu sections (Inventory, Rooms, Lab Tech) */
+.menu-tabs {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 4px 0 0;
+}
+.menu-tab {
+  display: flex;
+  align-items: center;
+  gap: var(--lab-space-3);
+  padding: 8px var(--lab-space-6) 8px 36px;
+  color: var(--lab-text-muted);
+  text-decoration: none;
+  font-size: var(--lab-text-sm);
+  font-weight: 500;
+  border-left: 3px solid transparent;
+  transition: all 0.2s;
+}
+.menu-tab:hover {
+  background: var(--lab-border-light);
+  color: var(--lab-text);
+  border-left-color: var(--lab-border);
+}
+.menu-tab.active {
+  background: var(--lab-primary-bg);
+  color: var(--lab-primary);
+  border-left-color: var(--lab-primary);
+  font-weight: 600;
+}
+.menu-tab .menu-icon {
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+}
+
+/* Settings pinned to bottom of sidebar */
+.menu-settings {
+  margin-top: auto;
+  border-top: 1px solid var(--lab-border);
+  padding-top: var(--lab-space-3);
+}
 
 .sidebar-footer {
   padding: var(--lab-space-4) var(--lab-space-6);
