@@ -518,6 +518,13 @@
                         '<div class="lab-form-group"><label class="lab-form-label" for="chem-expiry">Expiry Date</label><input type="date" id="chem-expiry" class="lab-form-input" value="' + (c && c.expiry ? c.expiry : '') + '"></div>' +
                         '<div class="lab-form-group" style="grid-column:1/-1;"><label class="lab-form-label" for="chem-msds">MSDS URL</label><input type="url" id="chem-msds" class="lab-form-input" value="' + (c ? (c.msds || '').replace(/"/g, '&quot;') : '') + '" placeholder="https://..."></div>' +
                         '</div>' +
+                        '<div style="margin:20px 0 12px;padding-top:16px;border-top:1px solid var(--lab-border);">' +
+                        '<div style="font-size:10px;font-weight:700;color:var(--lab-text-muted);text-transform:uppercase;letter-spacing:0.07em;margin-bottom:12px;">Consumption &amp; Acquisition — Semester History</div>' +
+                        '<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">' +
+                        '<div class="lab-form-group"><label class="lab-form-label" style="color:#dc2626;">Consumption</label><input type="number" id="chem-sem-consumption" class="lab-form-input" step="any" value="0" placeholder="0" style="border-color:#fecaca;color:#dc2626;font-weight:700;"></div>' +
+                        '<div class="lab-form-group"><label class="lab-form-label" style="color:#2563eb;">Acquisition</label><input type="number" id="chem-sem-acquisition" class="lab-form-input" step="any" value="0" placeholder="0" style="border-color:#bfdbfe;color:#2563eb;font-weight:700;"></div>' +
+                        '</div>' +
+                        '</div>' +
                         '<div class="lab-modal-actions">' +
                         '<button type="button" class="btn btn-primary" id="chemical-save">Save</button>' +
                         '<button type="button" class="btn btn-secondary" id="chemical-cancel">Cancel</button>' +
@@ -526,6 +533,18 @@
                     var cancelBtn = document.getElementById('chemical-cancel');
                     if (saveBtn) saveBtn.addEventListener('click', function () { saveChemicalRecord(chemicalId); });
                     if (cancelBtn) cancelBtn.addEventListener('click', closeChemicalModal);
+                    // Pre-populate consumption & acquisition from history
+                    if (chemicalId) {
+                        var _months = getSemesterMonths();
+                        getItemHistory(chemicalId).then(function (hd) {
+                            var hmap = {}; hd.forEach(function (h) { hmap[h.month] = h; });
+                            var fh = hmap[_months[0]] || {};
+                            var ce = document.getElementById('chem-sem-consumption');
+                            var ae = document.getElementById('chem-sem-acquisition');
+                            if (ce) ce.value = fh.consumption || 0;
+                            if (ae) ae.value = fh.acquisition || 0;
+                        });
+                    }
                 } else {
                     if (!c) { bodyEl.innerHTML = '<p>No item selected.</p>'; overlay.classList.add('show'); overlay.setAttribute('aria-hidden', 'false'); return; }
                     var fifoHint = await getFIFOHintForChemical(c.name);
@@ -609,6 +628,8 @@
                 var reqAmount       = (document.getElementById('chem-req-amount')  || {}).value;
                 var recAmount       = (document.getElementById('chem-rec-amount')  || {}).value;
                 var minQty          = (document.getElementById('chem-min-qty')     || {}).value;
+                var semCon = (document.getElementById('chem-sem-consumption') || {}).value;
+                var semAcq = (document.getElementById('chem-sem-acquisition') || {}).value;
                 var record = {
                     id:               chemicalId || 'ch-' + Date.now(),
                     name, category, storage, quantity, unit,
@@ -624,6 +645,18 @@
                 };
                 try {
                     await saveChemical(record);
+                    // Save semester history (consumption + acquisition)
+                    if (semCon !== undefined || semAcq !== undefined) {
+                        var _months = getSemesterMonths();
+                        try {
+                            await saveItemHistory(record.id, [{
+                                month:       _months[0],
+                                consumption: Number(semCon) || 0,
+                                acquisition: Number(semAcq) || 0,
+                                notes: ''
+                            }]);
+                        } catch (hErr) { console.warn('History save failed:', hErr); }
+                    }
                     closeChemicalModal();
                     renderInventory();
                 } catch (err) { alert('Save failed: ' + (err.message || err)); }
