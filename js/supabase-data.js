@@ -326,6 +326,37 @@ async function getInstructorsBySubject(subjectId) {
   return (data || []).filter(i => (i.subject_ids || []).includes(subjectId));
 }
 
+/* ── Breakages ──────────────────────────────────────────────── */
+
+async function getBreakages() {
+  const { data } = await db.from('breakages').select('*').order('date_reported', { ascending: false });
+  return data || [];
+}
+
+async function addBreakage(entry) {
+  const row = {
+    id:             'brk-' + Date.now(),
+    request_id:     entry.requestId     || null,
+    student_name:   entry.studentName   || '',
+    student_number: entry.studentNumber || '',
+    item_name:      entry.itemName      || '',
+    quantity:       entry.quantity      || null,
+    unit:           entry.unit          || '',
+    incident_type:  entry.incidentType  || 'breakage',
+    description:    entry.description   || '',
+    reported_by:    getCurrentUser()    || 'Admin',
+    date_reported:  new Date().toISOString(),
+  };
+  const { error } = await db.from('breakages').insert(row);
+  if (error) throw error;
+  return row;
+}
+
+async function deleteBreakage(id) {
+  const { error } = await db.from('breakages').delete().eq('id', id);
+  if (error) throw error;
+}
+
 /* ── Year Levels ────────────────────────────────────────────── */
 
 async function getYearLevels() {
