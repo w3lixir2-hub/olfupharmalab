@@ -325,6 +325,12 @@
                         <label>Group Name</label>
                         <input type="text" id="modal-group-name" placeholder="e.g., Group 1, Group A">
                     </div>
+                    <div class="form-group">
+                        <label>Section (optional)</label>
+                        <select id="modal-group-section">
+                            <option value="">Select Section</option>
+                        </select>
+                    </div>
                 </div>
             </div>
             <div class="modal-actions">
@@ -377,6 +383,7 @@
             if (id === 'modal-subject') populateModalSubjectCourse();
             if (id === 'modal-experiment') populateModalExperimentSubject();
             if (id === 'modal-instructor') populateModalInstructorSubjects();
+            if (id === 'modal-group') populateModalGroupSection();
             m.classList.add('active');
         }
         function closeModal(id) {
@@ -561,12 +568,19 @@
         }
 
         /* ── Groups ── */
+        async function populateModalGroupSection() {
+            const sel = document.getElementById('modal-group-section');
+            const sections = await getSections();
+            sel.innerHTML = '<option value="">Select Section</option>' + sections.map(s => `<option value="${s.id}">${s.name}</option>`).join('');
+        }
         async function submitGroup() {
             const name = (document.getElementById('modal-group-name').value || '').trim();
             if (!name) { alert('Enter group name.'); return; }
-            const { error } = await db.from('groups').insert({ id: 'grp-' + Date.now(), name });
+            const sectionId = document.getElementById('modal-group-section').value || null;
+            const { error } = await db.from('groups').insert({ id: 'grp-' + Date.now(), name, section_id: sectionId });
             if (error) { alert('Error: ' + error.message); return; }
             document.getElementById('modal-group-name').value = '';
+            document.getElementById('modal-group-section').value = '';
             closeModal('modal-group');
             renderGroups();
         }
@@ -578,9 +592,12 @@
         async function renderGroups() {
             const el = document.getElementById('groups-list');
             el.innerHTML = '<p style="color:#718096;font-size:14px;">Loading...</p>';
-            const list = await getGroups();
+            const [list, sections] = await Promise.all([getGroups(), getSections()]);
             el.innerHTML = list.length === 0 ? '<p style="color:#718096;font-size:14px;">No groups yet. Add above.</p>' :
-                list.map(g => `<div class="settings-item"><div><div class="name">${g.name}</div></div><button onclick="removeGroup('${g.id}')">Remove</button></div>`).join('');
+                list.map(g => {
+                    const sec = sections.find(s => s.id === g.section_id);
+                    return `<div class="settings-item"><div><div class="name">${g.name}</div><div class="meta">Section: ${sec ? sec.name : '—'}</div></div><button onclick="removeGroup('${g.id}')">Remove</button></div>`;
+                }).join('');
         }
 
         async function init() {
