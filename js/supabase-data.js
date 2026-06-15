@@ -326,6 +326,13 @@ async function getInstructorsBySubject(subjectId) {
   return (data || []).filter(i => (i.subject_ids || []).includes(subjectId));
 }
 
+/* ── Year Levels ────────────────────────────────────────────── */
+
+async function getYearLevels() {
+  const { data } = await db.from('year_levels').select('*').order('name');
+  return data || [];
+}
+
 /* ── Room Schedule ──────────────────────────────────────────── */
 
 async function getRoomSchedule() {

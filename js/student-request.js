@@ -25,7 +25,7 @@ const UNIT_OPTS = `<option value="mL">mL</option><option value="L">L</option><op
 /* ── Dropdown population ──────────────────────────────────── */
 
 async function populateDropdowns() {
-    const [sections, courses] = await Promise.all([getSections(), getCourses()]);
+    const [sections, courses, yearLevels] = await Promise.all([getSections(), getCourses(), getYearLevels()]);
 
     const sectionSelect = document.getElementById('section');
     if (sectionSelect) {
@@ -37,6 +37,12 @@ async function populateDropdowns() {
     if (courseSelect) {
         courseSelect.innerHTML = '<option value="">Select Course</option>' +
             courses.map(c => `<option value="${c.name}" data-id="${c.id}">${c.name}</option>`).join('');
+    }
+
+    const yearLevelSelect = document.getElementById('year-level');
+    if (yearLevelSelect) {
+        yearLevelSelect.innerHTML = '<option value="">Select Year Level</option>' +
+            yearLevels.map(y => `<option value="${y.name}">${y.name}</option>`).join('');
     }
 
     await populateSubjectDropdown();

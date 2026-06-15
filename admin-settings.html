@@ -108,6 +108,7 @@
             <button class="settings-tab" data-panel="subjects">Subjects</button>
             <button class="settings-tab" data-panel="experiments">Experiments & Activities</button>
             <button class="settings-tab" data-panel="instructors">Instructors</button>
+            <button class="settings-tab" data-panel="yearlevels">Year Levels</button>
         </div>
 
         <!-- Sections -->
@@ -162,6 +163,17 @@
                     <button class="btn btn-primary" onclick="openModal('modal-instructor')">+ Add Instructor</button>
                 </div>
                 <div id="instructors-list"></div>
+            </div>
+        </div>
+
+        <!-- Year Levels -->
+        <div class="settings-panel" id="panel-yearlevels">
+            <div class="settings-list" style="max-height: none;">
+                <div class="add-btn-row">
+                    <h3>Current Year Levels</h3>
+                    <button class="btn btn-primary" onclick="openModal('modal-yearlevel')">+ Add Year Level</button>
+                </div>
+                <div id="yearlevels-list"></div>
             </div>
         </div>
 
@@ -285,6 +297,27 @@
             <div class="modal-actions">
                 <button class="btn btn-secondary" onclick="closeModal('modal-instructor')">Cancel</button>
                 <button class="btn btn-primary" onclick="submitInstructor()">Add</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal" id="modal-yearlevel">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title">Add Year Level</h2>
+                <button class="modal-close" onclick="closeModal('modal-yearlevel')">×</button>
+            </div>
+            <div class="modal-body">
+                <div class="modal-form">
+                    <div class="form-group">
+                        <label>Year Level Name</label>
+                        <input type="text" id="modal-yearlevel-name" placeholder="e.g., 1st Year">
+                    </div>
+                </div>
+            </div>
+            <div class="modal-actions">
+                <button class="btn btn-secondary" onclick="closeModal('modal-yearlevel')">Cancel</button>
+                <button class="btn btn-primary" onclick="submitYearLevel()">Add</button>
             </div>
         </div>
     </div>
@@ -471,13 +504,37 @@
                 }).join('');
         }
 
+        /* ── Year Levels ── */
+        async function submitYearLevel() {
+            const name = (document.getElementById('modal-yearlevel-name').value || '').trim();
+            if (!name) { alert('Enter year level name.'); return; }
+            const { error } = await db.from('year_levels').insert({ id: 'yl-' + Date.now(), name });
+            if (error) { alert('Error: ' + error.message); return; }
+            document.getElementById('modal-yearlevel-name').value = '';
+            closeModal('modal-yearlevel');
+            renderYearLevels();
+        }
+        async function removeYearLevel(id) {
+            if (!confirm('Remove this year level?')) return;
+            await db.from('year_levels').delete().eq('id', id);
+            renderYearLevels();
+        }
+        async function renderYearLevels() {
+            const el = document.getElementById('yearlevels-list');
+            el.innerHTML = '<p style="color:#718096;font-size:14px;">Loading...</p>';
+            const list = await getYearLevels();
+            el.innerHTML = list.length === 0 ? '<p style="color:#718096;font-size:14px;">No year levels yet. Add above.</p>' :
+                list.map(y => `<div class="settings-item"><div><div class="name">${y.name}</div></div><button onclick="removeYearLevel('${y.id}')">Remove</button></div>`).join('');
+        }
+
         async function init() {
             await Promise.all([
                 renderSections(),
                 renderCourses(),
                 renderSubjects(),
                 renderExperiments(),
-                renderInstructors()
+                renderInstructors(),
+                renderYearLevels()
             ]);
         }
         init();

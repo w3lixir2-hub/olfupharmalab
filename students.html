@@ -262,7 +262,7 @@
                         </select>
                     </div>
                     <div class="filter-group">
-                        <label class="filter-label">Year</label>
+                        <label class="filter-label">Year Level</label>
                         <select id="f-year" class="filter-select" onchange="applyFilters()">
                             <option value="">All</option>
                         </select>
@@ -371,8 +371,8 @@
                 if (status  && r.status !== status) return false;
                 if (course  && r.course !== course) return false;
                 if (section && r.section !== section) return false;
+                if (year    && r.yearLevel !== year)  return false;
                 var sub = (r.dateSubmitted || '').slice(0, 10);
-                if (year  && sub.slice(0, 4) !== year)  return false;
                 if (month && sub.slice(5, 7) !== month) return false;
                 return true;
             });
@@ -420,7 +420,7 @@
             document.getElementById('stat-released').textContent = counts.released;
 
             // Populate filter dropdowns from actual data
-            var years    = [...new Set(requests.map(function (r) { return (r.dateSubmitted || '').slice(0, 4); }).filter(Boolean))].sort().reverse();
+            var years    = [...new Set(requests.map(function (r) { return r.yearLevel; }).filter(Boolean))].sort();
             var courses  = [...new Set(requests.map(function (r) { return r.course; }).filter(Boolean))].sort();
             var sections = [...new Set(requests.map(function (r) { return r.section; }).filter(Boolean))].sort();
             populateDropdown('f-year',    years);
