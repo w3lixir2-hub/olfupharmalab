@@ -248,9 +248,56 @@
 
         <!-- Recent Student Requests -->
         <div class="activity-section">
-            <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;">
-                <h2 class="section-title" style="margin:0;">Recent Student Requests</h2>
-                <a href="admin-requests.html" class="btn btn-secondary" style="text-decoration:none;font-size:13px;">View All</a>
+            <h2 class="section-title" style="margin-bottom:14px;">Student Requests</h2>
+            <div class="filters" style="margin-bottom:16px;">
+                <div style="display:flex;gap:12px;flex-wrap:wrap;align-items:flex-end;">
+                    <div class="filter-group">
+                        <label class="filter-label">Status</label>
+                        <select id="f-status" class="filter-select" onchange="applyFilters()">
+                            <option value="">All</option>
+                            <option value="pending">Pending</option>
+                            <option value="approved">Approved</option>
+                            <option value="released">Released</option>
+                            <option value="rejected">Rejected</option>
+                        </select>
+                    </div>
+                    <div class="filter-group">
+                        <label class="filter-label">Year</label>
+                        <select id="f-year" class="filter-select" onchange="applyFilters()">
+                            <option value="">All</option>
+                        </select>
+                    </div>
+                    <div class="filter-group">
+                        <label class="filter-label">Month</label>
+                        <select id="f-month" class="filter-select" onchange="applyFilters()">
+                            <option value="">All</option>
+                            <option value="01">January</option>
+                            <option value="02">February</option>
+                            <option value="03">March</option>
+                            <option value="04">April</option>
+                            <option value="05">May</option>
+                            <option value="06">June</option>
+                            <option value="07">July</option>
+                            <option value="08">August</option>
+                            <option value="09">September</option>
+                            <option value="10">October</option>
+                            <option value="11">November</option>
+                            <option value="12">December</option>
+                        </select>
+                    </div>
+                    <div class="filter-group">
+                        <label class="filter-label">Course</label>
+                        <select id="f-course" class="filter-select" onchange="applyFilters()">
+                            <option value="">All</option>
+                        </select>
+                    </div>
+                    <div class="filter-group">
+                        <label class="filter-label">Section</label>
+                        <select id="f-section" class="filter-select" onchange="applyFilters()">
+                            <option value="">All</option>
+                        </select>
+                    </div>
+                </div>
             </div>
             <div id="recent-requests-wrap">
                 <p style="color:var(--lab-text-muted);padding:16px 0;">Loading…</p>
@@ -299,34 +346,57 @@
         }
 
         /* ── Load data ── */
-        async function init() {
-            var requests = await getRequests();
+        var allRequests = [];
 
-            // Stats
-            var counts = { pending: 0, approved: 0, released: 0, rejected: 0 };
-            requests.forEach(function (r) { if (r.status in counts) counts[r.status]++; });
-            document.getElementById('stat-total').textContent   = requests.length;
-            document.getElementById('stat-pending').textContent = counts.pending;
-            document.getElementById('stat-approved').textContent = counts.approved;
-            document.getElementById('stat-released').textContent = counts.released;
+        function populateDropdown(id, values) {
+            var sel = document.getElementById(id);
+            var cur = sel.value;
+            while (sel.options.length > 1) sel.remove(1);
+            values.forEach(function (v) {
+                var o = document.createElement('option');
+                o.value = v; o.textContent = v;
+                sel.appendChild(o);
+            });
+            if (cur) sel.value = cur;
+        }
 
-            // Recent requests table (latest 10)
-            var recent = requests.slice(0, 10);
-            if (!recent.length) {
+        window.applyFilters = function () {
+            var status  = document.getElementById('f-status').value;
+            var year    = document.getElementById('f-year').value;
+            var month   = document.getElementById('f-month').value;
+            var course  = document.getElementById('f-course').value;
+            var section = document.getElementById('f-section').value;
+
+            var filtered = allRequests.filter(function (r) {
+                if (status  && r.status !== status) return false;
+                if (course  && r.course !== course) return false;
+                if (section && r.section !== section) return false;
+                var sub = (r.dateSubmitted || '').slice(0, 10);
+                if (year  && sub.slice(0, 4) !== year)  return false;
+                if (month && sub.slice(5, 7) !== month) return false;
+                return true;
+            });
+
+            renderTable(filtered);
+        };
+
+        function renderTable(rows) {
+            if (!rows.length) {
                 document.getElementById('recent-requests-wrap').innerHTML =
-                    '<p style="color:var(--lab-text-muted);padding:16px 0;">No requests yet.</p>';
+                    '<p style="color:var(--lab-text-muted);padding:16px 0;">No requests match the selected filters.</p>';
                 return;
             }
             var html = '<div class="table-container"><table class="table"><thead><tr>' +
                 '<th>Request ID</th><th>Student Name</th><th>Student No.</th>' +
-                '<th>Course</th><th>Subject</th><th>Date Needed</th><th>Date Submitted</th><th>Status</th>' +
+                '<th>Course</th><th>Year / Section</th><th>Subject</th><th>Date Needed</th><th>Date Submitted</th><th>Status</th>' +
                 '</tr></thead><tbody>';
-            recent.forEach(function (r) {
+            rows.forEach(function (r) {
                 html += '<tr>' +
                     '<td style="white-space:nowrap;">' + esc(r.requestId) + '</td>' +
                     '<td>' + esc(r.studentName) + '</td>' +
                     '<td>' + esc(r.studentNumber) + '</td>' +
                     '<td>' + esc(r.course) + '</td>' +
+                    '<td>' + esc(r.yearLevel) + ' ' + esc(r.section) + '</td>' +
                     '<td>' + esc(r.subject) + '</td>' +
                     '<td>' + esc(r.dateNeeded || '—') + '</td>' +
                     '<td style="white-space:nowrap;">' + fmtDate(r.dateSubmitted) + '</td>' +
@@ -335,6 +405,29 @@
             });
             html += '</tbody></table></div>';
             document.getElementById('recent-requests-wrap').innerHTML = html;
+        }
+
+        async function init() {
+            var requests = await getRequests();
+            allRequests = requests;
+
+            // Stats
+            var counts = { pending: 0, approved: 0, released: 0, rejected: 0 };
+            requests.forEach(function (r) { if (r.status in counts) counts[r.status]++; });
+            document.getElementById('stat-total').textContent    = requests.length;
+            document.getElementById('stat-pending').textContent  = counts.pending;
+            document.getElementById('stat-approved').textContent = counts.approved;
+            document.getElementById('stat-released').textContent = counts.released;
+
+            // Populate filter dropdowns from actual data
+            var years    = [...new Set(requests.map(function (r) { return (r.dateSubmitted || '').slice(0, 4); }).filter(Boolean))].sort().reverse();
+            var courses  = [...new Set(requests.map(function (r) { return r.course; }).filter(Boolean))].sort();
+            var sections = [...new Set(requests.map(function (r) { return r.section; }).filter(Boolean))].sort();
+            populateDropdown('f-year',    years);
+            populateDropdown('f-course',  courses);
+            populateDropdown('f-section', sections);
+
+            applyFilters();
         }
 
         initQr();
