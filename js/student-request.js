@@ -25,12 +25,18 @@ const UNIT_OPTS = `<option value="mL">mL</option><option value="L">L</option><op
 /* ── Dropdown population ──────────────────────────────────── */
 
 async function populateDropdowns() {
-    const [sections, courses, yearLevels] = await Promise.all([getSections(), getCourses(), getYearLevels()]);
+    const [sections, courses, yearLevels, groups] = await Promise.all([getSections(), getCourses(), getYearLevels(), getGroups()]);
 
     const sectionSelect = document.getElementById('section');
     if (sectionSelect) {
         sectionSelect.innerHTML = '<option value="">Select Section</option>' +
             sections.map(s => `<option value="${s.name}">${s.name}</option>`).join('');
+    }
+
+    const groupSelect = document.getElementById('group');
+    if (groupSelect) {
+        groupSelect.innerHTML = '<option value="">Select Group</option>' +
+            groups.map(g => `<option value="${g.name}">${g.name}</option>`).join('');
     }
 
     const courseSelect = document.getElementById('course');
@@ -285,6 +291,7 @@ async function submitForm() {
         course:             document.getElementById('course')?.value || '',
         yearLevel:          document.getElementById('year-level').value,
         section:            document.getElementById('section')?.value?.trim() || '',
+        group:              document.getElementById('group')?.value?.trim() || '',
         subject:            document.getElementById('subject')?.value?.trim() || '',
         activity:           document.getElementById('activity')?.value?.trim() || '',
         instructor:         document.getElementById('instructor')?.value?.trim() || '',
@@ -409,12 +416,13 @@ function updateReviewSummary() {
     const course     = document.getElementById('course').value || '-';
     const yearLevel  = document.getElementById('year-level').value || '-';
     const section    = document.getElementById('section').value?.trim() || '';
+    const group      = document.getElementById('group').value?.trim() || '';
 
     document.getElementById('review-name').textContent           = name;
     document.getElementById('review-student-number').textContent = studentNum;
     document.getElementById('review-contact').textContent        = contact;
     document.getElementById('review-course').textContent         =
-        course + (yearLevel !== '-' ? ' - ' + yearLevel : '') + (section ? ', Section ' + section : '');
+        course + (yearLevel !== '-' ? ' - ' + yearLevel : '') + (section ? ', Section ' + section : '') + (group ? ', ' + group : '');
 
     document.getElementById('review-subject').textContent    = document.getElementById('subject').value.trim()    || '-';
     document.getElementById('review-activity').textContent   = document.getElementById('activity').value.trim()   || '-';
