@@ -371,6 +371,29 @@ async function getYearLevels() {
   return data || [];
 }
 
+/* ── Inventory History ──────────────────────────────────────── */
+
+async function getItemHistory(chemicalId) {
+  const { data } = await db.from('inventory_history')
+    .select('*')
+    .eq('chemical_id', chemicalId)
+    .order('month');
+  return data || [];
+}
+
+async function saveItemHistory(chemicalId, entries) {
+  const rows = entries.map(e => ({
+    id:           chemicalId + '_' + e.month,
+    chemical_id:  chemicalId,
+    month:        e.month,
+    consumption:  Number(e.consumption) || 0,
+    acquisition:  Number(e.acquisition) || 0,
+    notes:        e.notes || '',
+  }));
+  const { error } = await db.from('inventory_history').upsert(rows, { onConflict: 'id' });
+  if (error) throw error;
+}
+
 /* ── Groups ─────────────────────────────────────────────────── */
 
 async function getGroups() {

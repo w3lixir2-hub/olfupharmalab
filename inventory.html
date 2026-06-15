@@ -6,6 +6,7 @@
     <title>LabTech Inventory - PharmaLab</title>
     <link rel="stylesheet" href="css/lab-ui.css">
     <script src="https://cdn.sheetjs.com/xlsx-latest/package/dist/xlsx.full.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4/dist/chart.umd.min.js"></script>
     <style>
         /* Page-specific: expiry in table */
         .expiry-warning { color: var(--lab-warning); font-weight: 600; }
@@ -243,6 +244,190 @@
 
             var categoryOptions = '<option value="">-- Select Category --</option><option value="Liquid Reagent">Liquid Reagent</option><option value="Solid Reagent">Solid Reagent</option><option value="Glassware">Glassware</option><option value="Equipment">Equipment</option><option value="Antibiotic Disc">Antibiotic Disc</option>';
 
+            var activeHistoryChart = null;
+
+            /* ── Semester months ── */
+            function getSemesterMonths() {
+                var now = new Date();
+                var m = now.getMonth() + 1;
+                var y = now.getFullYear();
+                var months = [];
+                if (m >= 8 && m <= 12) {
+                    for (var i = 8; i <= 12; i++) months.push(y + '-' + String(i).padStart(2, '0'));
+                } else if (m >= 1 && m <= 5) {
+                    for (var i = 1; i <= 5; i++) months.push(y + '-' + String(i).padStart(2, '0'));
+                } else {
+                    // Summer (Jun–Jul): show preceding 2nd sem
+                    for (var i = 1; i <= 5; i++) months.push(y + '-' + String(i).padStart(2, '0'));
+                }
+                return months;
+            }
+
+            function fmtMonthLabel(m) {
+                var d = new Date(m + '-01T00:00:00Z');
+                return d.toLocaleDateString('en-PH', { month: 'short', year: 'numeric', timeZone: 'UTC' });
+            }
+
+            /* ── Load & render history section ── */
+            async function loadAndRenderHistory(chemicalId, chemical) {
+                var histContent = document.getElementById('history-content');
+                if (!histContent) return;
+                var months = getSemesterMonths();
+                var histData = await getItemHistory(chemicalId);
+                var histMap = {};
+                histData.forEach(function (h) { histMap[h.month] = h; });
+                var unit = chemical.unit || '';
+
+                var tbl = '<table style="width:100%;border-collapse:collapse;font-size:12px;margin-bottom:14px;">' +
+                    '<thead><tr style="background:#f8fafc;">' +
+                    '<th style="padding:8px 10px;border:1px solid var(--lab-border);text-align:left;font-size:10px;color:var(--lab-text-muted);text-transform:uppercase;letter-spacing:0.05em;white-space:nowrap;">Month</th>' +
+                    '<th style="padding:8px 10px;border:1px solid var(--lab-border);text-align:center;font-size:10px;color:#dc2626;text-transform:uppercase;letter-spacing:0.05em;">Consumption' + (unit ? ' (' + unit + ')' : '') + '</th>' +
+                    '<th style="padding:8px 10px;border:1px solid var(--lab-border);text-align:center;font-size:10px;color:#2563eb;text-transform:uppercase;letter-spacing:0.05em;">Acquisition' + (unit ? ' (' + unit + ')' : '') + '</th>' +
+                    '<th style="padding:8px 10px;border:1px solid var(--lab-border);text-align:left;font-size:10px;color:var(--lab-text-muted);text-transform:uppercase;letter-spacing:0.05em;">Notes</th>' +
+                    '</tr></thead><tbody>';
+
+                months.forEach(function (mo, idx) {
+                    var h = histMap[mo] || {};
+                    tbl += '<tr style="transition:background 0.1s;">' +
+                        '<td style="padding:7px 10px;border:1px solid var(--lab-border);font-weight:600;font-size:12px;color:var(--lab-text);white-space:nowrap;">' + fmtMonthLabel(mo) + '</td>' +
+                        '<td style="padding:4px 6px;border:1px solid var(--lab-border);">' +
+                        '<input type="number" id="hist-con-' + idx + '" data-month="' + mo + '" value="' + (h.consumption || 0) + '" min="0" step="any" oninput="updateHistoryChart()" ' +
+                        'style="width:100%;padding:6px 8px;border:1.5px solid #fecaca;border-radius:5px;text-align:center;font-size:12px;font-family:inherit;background:#fff;">' +
+                        '</td>' +
+                        '<td style="padding:4px 6px;border:1px solid var(--lab-border);">' +
+                        '<input type="number" id="hist-acq-' + idx + '" data-month="' + mo + '" value="' + (h.acquisition || 0) + '" min="0" step="any" oninput="updateHistoryChart()" ' +
+                        'style="width:100%;padding:6px 8px;border:1.5px solid #bfdbfe;border-radius:5px;text-align:center;font-size:12px;font-family:inherit;background:#fff;">' +
+                        '</td>' +
+                        '<td style="padding:4px 6px;border:1px solid var(--lab-border);">' +
+                        '<input type="text" id="hist-notes-' + idx + '" data-month="' + mo + '" value="' + ((h.notes || '').replace(/"/g, '&quot;')) + '" placeholder="optional" ' +
+                        'style="width:100%;padding:6px 8px;border:1.5px solid var(--lab-border);border-radius:5px;font-size:12px;font-family:inherit;background:#fff;">' +
+                        '</td>' +
+                        '</tr>';
+                });
+                tbl += '</tbody></table>';
+
+                histContent.innerHTML =
+                    tbl +
+                    '<div style="display:flex;justify-content:flex-end;margin-bottom:16px;">' +
+                    '<button onclick="saveItemHistoryData(\'' + chemicalId + '\')" class="btn btn-primary btn-sm" id="save-hist-btn">Save History</button>' +
+                    '</div>' +
+                    '<canvas id="history-chart" height="140"></canvas>';
+
+                // Init chart
+                var conData = months.map(function (_, i) { return Number(document.getElementById('hist-con-' + i).value) || 0; });
+                var acqData = months.map(function (_, i) { return Number(document.getElementById('hist-acq-' + i).value) || 0; });
+                initHistoryChart(months.map(fmtMonthLabel), conData, acqData);
+                window._histMonthCount = months.length;
+            }
+
+            function initHistoryChart(labels, conData, acqData) {
+                if (activeHistoryChart) { activeHistoryChart.destroy(); activeHistoryChart = null; }
+                var canvas = document.getElementById('history-chart');
+                if (!canvas) return;
+                activeHistoryChart = new Chart(canvas.getContext('2d'), {
+                    type: 'line',
+                    data: {
+                        labels: labels,
+                        datasets: [
+                            {
+                                label: 'Consumption',
+                                data: conData,
+                                borderColor: '#dc2626',
+                                backgroundColor: 'rgba(220,38,38,0.08)',
+                                borderWidth: 2.5,
+                                tension: 0.35,
+                                fill: true,
+                                pointBackgroundColor: '#dc2626',
+                                pointRadius: 5,
+                                pointHoverRadius: 7,
+                            },
+                            {
+                                label: 'Acquisition',
+                                data: acqData,
+                                borderColor: '#2563eb',
+                                backgroundColor: 'rgba(37,99,235,0.07)',
+                                borderWidth: 2.5,
+                                tension: 0.35,
+                                fill: true,
+                                pointBackgroundColor: '#2563eb',
+                                pointRadius: 5,
+                                pointHoverRadius: 7,
+                            }
+                        ]
+                    },
+                    options: {
+                        responsive: true,
+                        interaction: { mode: 'index', intersect: false },
+                        plugins: {
+                            legend: {
+                                position: 'top',
+                                labels: { font: { family: 'Inter', size: 12 }, boxWidth: 14, padding: 16, usePointStyle: true }
+                            },
+                            tooltip: {
+                                backgroundColor: '#0f172a',
+                                titleFont: { family: 'Inter', size: 12 },
+                                bodyFont: { family: 'Inter', size: 12 },
+                                padding: 10,
+                                cornerRadius: 8,
+                            }
+                        },
+                        scales: {
+                            x: {
+                                grid: { color: 'rgba(0,0,0,0.04)' },
+                                ticks: { font: { family: 'Inter', size: 11 }, color: '#64748b' }
+                            },
+                            y: {
+                                grid: { color: 'rgba(0,0,0,0.04)' },
+                                ticks: { font: { family: 'Inter', size: 11 }, color: '#64748b' },
+                                beginAtZero: true
+                            }
+                        }
+                    }
+                });
+            }
+
+            window.updateHistoryChart = function () {
+                if (!activeHistoryChart) return;
+                var n = window._histMonthCount || 5;
+                var con = [], acq = [];
+                for (var i = 0; i < n; i++) {
+                    con.push(Number((document.getElementById('hist-con-' + i) || {}).value) || 0);
+                    acq.push(Number((document.getElementById('hist-acq-' + i) || {}).value) || 0);
+                }
+                activeHistoryChart.data.datasets[0].data = con;
+                activeHistoryChart.data.datasets[1].data = acq;
+                activeHistoryChart.update('none');
+            };
+
+            window.saveItemHistoryData = async function (chemicalId) {
+                var n = window._histMonthCount || 5;
+                var entries = [];
+                for (var i = 0; i < n; i++) {
+                    var ce = document.getElementById('hist-con-' + i);
+                    var ae = document.getElementById('hist-acq-' + i);
+                    var ne = document.getElementById('hist-notes-' + i);
+                    if (ce) entries.push({
+                        month: ce.dataset.month,
+                        consumption: Number(ce.value) || 0,
+                        acquisition: Number((ae || {}).value) || 0,
+                        notes: (ne || {}).value || ''
+                    });
+                }
+                var btn = document.getElementById('save-hist-btn');
+                if (btn) { btn.disabled = true; btn.textContent = 'Saving…'; }
+                try {
+                    await saveItemHistory(chemicalId, entries);
+                    if (btn) {
+                        btn.textContent = 'Saved ✓';
+                        btn.style.background = '#059669';
+                        setTimeout(function () { btn.textContent = 'Save History'; btn.style.background = ''; btn.disabled = false; }, 2000);
+                    }
+                } catch (err) {
+                    alert('Error saving history: ' + err.message);
+                    if (btn) { btn.disabled = false; btn.textContent = 'Save History'; }
+                }
+            };
+
             async function renderInventory() {
                 var list = await getChemicals();
                 var searchVal = (document.getElementById('inventory-search') || {}).value || '';
@@ -395,21 +580,35 @@
                         '<div class="lab-detail-row"><span class="lab-detail-label">MSDS / SDS</span><span class="lab-detail-value">' + (c.msds && c.msds.trim() ? '<a href="' + c.msds.trim() + '" target="_blank" rel="noopener" class="sds-btn">View SDS</a>' : '—') + '</span></div>' +
                         '</div>' +
                         '</div>' +
+                        '<div style="margin:20px 0 0;padding-top:16px;border-top:1px solid var(--lab-border);">' +
+                        '<div style="font-size:10px;font-weight:700;color:var(--lab-text-muted);text-transform:uppercase;letter-spacing:0.07em;margin-bottom:12px;">Consumption &amp; Acquisition — Semester History</div>' +
+                        '<div id="history-content"><p style="color:var(--lab-text-subtle);font-size:13px;padding:8px 0;">Loading history…</p></div>' +
+                        '</div>' +
                         '<div class="lab-modal-actions">' +
                         '<button type="button" class="btn btn-primary" id="chemical-edit-btn">Edit</button>' +
                         '<button type="button" class="btn btn-secondary" id="chemical-close-btn">Close</button>' +
                         '</div>';
                     document.getElementById('chemical-edit-btn').addEventListener('click', function () { closeChemicalModal(); openChemicalModal(chemicalId, true); });
                     document.getElementById('chemical-close-btn').addEventListener('click', closeChemicalModal);
+                    // Widen modal for chart view
+                    var modalEl = overlay.querySelector('.lab-modal');
+                    if (modalEl) modalEl.style.maxWidth = '720px';
                 }
 
                 overlay.classList.add('show');
                 overlay.setAttribute('aria-hidden', 'false');
+                if (!isEdit && c) loadAndRenderHistory(chemicalId, c);
             }
 
             function closeChemicalModal() {
                 var overlay = document.getElementById('chemical-modal-overlay');
-                if (overlay) { overlay.classList.remove('show'); overlay.setAttribute('aria-hidden', 'true'); }
+                if (overlay) {
+                    overlay.classList.remove('show');
+                    overlay.setAttribute('aria-hidden', 'true');
+                    var modalEl = overlay.querySelector('.lab-modal');
+                    if (modalEl) modalEl.style.maxWidth = '';
+                }
+                if (activeHistoryChart) { activeHistoryChart.destroy(); activeHistoryChart = null; }
             }
 
             async function saveChemicalRecord(chemicalId) {
