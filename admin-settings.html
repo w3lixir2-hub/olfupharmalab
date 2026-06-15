@@ -109,6 +109,7 @@
             <button class="settings-tab" data-panel="experiments">Experiments & Activities</button>
             <button class="settings-tab" data-panel="instructors">Instructors</button>
             <button class="settings-tab" data-panel="yearlevels">Year Levels</button>
+            <button class="settings-tab" data-panel="groups">Groups</button>
         </div>
 
         <!-- Sections -->
@@ -174,6 +175,17 @@
                     <button class="btn btn-primary" onclick="openModal('modal-yearlevel')">+ Add Year Level</button>
                 </div>
                 <div id="yearlevels-list"></div>
+            </div>
+        </div>
+
+        <!-- Groups -->
+        <div class="settings-panel" id="panel-groups">
+            <div class="settings-list" style="max-height: none;">
+                <div class="add-btn-row">
+                    <h3>Current Groups</h3>
+                    <button class="btn btn-primary" onclick="openModal('modal-group')">+ Add Group</button>
+                </div>
+                <div id="groups-list"></div>
             </div>
         </div>
 
@@ -297,6 +309,27 @@
             <div class="modal-actions">
                 <button class="btn btn-secondary" onclick="closeModal('modal-instructor')">Cancel</button>
                 <button class="btn btn-primary" onclick="submitInstructor()">Add</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal" id="modal-group">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title">Add Group</h2>
+                <button class="modal-close" onclick="closeModal('modal-group')">×</button>
+            </div>
+            <div class="modal-body">
+                <div class="modal-form">
+                    <div class="form-group">
+                        <label>Group Name</label>
+                        <input type="text" id="modal-group-name" placeholder="e.g., Group 1, Group A">
+                    </div>
+                </div>
+            </div>
+            <div class="modal-actions">
+                <button class="btn btn-secondary" onclick="closeModal('modal-group')">Cancel</button>
+                <button class="btn btn-primary" onclick="submitGroup()">Add</button>
             </div>
         </div>
     </div>
@@ -527,6 +560,29 @@
                 list.map(y => `<div class="settings-item"><div><div class="name">${y.name}</div></div><button onclick="removeYearLevel('${y.id}')">Remove</button></div>`).join('');
         }
 
+        /* ── Groups ── */
+        async function submitGroup() {
+            const name = (document.getElementById('modal-group-name').value || '').trim();
+            if (!name) { alert('Enter group name.'); return; }
+            const { error } = await db.from('groups').insert({ id: 'grp-' + Date.now(), name });
+            if (error) { alert('Error: ' + error.message); return; }
+            document.getElementById('modal-group-name').value = '';
+            closeModal('modal-group');
+            renderGroups();
+        }
+        async function removeGroup(id) {
+            if (!confirm('Remove this group?')) return;
+            await db.from('groups').delete().eq('id', id);
+            renderGroups();
+        }
+        async function renderGroups() {
+            const el = document.getElementById('groups-list');
+            el.innerHTML = '<p style="color:#718096;font-size:14px;">Loading...</p>';
+            const list = await getGroups();
+            el.innerHTML = list.length === 0 ? '<p style="color:#718096;font-size:14px;">No groups yet. Add above.</p>' :
+                list.map(g => `<div class="settings-item"><div><div class="name">${g.name}</div></div><button onclick="removeGroup('${g.id}')">Remove</button></div>`).join('');
+        }
+
         async function init() {
             await Promise.all([
                 renderSections(),
@@ -534,7 +590,8 @@
                 renderSubjects(),
                 renderExperiments(),
                 renderInstructors(),
-                renderYearLevels()
+                renderYearLevels(),
+                renderGroups()
             ]);
         }
         init();

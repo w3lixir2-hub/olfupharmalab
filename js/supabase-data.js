@@ -370,6 +370,13 @@ async function getYearLevels() {
   return data || [];
 }
 
+/* ── Groups ─────────────────────────────────────────────────── */
+
+async function getGroups() {
+  const { data } = await db.from('groups').select('*').order('name');
+  return data || [];
+}
+
 /* ── Room Schedule ──────────────────────────────────────────── */
 
 async function getRoomSchedule() {
