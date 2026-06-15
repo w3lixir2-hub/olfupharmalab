@@ -345,6 +345,7 @@ async function addBreakage(entry) {
     request_id:     entry.requestId     || null,
     student_name:   entry.studentName   || '',
     student_number: entry.studentNumber || '',
+    group_name:     entry.groupName     || '',
     item_name:      entry.itemName      || '',
     quantity:       entry.quantity      || null,
     unit:           entry.unit          || '',

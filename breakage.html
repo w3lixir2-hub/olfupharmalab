@@ -166,6 +166,13 @@
                 </div>
 
                 <div style="margin-bottom:16px;">
+                    <label class="filter-label" style="display:block;margin-bottom:6px;">Group</label>
+                    <select id="m-group" class="filter-select" style="width:100%;">
+                        <option value="">Select Group</option>
+                    </select>
+                </div>
+
+                <div style="margin-bottom:16px;">
                     <label class="filter-label" style="display:block;margin-bottom:6px;">Item / Material <span style="color:var(--lab-danger)">*</span></label>
                     <input type="text" id="m-item-name" class="filter-input" placeholder="e.g. Beaker 250mL, HCl solution" style="width:100%;">
                 </div>
@@ -227,9 +234,14 @@
         }
 
         /* ── Modal ── */
-        window.openModal = function () {
+        window.openModal = async function () {
             document.getElementById('modal-overlay').setAttribute('aria-hidden', 'false');
             document.getElementById('modal-overlay').classList.add('active');
+            // Populate group dropdown
+            var groups = await getGroups();
+            document.getElementById('m-group').innerHTML =
+                '<option value="">Select Group</option>' +
+                groups.map(function(g){ return '<option value="' + g.name + '">' + g.name + '</option>'; }).join('');
         };
         window.closeModal = function () {
             document.getElementById('modal-overlay').setAttribute('aria-hidden', 'true');
@@ -238,6 +250,7 @@
                 document.getElementById(id).value = '';
             });
             document.getElementById('m-type').value = 'breakage';
+            document.getElementById('m-group').value = '';
             document.getElementById('m-lookup-msg').textContent = '';
         };
         document.getElementById('modal-overlay').addEventListener('click', function (e) {
@@ -278,6 +291,7 @@
                     requestId:     (document.getElementById('m-request-id').value     || '').trim() || null,
                     studentName:   studentName,
                     studentNumber: (document.getElementById('m-student-number').value || '').trim(),
+                    groupName:     document.getElementById('m-group').value || '',
                     itemName:      itemName,
                     quantity:      parseFloat(document.getElementById('m-qty').value) || null,
                     unit:          (document.getElementById('m-unit').value           || '').trim(),
@@ -327,7 +341,7 @@
             }
 
             var html = '<div class="table-container"><table class="table"><thead><tr>' +
-                '<th>Date Reported</th><th>Request ID</th><th>Student Name</th><th>Student No.</th>' +
+                '<th>Date Reported</th><th>Request ID</th><th>Student Name</th><th>Student No.</th><th>Group</th>' +
                 '<th>Item / Material</th><th>Qty</th><th>Type</th><th>Notes</th><th>Reported By</th><th></th>' +
                 '</tr></thead><tbody>';
             rows.forEach(function (b) {
@@ -336,6 +350,7 @@
                     '<td style="white-space:nowrap;">' + esc(b.request_id || '—') + '</td>' +
                     '<td>' + esc(b.student_name) + '</td>' +
                     '<td>' + esc(b.student_number) + '</td>' +
+                    '<td>' + esc(b.group_name || '—') + '</td>' +
                     '<td>' + esc(b.item_name) + '</td>' +
                     '<td>' + (b.quantity != null ? esc(b.quantity) + ' ' + esc(b.unit) : '—') + '</td>' +
                     '<td>' + typeBadge(b.incident_type) + '</td>' +

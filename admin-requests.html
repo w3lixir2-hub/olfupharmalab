@@ -631,7 +631,7 @@
             }
         }
 
-        function openReturnModal() {
+        async function openReturnModal() {
             if (!currentRequestData) return;
             const borrowCategories = ['Glassware', 'Equipment'];
             const items = (currentRequestData.items || []).filter(it => borrowCategories.includes(it.category));
@@ -641,6 +641,11 @@
                 return;
             }
 
+            // Load groups for the damage dropdown
+            const groups = await getGroups();
+            const groupOptions = '<option value="">Select Group</option>' +
+                groups.map(g => `<option value="${g.name}">${g.name}</option>`).join('');
+
             // Set default return datetime to now
             const now = new Date();
             const pad = n => String(n).padStart(2,'0');
@@ -648,24 +653,45 @@
                 `${now.getFullYear()}-${pad(now.getMonth()+1)}-${pad(now.getDate())}T${pad(now.getHours())}:${pad(now.getMinutes())}`;
             document.getElementById('return-received-by').value = getCurrentUser() || '';
 
+            const studentName = currentRequestData.studentName || '';
+
             // Build checklist
             document.getElementById('return-checklist').innerHTML = `
                 <div style="background:#f7fafc;border-radius:10px;padding:16px;">
                     <div style="font-size:13px;font-weight:600;color:#2d3748;margin-bottom:12px;">Items to Return</div>
                     ${items.map((it, i) => `
-                        <div style="display:grid;grid-template-columns:auto 1fr auto auto;gap:12px;align-items:center;padding:10px 0;border-bottom:1px solid #e2e8f0;">
-                            <input type="checkbox" id="ret-chk-${i}" checked style="width:18px;height:18px;cursor:pointer;">
-                            <div>
-                                <div style="font-weight:500;font-size:14px;color:#1a202c;">${it.name}</div>
-                                <div style="font-size:12px;color:#718096;">${it.category} — Original: ${it.quantity} ${it.unit}</div>
+                        <div style="padding:10px 0;border-bottom:1px solid #e2e8f0;">
+                            <div style="display:grid;grid-template-columns:auto 1fr auto auto;gap:12px;align-items:center;">
+                                <input type="checkbox" id="ret-chk-${i}" checked style="width:18px;height:18px;cursor:pointer;">
+                                <div>
+                                    <div style="font-weight:500;font-size:14px;color:#1a202c;">${it.name}</div>
+                                    <div style="font-size:12px;color:#718096;">${it.category} — Original: ${it.quantity} ${it.unit}</div>
+                                </div>
+                                <input type="number" id="ret-qty-${i}" value="${it.quantity}" min="0" max="${it.quantity}"
+                                    style="width:70px;padding:6px 10px;border:2px solid #e2e8f0;border-radius:6px;font-size:14px;text-align:center;">
+                                <select id="ret-cond-${i}" onchange="toggleDamageFields(${i})" style="padding:6px 8px;border:2px solid #e2e8f0;border-radius:6px;font-size:13px;">
+                                    <option value="Good">Good</option>
+                                    <option value="Damaged">Damaged</option>
+                                    <option value="Missing">Missing</option>
+                                </select>
                             </div>
-                            <input type="number" id="ret-qty-${i}" value="${it.quantity}" min="0" max="${it.quantity}"
-                                style="width:70px;padding:6px 10px;border:2px solid #e2e8f0;border-radius:6px;font-size:14px;text-align:center;">
-                            <select id="ret-cond-${i}" style="padding:6px 8px;border:2px solid #e2e8f0;border-radius:6px;font-size:13px;">
-                                <option value="Good">Good</option>
-                                <option value="Damaged">Damaged</option>
-                                <option value="Missing">Missing</option>
-                            </select>
+                            <div id="ret-damage-${i}" style="display:none;margin-top:10px;padding:12px;background:#fff3cd;border-radius:8px;border:1px solid #ffc107;">
+                                <div style="font-size:12px;font-weight:600;color:#856404;margin-bottom:8px;">Incident Details</div>
+                                <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
+                                    <div>
+                                        <label style="font-size:12px;font-weight:600;color:#4a5568;display:block;margin-bottom:4px;">Student Name</label>
+                                        <input type="text" id="ret-name-${i}" value="${studentName}"
+                                            placeholder="Student name"
+                                            style="width:100%;padding:7px 10px;border:1.5px solid #e2e8f0;border-radius:6px;font-size:13px;box-sizing:border-box;">
+                                    </div>
+                                    <div>
+                                        <label style="font-size:12px;font-weight:600;color:#4a5568;display:block;margin-bottom:4px;">Group</label>
+                                        <select id="ret-group-${i}" style="width:100%;padding:7px 10px;border:1.5px solid #e2e8f0;border-radius:6px;font-size:13px;">
+                                            ${groupOptions}
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     `).join('')}
                 </div>`;
@@ -673,6 +699,12 @@
             // Store items ref for confirmReturn
             document.getElementById('returnModal')._items = items;
             document.getElementById('returnModal').style.display = 'flex';
+        }
+
+        function toggleDamageFields(i) {
+            const cond = document.getElementById(`ret-cond-${i}`).value;
+            const el   = document.getElementById(`ret-damage-${i}`);
+            if (el) el.style.display = (cond === 'Damaged' || cond === 'Missing') ? 'block' : 'none';
         }
 
         function closeReturnModal() {
@@ -718,17 +750,21 @@
 
                     // Auto-log to breakage table if condition is not Good
                     if (condition === 'Damaged' || condition === 'Missing') {
-                        const incidentType = condition === 'Missing' ? 'missing' : 'breakage';
+                        const incidentType  = condition === 'Missing' ? 'missing' : 'breakage';
+                        const damageStudent = (document.getElementById(`ret-name-${i}`)?.value || '').trim()
+                                              || currentRequestData.studentName || borrower;
+                        const damageGroup   = document.getElementById(`ret-group-${i}`)?.value || '';
                         try {
                             await addBreakage({
                                 requestId:     reqId,
-                                studentName:   currentRequestData.studentName   || borrower,
+                                studentName:   damageStudent,
                                 studentNumber: currentRequestData.studentNumber || '',
+                                groupName:     damageGroup,
                                 itemName:      it.name,
                                 quantity:      qtyRet,
                                 unit:          it.unit || '',
                                 incidentType:  incidentType,
-                                description:   `Returned in ${condition} condition.`,
+                                description:   `Returned in ${condition} condition.${damageGroup ? ' Group: ' + damageGroup : ''}`,
                             });
                         } catch (bErr) {
                             console.error('[Breakage insert failed]', bErr);
