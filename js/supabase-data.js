@@ -41,7 +41,13 @@ function getCurrentUser() {
   try {
     const raw = localStorage.getItem('labCurrentUser') || sessionStorage.getItem('labCurrentUser');
     const u = JSON.parse(raw || 'null');
-    return u && u.name ? u.name : null;
+    if (!u || !u.name) return null;
+    let name = u.name;
+    // strip email domain if stored as email
+    if (name.includes('@')) name = name.split('@')[0];
+    // return first segment only (e.g. "ong.karl88" → "Ong")
+    const first = name.split(/[\s._]+/)[0];
+    return first ? first.charAt(0).toUpperCase() + first.slice(1) : name;
   } catch (_) { return null; }
 }
 function setCurrentUser(name) {
