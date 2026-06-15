@@ -715,6 +715,21 @@
                     // Log return to audit_log
                     const details = `${it.name} | ${it.category} | ${qtyRet} ${it.unit} | Borrower: ${borrower} | Condition: ${condition} | Received by: ${receivedBy} | Req: ${reqId}`;
                     await addAuditEntry('Return', details);
+
+                    // Auto-log to breakage table if condition is not Good
+                    if (condition === 'Damaged' || condition === 'Missing') {
+                        const incidentType = condition === 'Missing' ? 'missing' : 'breakage';
+                        await addBreakage({
+                            requestId:     reqId,
+                            studentName:   currentRequestData.studentName   || borrower,
+                            studentNumber: currentRequestData.studentNumber || '',
+                            itemName:      it.name,
+                            quantity:      qtyRet,
+                            unit:          it.unit || '',
+                            incidentType:  incidentType,
+                            description:   `Returned in ${condition} condition.`,
+                        });
+                    }
                 }
 
                 // Update request status to returned
