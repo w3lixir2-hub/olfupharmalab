@@ -332,16 +332,24 @@
                 if (isEdit) {
                     var curCat = c ? (c.category || '') : '';
                     var catSelectHtml = categoryOptions.replace('value="' + curCat + '"', 'value="' + curCat + '" selected');
+                    var dAcq = c ? (c.delivery_date || c.deliveryDate || '') : '';
                     bodyEl.innerHTML =
-                        '<div class="lab-form-group"><label class="lab-form-label" for="chem-name">Item name</label><input type="text" id="chem-name" class="lab-form-input" value="' + (c ? (c.name || '').replace(/"/g, '&quot;') : '') + '" placeholder="e.g. Hydrochloric Acid"></div>' +
+                        '<div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">' +
+                        '<div class="lab-form-group"><label class="lab-form-label" for="chem-name">Item Name</label><input type="text" id="chem-name" class="lab-form-input" value="' + (c ? (c.name || '').replace(/"/g, '&quot;') : '') + '" placeholder="e.g. Hydrochloric Acid"></div>' +
+                        '<div class="lab-form-group"><label class="lab-form-label" for="chem-ref">Reference No.</label><input type="text" id="chem-ref" class="lab-form-input" value="' + (c ? (c.reference_number || '').replace(/"/g, '&quot;') : '') + '" placeholder="e.g. REF-001"></div>' +
                         '<div class="lab-form-group"><label class="lab-form-label" for="chem-category">Category</label><select id="chem-category" class="lab-form-input">' + catSelectHtml + '</select></div>' +
-                        '<div class="lab-form-group"><label class="lab-form-label" for="chem-quantity">Quantity</label><input type="number" id="chem-quantity" class="lab-form-input" step="any" value="' + (c ? c.quantity : '') + '" placeholder="0"></div>' +
-                        '<div class="lab-form-group"><label class="lab-form-label" for="chem-unit">Unit</label><input type="text" id="chem-unit" class="lab-form-input" value="' + (c ? (c.unit || '').replace(/"/g, '&quot;') : '') + '" placeholder="L, g, mL, pcs"></div>' +
+                        '<div class="lab-form-group"><label class="lab-form-label" for="chem-unit">UOM</label><input type="text" id="chem-unit" class="lab-form-input" value="' + (c ? (c.unit || '').replace(/"/g, '&quot;') : '') + '" placeholder="L, g, mL, pcs"></div>' +
+                        '<div class="lab-form-group"><label class="lab-form-label" for="chem-quantity">Current Balance</label><input type="number" id="chem-quantity" class="lab-form-input" step="any" value="' + (c ? c.quantity : '') + '" placeholder="0"></div>' +
+                        '<div class="lab-form-group"><label class="lab-form-label" for="chem-prev-balance">Previous Balance</label><input type="number" id="chem-prev-balance" class="lab-form-input" step="any" value="' + (c && c.previous_balance != null ? c.previous_balance : '') + '" placeholder="0"></div>' +
+                        '<div class="lab-form-group"><label class="lab-form-label" for="chem-req-amount">Requested Amount</label><input type="number" id="chem-req-amount" class="lab-form-input" step="any" value="' + (c && c.requested_amount != null ? c.requested_amount : '') + '" placeholder="0"></div>' +
+                        '<div class="lab-form-group"><label class="lab-form-label" for="chem-rec-amount">Received Amount</label><input type="number" id="chem-rec-amount" class="lab-form-input" step="any" value="' + (c && c.received_amount != null ? c.received_amount : '') + '" placeholder="0"></div>' +
+                        '<div class="lab-form-group"><label class="lab-form-label" for="chem-min-qty">Reorder Level</label><input type="number" id="chem-min-qty" class="lab-form-input" step="any" value="' + (c && c.min_quantity != null ? c.min_quantity : '') + '" placeholder="0"></div>' +
+                        '<div class="lab-form-group"><label class="lab-form-label" for="chem-delivery">Date of Acquisition</label><input type="date" id="chem-delivery" class="lab-form-input" value="' + dAcq + '"></div>' +
                         '<div class="lab-form-group"><label class="lab-form-label" for="chem-storage">Storage</label><input type="text" id="chem-storage" class="lab-form-input" value="' + (c ? (c.storage || c.location || '').replace(/"/g, '&quot;') : '') + '" placeholder="e.g. Hazmat Cabinet A1"></div>' +
                         '<div class="lab-form-group"><label class="lab-form-label" for="chem-supplier">Supplier</label><input type="text" id="chem-supplier" class="lab-form-input" value="' + (c ? (c.supplier || '').replace(/"/g, '&quot;') : '') + '"></div>' +
-                        '<div class="lab-form-group"><label class="lab-form-label" for="chem-delivery">Delivery date</label><input type="date" id="chem-delivery" class="lab-form-input" value="' + (c && c.deliveryDate ? c.deliveryDate : '') + '"></div>' +
-                        '<div class="lab-form-group"><label class="lab-form-label" for="chem-expiry">Expiry date</label><input type="date" id="chem-expiry" class="lab-form-input" value="' + (c && c.expiry ? c.expiry : '') + '"></div>' +
-                        '<div class="lab-form-group"><label class="lab-form-label" for="chem-msds">MSDS URL</label><input type="url" id="chem-msds" class="lab-form-input" value="' + (c ? (c.msds || '').replace(/"/g, '&quot;') : '') + '" placeholder="https://..."></div>' +
+                        '<div class="lab-form-group"><label class="lab-form-label" for="chem-expiry">Expiry Date</label><input type="date" id="chem-expiry" class="lab-form-input" value="' + (c && c.expiry ? c.expiry : '') + '"></div>' +
+                        '<div class="lab-form-group" style="grid-column:1/-1;"><label class="lab-form-label" for="chem-msds">MSDS URL</label><input type="url" id="chem-msds" class="lab-form-input" value="' + (c ? (c.msds || '').replace(/"/g, '&quot;') : '') + '" placeholder="https://..."></div>' +
+                        '</div>' +
                         '<div class="lab-modal-actions">' +
                         '<button type="button" class="btn btn-primary" id="chemical-save">Save</button>' +
                         '<button type="button" class="btn btn-secondary" id="chemical-cancel">Cancel</button>' +
@@ -359,17 +367,33 @@
                     var cat = c.category || '—';
                     var catColor = categoryBadgeColors[cat] || '#6b7280';
                     var catBadgeView = cat !== '—' ? '<span style="display:inline-block;padding:2px 8px;border-radius:12px;font-size:11px;font-weight:600;color:#fff;background:' + catColor + ';">' + cat + '</span>' : '—';
+                    var uom = c.unit || '—';
+                    var currentBal  = c.quantity != null ? c.quantity + (c.unit ? ' ' + c.unit : '') : '—';
+                    var previousBal = c.previous_balance != null ? c.previous_balance + (c.unit ? ' ' + c.unit : '') : '—';
+                    var reqAmt      = c.requested_amount != null ? c.requested_amount + (c.unit ? ' ' + c.unit : '') : '—';
+                    var recAmt      = c.received_amount  != null ? c.received_amount  + (c.unit ? ' ' + c.unit : '') : '—';
+                    var reorderLvl  = c.min_quantity     != null ? c.min_quantity     + (c.unit ? ' ' + c.unit : '') : '—';
+                    var refNum      = c.reference_number || '—';
+
                     bodyEl.innerHTML =
                         '<div class="lab-modal-section">' +
                         (fifoHtml ? fifoHtml : '') +
-                        '<div class="lab-detail-row"><span class="lab-detail-label">Item name</span><span class="lab-detail-value">' + (c.name || '—') + '</span></div>' +
+                        '<div style="display:grid;grid-template-columns:1fr 1fr;gap:0;">' +
+                        '<div class="lab-detail-row"><span class="lab-detail-label">Item Name</span><span class="lab-detail-value">' + (c.name || '—') + '</span></div>' +
                         '<div class="lab-detail-row"><span class="lab-detail-label">Category</span><span class="lab-detail-value">' + catBadgeView + '</span></div>' +
-                        '<div class="lab-detail-row"><span class="lab-detail-label">Quantity</span><span class="lab-detail-value">' + qtyStr + '</span></div>' +
+                        '<div class="lab-detail-row"><span class="lab-detail-label">Reference No.</span><span class="lab-detail-value">' + refNum + '</span></div>' +
+                        '<div class="lab-detail-row"><span class="lab-detail-label">UOM</span><span class="lab-detail-value">' + uom + '</span></div>' +
+                        '<div class="lab-detail-row"><span class="lab-detail-label">Current Balance</span><span class="lab-detail-value" style="font-weight:700;color:var(--lab-primary);">' + currentBal + '</span></div>' +
+                        '<div class="lab-detail-row"><span class="lab-detail-label">Previous Balance</span><span class="lab-detail-value">' + previousBal + '</span></div>' +
+                        '<div class="lab-detail-row"><span class="lab-detail-label">Requested Amount</span><span class="lab-detail-value">' + reqAmt + '</span></div>' +
+                        '<div class="lab-detail-row"><span class="lab-detail-label">Received Amount</span><span class="lab-detail-value">' + recAmt + '</span></div>' +
+                        '<div class="lab-detail-row"><span class="lab-detail-label">Date of Acquisition</span><span class="lab-detail-value">' + fmt(c.delivery_date || c.deliveryDate) + '</span></div>' +
+                        '<div class="lab-detail-row"><span class="lab-detail-label">Reorder Level</span><span class="lab-detail-value">' + reorderLvl + '</span></div>' +
                         '<div class="lab-detail-row"><span class="lab-detail-label">Storage</span><span class="lab-detail-value">' + storage + '</span></div>' +
                         '<div class="lab-detail-row"><span class="lab-detail-label">Supplier</span><span class="lab-detail-value">' + (c.supplier || '—') + '</span></div>' +
-                        '<div class="lab-detail-row"><span class="lab-detail-label">Delivery date</span><span class="lab-detail-value">' + fmt(c.deliveryDate) + '</span></div>' +
-                        '<div class="lab-detail-row"><span class="lab-detail-label">Expiry</span><span class="lab-detail-value">' + fmt(c.expiry) + '</span></div>' +
+                        '<div class="lab-detail-row"><span class="lab-detail-label">Expiry Date</span><span class="lab-detail-value">' + fmt(c.expiry) + '</span></div>' +
                         '<div class="lab-detail-row"><span class="lab-detail-label">MSDS / SDS</span><span class="lab-detail-value">' + (c.msds && c.msds.trim() ? '<a href="' + c.msds.trim() + '" target="_blank" rel="noopener" class="sds-btn">View SDS</a>' : '—') + '</span></div>' +
+                        '</div>' +
                         '</div>' +
                         '<div class="lab-modal-actions">' +
                         '<button type="button" class="btn btn-primary" id="chemical-edit-btn">Edit</button>' +
@@ -389,22 +413,31 @@
             }
 
             async function saveChemicalRecord(chemicalId) {
-                var name         = (document.getElementById('chem-name')     || {}).value || '';
-                var category     = (document.getElementById('chem-category') || {}).value || '';
-                var storage      = (document.getElementById('chem-storage')  || {}).value || '';
-                var quantity     = (document.getElementById('chem-quantity') || {}).value;
-                var unit         = (document.getElementById('chem-unit')     || {}).value || '';
-                var supplier     = (document.getElementById('chem-supplier') || {}).value || '';
-                var deliveryDate = (document.getElementById('chem-delivery') || {}).value || '';
-                var expiry       = (document.getElementById('chem-expiry')   || {}).value || '';
-                var msds         = (document.getElementById('chem-msds')     || {}).value || '';
+                var name            = (document.getElementById('chem-name')        || {}).value || '';
+                var category        = (document.getElementById('chem-category')    || {}).value || '';
+                var storage         = (document.getElementById('chem-storage')     || {}).value || '';
+                var quantity        = (document.getElementById('chem-quantity')    || {}).value;
+                var unit            = (document.getElementById('chem-unit')        || {}).value || '';
+                var supplier        = (document.getElementById('chem-supplier')    || {}).value || '';
+                var deliveryDate    = (document.getElementById('chem-delivery')    || {}).value || '';
+                var expiry          = (document.getElementById('chem-expiry')      || {}).value || '';
+                var msds            = (document.getElementById('chem-msds')        || {}).value || '';
+                var refNum          = (document.getElementById('chem-ref')         || {}).value || '';
+                var prevBalance     = (document.getElementById('chem-prev-balance')|| {}).value;
+                var reqAmount       = (document.getElementById('chem-req-amount')  || {}).value;
+                var recAmount       = (document.getElementById('chem-rec-amount')  || {}).value;
+                var minQty          = (document.getElementById('chem-min-qty')     || {}).value;
                 var record = {
-                    id:            chemicalId || 'ch-' + Date.now(),
+                    id:               chemicalId || 'ch-' + Date.now(),
                     name, category, storage, quantity, unit,
-                    min_quantity:  0,
                     supplier,
-                    delivery_date: deliveryDate || null,
-                    expiry:        expiry       || null,
+                    reference_number: refNum        || null,
+                    previous_balance: prevBalance !== '' ? Number(prevBalance) : null,
+                    requested_amount: reqAmount   !== '' ? Number(reqAmount)   : null,
+                    received_amount:  recAmount   !== '' ? Number(recAmount)   : null,
+                    min_quantity:     minQty      !== '' ? Number(minQty)      : 0,
+                    delivery_date:    deliveryDate || null,
+                    expiry:           expiry       || null,
                     msds
                 };
                 try {
