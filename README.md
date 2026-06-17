@@ -29,7 +29,7 @@ PharmaLab IMS is a production-grade system for managing:
 EC-Lab/
 ├── index.html                  # Admin/Lab Manager Dashboard
 ├── student-dashboard.html      # Student Dashboard
-├── student-request.html        # QR-based Material Request Form (Student-facing)
+├── material-request.html        # QR-based Material Request Form (Student-facing)
 ├── admin-requests.html         # Request Management (Admin view)
 ├── print-checklist.html        # Printable Dispensing Checklist (A4-optimized)
 ├── inventory.html              # Chemical Inventory Management
@@ -98,7 +98,7 @@ EC-Lab/
 2. **Open any HTML file directly in your browser**
    - For Admin view: Open `index.html`
    - For Student view: Open `student-dashboard.html`
-   - For QR Request Form: Open `student-request.html`
+   - For QR Request Form: Open `material-request.html`
 
 3. **No build process required** - These are static HTML files with embedded CSS and JavaScript
 
@@ -112,7 +112,7 @@ EC-Lab/
 5. `inventory.html` or `equipment.html` → Manage inventory
 
 #### Student Workflow:
-1. Scan QR code in laboratory → Opens `student-request.html`
+1. Scan QR code in laboratory → Opens `material-request.html`
 2. Fill out multi-step form (Student Info → Request Details → Items → Review)
 3. Submit → Receive reference number
 4. `student-dashboard.html` → Track request status
@@ -175,7 +175,7 @@ EC-Lab/
 - Request history with status tracking
 - Important reminders
 
-### 3. **student-request.html** - QR Request Form
+### 3. **material-request.html** - QR Request Form
 - **Multi-step wizard**:
   1. Student Information
   2. Request Details (Subject, Experiment, Instructor)
@@ -258,7 +258,7 @@ Current prototype is **desktop-first** (as requested), but includes responsive b
 - Tablet: Collapsible sidebar
 - Mobile: Bottom navigation (for future mobile app)
 
-**Note**: QR request form (`student-request.html`) is mobile-optimized for students scanning QR codes on phones.
+**Note**: QR request form (`material-request.html`) is mobile-optimized for students scanning QR codes on phones.
 
 ## 🖨️ Print Optimization
 

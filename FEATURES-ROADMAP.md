@@ -93,7 +93,7 @@ sds-browser.html          # SDS/Safety Data Sheets
 ```
 START-HERE.html           # Add role switcher
 student-dashboard.html    # Notifications, announcements, safety ack
-student-request.html      # Experiment templates, safety check
+material-request.html     # Experiment templates, safety check
 admin-requests.html      # Professor approval workflow
 index.html               # Notification center
 js/data.js               # announcements, notifications, templates

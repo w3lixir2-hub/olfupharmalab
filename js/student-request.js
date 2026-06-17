@@ -5,7 +5,52 @@
 let currentStep = 1;
 const totalSteps = 4;
 
+let requesterType = 'student'; // 'student' | 'professor'
+
 let _chemicals = null;
+
+/* ── Requester type (Student / Professor) ─────────────────── */
+
+function setRequesterType(type) {
+    requesterType = type === 'professor' ? 'professor' : 'student';
+    const isStudent = requesterType === 'student';
+
+    document.querySelectorAll('.requester-option').forEach(btn => {
+        btn.classList.toggle('active', btn.dataset.type === requesterType);
+    });
+
+    // Show/hide student-only fields (Student Number, Group)
+    document.querySelectorAll('.student-only').forEach(el => {
+        el.style.display = isStudent ? '' : 'none';
+    });
+    // Show/hide professor-only fields (Project / Research Title)
+    document.querySelectorAll('.professor-only').forEach(el => {
+        el.style.display = isStudent ? 'none' : '';
+    });
+
+    // ID number field: Student Number vs Faculty Number
+    const idLabel = document.getElementById('label-id-number');
+    if (idLabel) {
+        idLabel.innerHTML = isStudent
+            ? 'Student Number <span class="required">*</span>'
+            : 'Faculty Number <span class="required">*</span>';
+    }
+    const idInput = document.getElementById('student-number');
+    if (idInput) idInput.placeholder = isStudent ? 'e.g., 2020-12345' : 'e.g., FAC-12345';
+
+    // Course label: required for student, optional (Department) for professor
+    const courseLabel = document.getElementById('label-course');
+    if (courseLabel) {
+        courseLabel.innerHTML = isStudent
+            ? 'Course <span class="required">*</span>'
+            : 'Department / Course';
+    }
+    // Year Level stays for both, but required mark only for students
+    const ylLabel = document.getElementById('label-year-level');
+    if (ylLabel) {
+        ylLabel.innerHTML = isStudent ? 'Year Level <span class="required">*</span>' : 'Year Level';
+    }
+}
 
 async function getChemicalsForForm() {
     if (!_chemicals) _chemicals = await getChemicals();
@@ -204,9 +249,16 @@ async function nextStep() {
         const contact    = document.getElementById('contact-number').value.trim();
         const course     = document.getElementById('course').value;
         const yearLevel  = document.getElementById('year-level').value;
-        if (!name || !studentNum || !contact || !course || !yearLevel) {
-            alert('Please fill in all required fields in Student Information.');
-            return;
+        if (requesterType === 'professor') {
+            if (!name || !studentNum || !contact) {
+                alert('Please fill in Full Name, Faculty Number, and Contact Number.');
+                return;
+            }
+        } else {
+            if (!name || !studentNum || !contact || !course || !yearLevel) {
+                alert('Please fill in all required fields in Student Information.');
+                return;
+            }
         }
     } else if (currentStep === 2) {
         const subject    = document.getElementById('subject').value;
@@ -285,6 +337,7 @@ async function submitForm() {
 
     const formData = {
         requestId:          referenceNumber,
+        requesterType:      requesterType,
         studentName:        document.getElementById('student-name').value.trim(),
         studentNumber:      document.getElementById('student-number').value.trim(),
         contactNumber:      document.getElementById('contact-number').value.trim(),
@@ -292,6 +345,7 @@ async function submitForm() {
         yearLevel:          document.getElementById('year-level').value,
         section:            document.getElementById('section')?.value?.trim() || '',
         group:              document.getElementById('group')?.value?.trim() || '',
+        projectTitle:       document.getElementById('project-title')?.value?.trim() || '',
         subject:            document.getElementById('subject')?.value?.trim() || '',
         activity:           document.getElementById('activity')?.value?.trim() || '',
         instructor:         document.getElementById('instructor')?.value?.trim() || '',
@@ -386,10 +440,11 @@ table{width:100%;border-collapse:collapse;}th{text-align:left;padding:10px;backg
 <div class="header"><div style="font-size:28px;font-weight:700;color:#667eea;">PharmaLab IMS</div>
 <div style="font-size:16px;font-weight:600;margin-top:6px;">Request Confirmation</div>
 <div class="ref"><div class="ref-label">Reference Number</div><div class="ref-value">${refNumber}</div></div></div>
-<div class="section"><h3>Student Information</h3>
+<div class="section"><h3>${requesterType === 'professor' ? 'Professor' : 'Student'} Information</h3>
 <p>Name: <strong>${name}</strong></p>
-<p>Student Number: <strong>${studentNum}</strong></p>
-<p>Course: <strong>${courseDisplay}</strong></p></div>
+<p>${requesterType === 'professor' ? 'Faculty' : 'Student'} Number: <strong>${studentNum}</strong></p>
+<p>Course: <strong>${courseDisplay}</strong></p>
+${requesterType === 'professor' && document.getElementById('project-title')?.value?.trim() ? '<p>Project / Research: <strong>' + document.getElementById('project-title').value.trim() + '</strong></p>' : ''}</div>
 <div class="section"><h3>Request Details</h3>
 <p>Subject: <strong>${subject}</strong></p>
 <p>Activity: <strong>${activity}</strong></p>
@@ -418,11 +473,32 @@ function updateReviewSummary() {
     const section    = document.getElementById('section').value?.trim() || '';
     const group      = document.getElementById('group').value?.trim() || '';
 
+    const isStudent = requesterType === 'student';
+    const typeEl = document.getElementById('review-requester-type');
+    if (typeEl) typeEl.textContent = isStudent ? 'Student' : 'Professor';
+
     document.getElementById('review-name').textContent           = name;
     document.getElementById('review-student-number').textContent = studentNum;
     document.getElementById('review-contact').textContent        = contact;
+
+    // ID label: Student Number vs Faculty Number
+    const idLabelEl = document.getElementById('review-id-label');
+    if (idLabelEl) idLabelEl.textContent = isStudent ? 'Student Number' : 'Faculty Number';
+
     document.getElementById('review-course').textContent         =
-        course + (yearLevel !== '-' ? ' - ' + yearLevel : '') + (section ? ', Section ' + section : '') + (group ? ', ' + group : '');
+        course + (yearLevel !== '-' ? ' - ' + yearLevel : '') + (section ? ', Section ' + section : '') + (isStudent && group ? ', ' + group : '');
+
+    // Project / Research title (professor)
+    const projectTitle = document.getElementById('project-title')?.value?.trim() || '';
+    const projRow = document.getElementById('review-project-row');
+    if (projRow) {
+        if (!isStudent && projectTitle) {
+            document.getElementById('review-project-title').textContent = projectTitle;
+            projRow.style.display = '';
+        } else {
+            projRow.style.display = 'none';
+        }
+    }
 
     document.getElementById('review-subject').textContent    = document.getElementById('subject').value.trim()    || '-';
     document.getElementById('review-activity').textContent   = document.getElementById('activity').value.trim()   || '-';

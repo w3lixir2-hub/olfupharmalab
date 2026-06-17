@@ -15,7 +15,7 @@ EC-Lab/
 │
 ├── 👨‍🎓 STUDENT PAGES
 │   ├── student-dashboard.html       # Student Dashboard (my requests, quick actions)
-│   ├── student-request.html         # Material Request Form (4-step wizard)
+│   ├── material-request.html         # Material Request Form (4-step wizard)
 │   └── qr-landing.html              # QR Landing Page (entry point after scan)
 │
 ├── 🖨️ PRINT MATERIALS
@@ -147,7 +147,7 @@ EC-Lab/
 
 ---
 
-### 7️⃣ **student-request.html** (Material Request Form)
+### 7️⃣ **material-request.html** (Material Request Form)
 **Role:** Student (Public-facing, QR-accessible)  
 **Features:**
 - 4-step wizard interface
@@ -279,7 +279,7 @@ inventory.html / equipment.html (Update stock after release)
     ↓
 qr-landing.html (Welcome screen)
     ↓
-student-request.html (Fill 4-step form)
+material-request.html (Fill 4-step form)
     ↓
 [Submit] → Receive REQ-2026-XXXX
     ↓
@@ -434,7 +434,7 @@ Legend:
 | See all pages | `START-HERE.html` |
 | Preview admin view | `index.html` |
 | Preview student view | `student-dashboard.html` |
-| Test request form | `student-request.html` |
+| Test request form | `material-request.html` |
 | Review print checklist | `print-checklist.html` |
 | Check inventory UI | `inventory.html` |
 | See equipment tracking | `equipment.html` |

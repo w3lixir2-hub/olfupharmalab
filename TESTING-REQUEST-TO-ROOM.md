@@ -13,7 +13,7 @@ Browser opens at `http://127.0.0.1:3000` (or similar). Use that base URL for all
 ## 1. Student: Submit a material request (with Room Assignment)
 
 1. Open **Student Request**:  
-   `http://127.0.0.1:3000/student-request.html`
+   `http://127.0.0.1:3000/material-request.html`
 2. Fill **Step 1** (Student Info): name, student number, contact, course, year, section.
 3. In **Step 2** (Request Details):
    - Subject, Experiment, **Date Needed**, **Time Start**, **Time End**, Instructor.
