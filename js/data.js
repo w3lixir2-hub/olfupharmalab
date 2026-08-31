@@ -419,6 +419,22 @@ function getTodayManilaDateStr() {
   return y + '-' + m + '-' + day;
 }
 
+function getRequestNeededDateTime(request) {
+  if (!request || !request.dateNeeded) return null;
+  const time = String(request.timeNeeded || '00:00').slice(0, 5);
+  const d = new Date(request.dateNeeded + 'T' + time + ':00+08:00');
+  return isNaN(d.getTime()) ? null : d;
+}
+
+function isLateRequest(request) {
+  const needed = getRequestNeededDateTime(request);
+  if (!needed) return false;
+  const submitted = request.dateSubmitted ? new Date(request.dateSubmitted) : new Date();
+  if (isNaN(submitted.getTime())) return false;
+  const diffMs = needed.getTime() - submitted.getTime();
+  return diffMs < 24 * 60 * 60 * 1000;
+}
+
 /**
  * Room is occupied only if there is a schedule and (for today) current time is within start–end.
  * Past date = gray. Today but current time past end = gray. Today and current time within slot = green.

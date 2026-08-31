@@ -11,21 +11,39 @@
 })();
 
 async function requireAuth() {
-  var result = await db.auth.getUser();
-  var user = result.data && result.data.user;
-  if (!user) {
-    var redirect = (window.location.pathname.split('/').pop() || 'index.html');
-    window.location.replace('login.html?redirect=' + encodeURIComponent(redirect));
+  if (!hasSupabaseAuth()) {
+    var localName = getCurrentUser() || 'Demo Admin';
+    setCurrentUser(localName);
+    initAuthUI(localName, 'Demo Mode');
     return;
   }
-  var displayName = user.user_metadata && user.user_metadata.full_name
-    ? user.user_metadata.full_name
-    : user.email;
-  setCurrentUser(displayName);
-  initAuthUI(displayName);
+
+  try {
+    var result = await db.auth.getUser();
+    var user = result.data && result.data.user;
+    if (!user) {
+      var redirect = (window.location.pathname.split('/').pop() || 'index.html');
+      window.location.replace('login.html?redirect=' + encodeURIComponent(redirect));
+      return;
+    }
+    var displayName = user.user_metadata && user.user_metadata.full_name
+      ? user.user_metadata.full_name
+      : user.email;
+    setCurrentUser(displayName);
+    initAuthUI(displayName, 'Lab Staff');
+  } catch (err) {
+    console.error('Auth check failed:', err);
+    var fallbackName = getCurrentUser() || 'Demo Admin';
+    setCurrentUser(fallbackName);
+    initAuthUI(fallbackName, 'Demo Mode');
+  }
 }
 
-function initAuthUI(name) {
+function hasSupabaseAuth() {
+  return typeof db !== 'undefined' && db && db.auth && typeof db.auth.getUser === 'function';
+}
+
+function initAuthUI(name, role) {
   name = name || getCurrentUser();
   if (!name) return;
   var profile = document.querySelector('.user-profile');
@@ -37,7 +55,7 @@ function initAuthUI(name) {
     var nameEl = profile.querySelector('.user-name');
     if (nameEl) nameEl.textContent = name;
     var roleEl = profile.querySelector('.user-role');
-    if (roleEl) roleEl.textContent = 'Lab Staff';
+    if (roleEl) roleEl.textContent = role || 'Lab Staff';
     var wrap = profile.querySelector('.user-info');
     if (wrap && !wrap.querySelector('.logout-link')) {
       var logout = document.createElement('a');
@@ -55,7 +73,7 @@ function initAuthUI(name) {
 async function doLogout() {
   var who = getCurrentUser();
   try { if (who) await addAuditEntry('Logout', who + ' signed out'); } catch(_) {}
-  await db.auth.signOut();
+  if (hasSupabaseAuth()) await db.auth.signOut();
   clearCurrentUser();
   window.location.href = 'login.html';
 }

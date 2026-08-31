@@ -259,6 +259,7 @@
             </div>
             <div class="modal-actions">
                 <button class="btn btn-danger" onclick="rejectRequest()">Reject Request</button>
+                <button class="btn btn-secondary" onclick="printRequestDetails()">Print Details</button>
                 <button class="btn btn-secondary" onclick="closeModal()">Save Draft</button>
                 <button class="btn btn-warning" id="release-btn" onclick="releaseRequest()" style="display:none;background:#f59e0b;color:white;border:none;">Mark as Released</button>
                 <button class="btn btn-primary" id="return-btn" onclick="openReturnModal()" style="display:none;background:#8b5cf6;border:none;">Process Return</button>
@@ -370,6 +371,93 @@
             return dateStr;
         }
 
+        function lateBadge(request) {
+            return (typeof isLateRequest === 'function' && isLateRequest(request))
+                ? ' <span class="alert-badge warning" title="Submitted less than 24 hours before needed time">Late</span>'
+                : '';
+        }
+
+        function escHtml(value) {
+            return String(value ?? '').replace(/[&<>"']/g, function(ch) {
+                return ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[ch];
+            });
+        }
+
+        function buildRequestDetailsPrintHtml(request) {
+            const isProf = (request.requesterType || 'student') === 'professor';
+            const status = request.status || 'pending';
+            const items = [...(request.items || [])].sort((a, b) => {
+                const order = ['Liquid Reagent','Solid Reagent','Glassware','Equipment','Antibiotic Disc'];
+                const ai = order.indexOf(a.category); const bi = order.indexOf(b.category);
+                return (ai === -1 ? 99 : ai) - (bi === -1 ? 99 : bi);
+            });
+            const itemRows = items.map(item => `
+                <tr>
+                    <td>${escHtml(item.category || '-')}</td>
+                    <td>${escHtml(item.name || '-')}</td>
+                    <td style="text-align:right;">${escHtml(item.quantity || '-')} ${escHtml(item.unit || '')}</td>
+                </tr>
+            `).join('');
+            const courseText = (request.course || '-') + (request.yearLevel ? ' - ' + request.yearLevel : '') + (request.section ? ', Section ' + request.section : '');
+            const isLate = typeof isLateRequest === 'function' && isLateRequest(request);
+            const lateText = isLate ? 'Late submission' : 'On-time submission';
+
+            return `<!DOCTYPE html><html><head><title>Request Details - ${escHtml(request.requestId || '')}</title>
+<style>
+*{box-sizing:border-box;}body{font-family:Arial,sans-serif;color:#111827;padding:32px;background:#fff;}
+.header{text-align:center;border-bottom:2px solid #111827;padding-bottom:16px;margin-bottom:20px;}
+.brand{font-size:24px;font-weight:700;color:#0d9488;}.doc-title{font-size:16px;font-weight:700;margin-top:6px;}
+.meta{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:18px;}
+.box{border:1px solid #d1d5db;border-radius:8px;padding:14px;}
+.label{font-size:11px;text-transform:uppercase;color:#6b7280;font-weight:700;margin-bottom:4px;}
+.value{font-size:14px;font-weight:600;color:#111827;}.section{margin-top:16px;border:1px solid #d1d5db;border-radius:8px;overflow:hidden;}
+.section h3{margin:0;padding:10px 14px;background:#f8fafc;border-bottom:1px solid #d1d5db;font-size:14px;}
+.section-body{padding:14px;}p{margin:0 0 8px;font-size:14px;}table{width:100%;border-collapse:collapse;}th,td{padding:10px;border-bottom:1px solid #e5e7eb;font-size:13px;}th{text-align:left;background:#f8fafc;color:#6b7280;}
+.timing{display:inline-block;padding:3px 10px;border-radius:999px;background:#dcfce7;color:#166534;font-size:12px;font-weight:700;}
+.timing.late{background:#fef3c7;color:#92400e;}
+.status{display:inline-block;padding:3px 10px;border-radius:999px;background:#e0f2fe;color:#0369a1;font-size:12px;font-weight:700;text-transform:capitalize;}
+@media print{body{padding:18px;}.section,.box{break-inside:avoid;}}
+</style></head><body>
+<div class="header"><div class="brand">PharmaLab IMS</div><div class="doc-title">Request Details Printout</div></div>
+<div class="meta">
+    <div class="box"><div class="label">Request ID</div><div class="value">${escHtml(request.requestId || '-')}</div></div>
+    <div class="box"><div class="label">Status</div><div class="value"><span class="status">${escHtml(status)}</span> <span class="timing${isLate ? ' late' : ''}">${escHtml(lateText)}</span></div></div>
+    <div class="box"><div class="label">Date Needed</div><div class="value">${escHtml(formatDateNeeded(request.dateNeeded, request.timeNeeded))}${request.timeEnd ? ' - ' + escHtml(formatDateNeeded(request.dateNeeded, request.timeEnd).split(' at ')[1] || request.timeEnd) : ''}</div></div>
+    <div class="box"><div class="label">Date Submitted</div><div class="value">${escHtml(formatDateTime(request.dateSubmitted))}</div></div>
+</div>
+<div class="section"><h3>${isProf ? 'Professor' : 'Student'} Information</h3><div class="section-body">
+<p>Name: <strong>${escHtml(request.studentName || '-')}</strong></p>
+<p>${isProf ? 'Faculty' : 'Student'} Number: <strong>${escHtml(request.studentNumber || '-')}</strong></p>
+<p>Contact Number: <strong>${escHtml(request.contactNumber || '-')}</strong></p>
+<p>${isProf ? 'Department / Course' : 'Course & Year'}: <strong>${escHtml(courseText)}</strong></p>
+${isProf && request.projectTitle ? '<p>Project / Research: <strong>' + escHtml(request.projectTitle) + '</strong></p>' : ''}</div></div>
+<div class="section"><h3>Request Details</h3><div class="section-body">
+<p>Subject: <strong>${escHtml(request.subject || '-')}</strong></p>
+<p>Activity: <strong>${escHtml(request.activity || '-')}</strong></p>
+<p>Instructor: <strong>${escHtml(request.instructor || '-')}</strong></p>
+<p>Room Assignment: <strong>${escHtml(request.roomAssignmentName || request.laboratory || '-')}</strong></p>
+${request.remarks ? '<p>Purpose / Remarks: <strong>' + escHtml(request.remarks) + '</strong></p>' : ''}</div></div>
+<div class="section"><h3>Requested Items</h3>
+<table><thead><tr><th>Category</th><th>Item Name</th><th style="text-align:right;">Quantity</th></tr></thead>
+<tbody>${itemRows || '<tr><td colspan="3" style="text-align:center;color:#6b7280;">No requested items listed.</td></tr>'}</tbody></table></div>
+<\/body><\/html>`;
+        }
+
+        function printRequestDetails() {
+            if (!currentRequestData) {
+                alert('Open a request first.');
+                return;
+            }
+            const printWindow = window.open('', '_blank');
+            if (!printWindow) {
+                alert('Please allow pop-ups to open the print preview.');
+                return;
+            }
+            printWindow.document.write(buildRequestDetailsPrintHtml(currentRequestData));
+            printWindow.document.close();
+            setTimeout(() => { printWindow.focus(); printWindow.print(); }, 250);
+        }
+
         // Render requests table
         function renderRequests() {
             const tbody = document.getElementById('requests-table-body');
@@ -406,7 +494,7 @@
                     actionButton = `<button class="btn btn-secondary btn-sm" onclick="event.stopPropagation(); openRequestDetail('${request.requestId}')">View</button>`;
                 }
 
-                const dateNeededDisplay = request.dateNeeded ? formatDateNeeded(request.dateNeeded, request.timeNeeded) : '-';
+                const dateNeededDisplay = (request.dateNeeded ? formatDateNeeded(request.dateNeeded, request.timeNeeded) : '-') + lateBadge(request);
                 
                 row.innerHTML = `
                     <td><strong>${request.requestId}</strong></td>
@@ -506,7 +594,7 @@
                 </div>
                 <div class="info-row">
                     <span class="info-label">Date Needed</span>
-                    <span class="info-value">${formatDateNeeded(request.dateNeeded, request.timeNeeded)}</span>
+                    <span class="info-value">${formatDateNeeded(request.dateNeeded, request.timeNeeded)}${lateBadge(request)}</span>
                 </div>
                 <div class="info-row">
                     <span class="info-label">Date Submitted</span>

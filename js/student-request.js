@@ -307,19 +307,7 @@ function previousStep() {
 
 /* ── Submit ───────────────────────────────────────────────── */
 
-async function submitForm() {
-    const submitBtn = document.getElementById('submit-btn');
-    submitBtn.disabled = true;
-    submitBtn.textContent = 'Submitting...';
-
-    const now = new Date();
-    const pad = n => String(n).padStart(2, '0');
-    const referenceNumber = `REQ-${now.getFullYear()}-${pad(now.getMonth()+1)}${pad(now.getDate())}-${Math.floor(Math.random()*10000).toString().padStart(4,'0')}`;
-
-    const roomEl   = document.getElementById('room-assignment');
-    const roomVal  = roomEl ? roomEl.value : '';
-    const roomName = roomEl && roomEl.selectedIndex > 0 ? roomEl.options[roomEl.selectedIndex].text : '';
-
+function getFormRequestItems() {
     const CAT_ORDER_SUBMIT = ['Liquid Reagent','Solid Reagent','Glassware','Equipment','Antibiotic Disc'];
     const items = [];
     document.querySelectorAll('.item-row').forEach(item => {
@@ -333,10 +321,18 @@ async function submitForm() {
         const ai = CAT_ORDER_SUBMIT.indexOf(a.category); const bi = CAT_ORDER_SUBMIT.indexOf(b.category);
         return (ai === -1 ? 99 : ai) - (bi === -1 ? 99 : bi);
     });
+    return items;
+}
+
+function collectCurrentRequestData(referenceNumber, dateSubmitted) {
+    const roomEl   = document.getElementById('room-assignment');
+    const roomVal  = roomEl ? roomEl.value : '';
+    const roomName = roomEl && roomEl.selectedIndex > 0 ? roomEl.options[roomEl.selectedIndex].text : '';
+    const items = getFormRequestItems();
     const firstCategory = items[0]?.category || '';
 
-    const formData = {
-        requestId:          referenceNumber,
+    return {
+        requestId:          referenceNumber || '',
         requesterType:      requesterType,
         studentName:        document.getElementById('student-name').value.trim(),
         studentNumber:      document.getElementById('student-number').value.trim(),
@@ -358,9 +354,21 @@ async function submitForm() {
         remarks:            document.getElementById('remarks').value.trim(),
         items,
         status:             'pending',
-        dateSubmitted:      new Date().toISOString(),
+        dateSubmitted:      dateSubmitted || new Date().toISOString(),
         laboratory:         roomName || 'AMS 204',
     };
+}
+
+async function submitForm() {
+    const submitBtn = document.getElementById('submit-btn');
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'Submitting...';
+
+    const now = new Date();
+    const pad = n => String(n).padStart(2, '0');
+    const referenceNumber = `REQ-${now.getFullYear()}-${pad(now.getMonth()+1)}${pad(now.getDate())}-${Math.floor(Math.random()*10000).toString().padStart(4,'0')}`;
+
+    const formData = collectCurrentRequestData(referenceNumber, new Date().toISOString());
 
     try {
         await saveRequest(formData);
@@ -387,80 +395,93 @@ async function submitForm() {
 
 /* ── Print helpers ────────────────────────────────────────── */
 
-function printSuccessPage() {
-    const name        = document.getElementById('student-name').value.trim();
-    const studentNum  = document.getElementById('student-number').value.trim();
-    const course      = document.getElementById('course').value;
-    const yearLevel   = document.getElementById('year-level').value;
-    const section     = document.getElementById('section').value.trim();
-    const subject     = document.getElementById('subject').value.trim();
-    const activity    = document.getElementById('activity').value.trim();
-    const instructor  = document.getElementById('instructor').value.trim();
-    const dateNeeded  = document.getElementById('date-needed').value;
-    const timeNeeded  = document.getElementById('time-needed').value;
-    const timeEndVal  = document.getElementById('time-end').value;
-    const refNumber   = document.getElementById('reference-number-display').textContent;
-    const roomEl      = document.getElementById('room-assignment');
-    const roomDisplay = roomEl && roomEl.selectedIndex > 0 ? roomEl.options[roomEl.selectedIndex].text : '-';
+function escapeHtml(value) {
+    return String(value ?? '').replace(/[&<>"']/g, ch => ({
+        '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
+    }[ch]));
+}
 
-    const courseDisplay = course + (yearLevel ? ' - ' + yearLevel : '') + (section ? ', Section ' + section : '');
+function formatRequestTime(hhmm) {
+    if (!hhmm) return '-';
+    const [h, m] = hhmm.split(':');
+    const hr = parseInt(h, 10);
+    return ((hr % 12) || 12) + ':' + m + ' ' + (hr >= 12 ? 'PM' : 'AM');
+}
+
+function buildPrintableRequestHtml(req, options = {}) {
+    const title = options.title || 'Request Print Preview';
+    const refNumber = req.requestId || 'Preview only - not submitted';
+    const isProf = (req.requesterType || 'student') === 'professor';
+    const courseDisplay = (req.course || '-') + (req.yearLevel ? ' - ' + req.yearLevel : '') + (req.section ? ', Section ' + req.section : '') + (!isProf && req.group ? ', ' + req.group : '');
 
     function fmtDate(s) {
         if (!s) return '-';
         return new Date(s).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
     }
-    function fmtTime12(hhmm) {
-        if (!hhmm) return '-';
-        const [h, m] = hhmm.split(':');
-        const hr = parseInt(h, 10);
-        return ((hr % 12) || 12) + ':' + m + ' ' + (hr >= 12 ? 'PM' : 'AM');
-    }
 
-    let itemsHTML = '';
-    document.querySelectorAll('.item-row').forEach(item => {
-        const cat = item.querySelector('.item-category')?.value || '';
-        const n   = item.querySelector('.item-name')?.value.trim() || '';
-        const q   = item.querySelector('.item-quantity')?.value || '';
-        const u   = item.querySelector('.item-unit')?.value || '';
-        if (n && q && u) itemsHTML += `<tr><td style="padding:12px;">${n}</td><td style="padding:12px;color:#718096;font-size:13px;">${cat}</td><td style="text-align:right;padding:12px;">${q} ${u}</td></tr>`;
-    });
+    const itemsHTML = (req.items || []).map(item =>
+        `<tr><td>${escapeHtml(item.name)}</td><td>${escapeHtml(item.category || '-')}</td><td style="text-align:right;">${escapeHtml(item.quantity)} ${escapeHtml(item.unit)}</td></tr>`
+    ).join('');
+    const submitted = req.requestId ? `<p>Submitted: <strong>${new Date(req.dateSubmitted).toLocaleString('en-PH', { timeZone: 'Asia/Manila', dateStyle: 'medium', timeStyle: 'short' })}</strong></p>` : '';
+    const previewNote = req.requestId ? '' : '<div class="notice">This is a pre-submit print preview. Submit the request to generate a reference number.</div>';
 
-    const printWindow = window.open('', '_blank');
-    printWindow.document.write(`<!DOCTYPE html><html><head><title>Request Confirmation - ${refNumber}</title>
-<style>*{margin:0;padding:0;box-sizing:border-box;}body{font-family:sans-serif;padding:40px;color:#2d3748;}
-.header{text-align:center;margin-bottom:32px;border-bottom:2px solid #e2e8f0;padding-bottom:20px;}
-.section{background:#f7fafc;padding:20px;border-radius:10px;margin-bottom:20px;}
-.section h3{font-size:15px;font-weight:600;margin-bottom:12px;color:#2d3748;}
-.section p{margin-bottom:6px;color:#4a5568;font-size:14px;}
-.ref{background:#f7fafc;padding:14px;border-radius:8px;text-align:center;margin:20px 0;}
-.ref-label{font-size:12px;color:#718096;margin-bottom:4px;}
-.ref-value{font-size:22px;font-weight:700;color:#667eea;font-family:'Courier New',monospace;}
-table{width:100%;border-collapse:collapse;}th{text-align:left;padding:10px;background:#f7fafc;font-size:12px;color:#718096;}
-@media print{body{padding:20px;}}</style></head><body>
-<div class="header"><div style="font-size:28px;font-weight:700;color:#667eea;">PharmaLab IMS</div>
-<div style="font-size:16px;font-weight:600;margin-top:6px;">Request Confirmation</div>
-<div class="ref"><div class="ref-label">Reference Number</div><div class="ref-value">${refNumber}</div></div></div>
-<div class="section"><h3>${requesterType === 'professor' ? 'Professor' : 'Student'} Information</h3>
-<p>Name: <strong>${name}</strong></p>
-<p>${requesterType === 'professor' ? 'Faculty' : 'Student'} Number: <strong>${studentNum}</strong></p>
-<p>Course: <strong>${courseDisplay}</strong></p>
-${requesterType === 'professor' && document.getElementById('project-title')?.value?.trim() ? '<p>Project / Research: <strong>' + document.getElementById('project-title').value.trim() + '</strong></p>' : ''}</div>
-<div class="section"><h3>Request Details</h3>
-<p>Subject: <strong>${subject}</strong></p>
-<p>Activity: <strong>${activity}</strong></p>
-<p>Instructor: <strong>${instructor}</strong></p>
-<p>Date Needed: <strong>${fmtDate(dateNeeded)}</strong></p>
-<p>Time: <strong>${fmtTime12(timeNeeded)} – ${fmtTime12(timeEndVal)}</strong></p>
-<p>Room: <strong>${roomDisplay}</strong></p></div>
+    return `<!DOCTYPE html><html><head><title>${escapeHtml(title)} - ${escapeHtml(refNumber)}</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}body{font-family:Arial,sans-serif;padding:36px;color:#1f2937;background:white;}
+.header{text-align:center;margin-bottom:24px;border-bottom:2px solid #d1d5db;padding-bottom:18px;}
+.brand{font-size:26px;font-weight:700;color:#0d9488;}.title{font-size:16px;font-weight:700;margin-top:6px;color:#111827;}
+.ref{background:#f8fafc;border:1px solid #e2e8f0;padding:14px;border-radius:8px;text-align:center;margin:18px 0;}
+.ref-label{font-size:11px;color:#64748b;text-transform:uppercase;font-weight:700;letter-spacing:.05em;margin-bottom:4px;}
+.ref-value{font-size:21px;font-weight:700;color:#0f766e;font-family:'Courier New',monospace;}
+.notice{padding:12px 14px;background:#fffbeb;border:1px solid #f59e0b;border-radius:8px;color:#92400e;font-size:13px;margin-bottom:16px;}
+.section{border:1px solid #e5e7eb;border-radius:8px;margin-bottom:16px;overflow:hidden;}
+.section h3{font-size:14px;font-weight:700;background:#f8fafc;padding:10px 14px;color:#111827;border-bottom:1px solid #e5e7eb;}
+.section-body{padding:14px 16px;}.section p{margin-bottom:7px;color:#374151;font-size:14px;}
+table{width:100%;border-collapse:collapse;}th,td{padding:10px 12px;border-bottom:1px solid #e5e7eb;font-size:13px;}th{text-align:left;background:#f8fafc;color:#64748b;font-weight:700;}
+@media print{body{padding:18px;}.notice{border-color:#999;color:#111;background:white;}}
+</style></head><body>
+<div class="header"><div class="brand">PharmaLab IMS</div><div class="title">${escapeHtml(title)}</div>
+<div class="ref"><div class="ref-label">Reference Number</div><div class="ref-value">${escapeHtml(refNumber)}</div></div></div>
+${previewNote}
+<div class="section"><h3>${isProf ? 'Professor' : 'Student'} Information</h3><div class="section-body">
+<p>Name: <strong>${escapeHtml(req.studentName || '-')}</strong></p>
+<p>${isProf ? 'Faculty' : 'Student'} Number: <strong>${escapeHtml(req.studentNumber || '-')}</strong></p>
+<p>Contact Number: <strong>${escapeHtml(req.contactNumber || '-')}</strong></p>
+<p>${isProf ? 'Department / Course' : 'Course'}: <strong>${escapeHtml(courseDisplay)}</strong></p>
+${isProf && req.projectTitle ? '<p>Project / Research: <strong>' + escapeHtml(req.projectTitle) + '</strong></p>' : ''}</div></div>
+<div class="section"><h3>Request Details</h3><div class="section-body">
+<p>Subject: <strong>${escapeHtml(req.subject || '-')}</strong></p>
+<p>Activity: <strong>${escapeHtml(req.activity || '-')}</strong></p>
+<p>Instructor: <strong>${escapeHtml(req.instructor || '-')}</strong></p>
+<p>Date Needed: <strong>${escapeHtml(fmtDate(req.dateNeeded))}</strong></p>
+<p>Time: <strong>${escapeHtml(formatRequestTime(req.timeNeeded))} - ${escapeHtml(formatRequestTime(req.timeEnd))}</strong></p>
+<p>Room: <strong>${escapeHtml(req.roomAssignmentName || req.laboratory || '-')}</strong></p>
+${submitted}</div></div>
 <div class="section"><h3>Requested Items</h3>
 <table><thead><tr><th>Item</th><th>Category</th><th style="text-align:right;">Qty</th></tr></thead>
-<tbody>${itemsHTML || '<tr><td colspan="3" style="text-align:center;color:#a0aec0;">No items</td></tr>'}</tbody></table>
-</div></body></html>`);
+<tbody>${itemsHTML || '<tr><td colspan="3" style="text-align:center;color:#94a3b8;">No items</td></tr>'}</tbody></table></div>
+${req.remarks ? '<div class="section"><h3>Purpose / Remarks</h3><div class="section-body"><p>' + escapeHtml(req.remarks) + '</p></div></div>' : ''}
+</body></html>`;
+}
+
+function openPrintableRequest(req, title) {
+    const printWindow = window.open('', '_blank');
+    if (!printWindow) {
+        alert('Please allow pop-ups to open the print preview.');
+        return;
+    }
+    printWindow.document.write(buildPrintableRequestHtml(req, { title }));
     printWindow.document.close();
     setTimeout(() => { printWindow.focus(); printWindow.print(); }, 250);
 }
 
-function printReviewSummary() { window.print(); }
+function printSuccessPage() {
+    const officialRefNumber = document.getElementById('reference-number-display').textContent;
+    openPrintableRequest(collectCurrentRequestData(officialRefNumber), 'Official Request Copy');
+}
+function printReviewSummary() {
+    openPrintableRequest(collectCurrentRequestData(''), 'Request Print Preview');
+}
 
 /* ── Review summary (step 4) ──────────────────────────────── */
 

@@ -198,6 +198,7 @@
         <div class="tab-panel" id="panel-glassware">
             <div class="search-bar">
                 <input type="text" id="glass-search" placeholder="Search glassware..." oninput="filterGlassware()">
+                <button type="button" class="btn-primary" onclick="openAddGlasswareModal()">+ Add Glassware</button>
             </div>
             <div style="overflow-x:auto;">
                 <table class="data-table">
@@ -216,6 +217,51 @@
                 </table>
             </div>
         </div>
+
+    <!-- Modal: Add Glassware -->
+    <div class="modal-overlay" id="modal-add-glassware">
+        <div class="modal-box">
+            <h2 class="modal-title">Add Glassware</h2>
+            <div class="modal-form">
+                <div class="form-group">
+                    <label>Glassware Name</label>
+                    <input type="text" id="glass-name" placeholder="e.g., Beaker 250 mL">
+                </div>
+                <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+                    <div class="form-group">
+                        <label>Quantity</label>
+                        <input type="number" id="glass-quantity" min="0" step="1" placeholder="0">
+                    </div>
+                    <div class="form-group">
+                        <label>Unit</label>
+                        <input type="text" id="glass-unit" value="pcs" placeholder="pcs">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Storage</label>
+                    <input type="text" id="glass-storage" placeholder="e.g., AMS 204 - Cabinet 2">
+                </div>
+                <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+                    <div class="form-group">
+                        <label>Reorder Level</label>
+                        <input type="number" id="glass-min-quantity" min="0" step="1" placeholder="0">
+                    </div>
+                    <div class="form-group">
+                        <label>Supplier (optional)</label>
+                        <input type="text" id="glass-supplier" placeholder="Supplier name">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Remarks (optional)</label>
+                    <textarea id="glass-remarks" rows="2" placeholder="Condition, notes, or location details"></textarea>
+                </div>
+            </div>
+            <div class="modal-actions">
+                <button class="btn-cancel" onclick="closeModal('modal-add-glassware')">Cancel</button>
+                <button class="btn-primary" onclick="saveGlassware()">Save Glassware</button>
+            </div>
+        </div>
+    </div>
 
         <!-- Borrow Log Panel -->
         <div class="tab-panel" id="panel-borrow-log">
@@ -463,6 +509,58 @@
         function filterGlassware() {
             const q = document.getElementById('glass-search').value.toLowerCase();
             renderGlassware(q ? allGlassware.filter(g => g.name.toLowerCase().includes(q)) : allGlassware);
+        }
+
+        function openAddGlasswareModal() {
+            document.getElementById('glass-name').value = '';
+            document.getElementById('glass-quantity').value = '';
+            document.getElementById('glass-unit').value = 'pcs';
+            document.getElementById('glass-storage').value = '';
+            document.getElementById('glass-min-quantity').value = '';
+            document.getElementById('glass-supplier').value = '';
+            document.getElementById('glass-remarks').value = '';
+            openModal('modal-add-glassware');
+        }
+
+        async function saveGlassware() {
+            const name = document.getElementById('glass-name').value.trim();
+            const quantityRaw = document.getElementById('glass-quantity').value;
+            const unit = document.getElementById('glass-unit').value.trim() || 'pcs';
+            const storage = document.getElementById('glass-storage').value.trim();
+            const minRaw = document.getElementById('glass-min-quantity').value;
+            const supplier = document.getElementById('glass-supplier').value.trim();
+            const remarks = document.getElementById('glass-remarks').value.trim();
+
+            if (!name) { alert('Enter a glassware name.'); return; }
+            if (quantityRaw === '' || isNaN(Number(quantityRaw)) || Number(quantityRaw) < 0) { alert('Enter a valid quantity.'); return; }
+
+            const record = {
+                id: 'gw-' + Date.now(),
+                name,
+                category: 'Glassware',
+                quantity: Number(quantityRaw),
+                unit,
+                storage,
+                min_quantity: minRaw !== '' && !isNaN(Number(minRaw)) ? Number(minRaw) : 0,
+                supplier: supplier || null,
+                delivery_date: null,
+                expiry: null,
+                msds: ''
+            };
+
+            try {
+                if (typeof saveChemical === 'function') {
+                    await saveChemical(record);
+                } else {
+                    const { error } = await db.from('chemicals').upsert(record, { onConflict: 'id' });
+                    if (error) throw error;
+                }
+                await addAuditEntry('Add Glassware', `${name} added (${record.quantity} ${unit})${remarks ? ' | ' + remarks : ''}`);
+                closeModal('modal-add-glassware');
+                await loadAll();
+            } catch (err) {
+                alert('Error saving glassware: ' + (err.message || err));
+            }
         }
 
         /* ── Borrow Log ── */

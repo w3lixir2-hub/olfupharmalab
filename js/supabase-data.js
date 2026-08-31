@@ -35,6 +35,22 @@ function getCurrentTimeManilaHHmm() {
     parts.find(p => p.type === 'minute').value.padStart(2, '0');
 }
 
+function getRequestNeededDateTime(request) {
+  if (!request || !request.dateNeeded) return null;
+  const time = String(request.timeNeeded || '00:00').slice(0, 5);
+  const d = new Date(request.dateNeeded + 'T' + time + ':00+08:00');
+  return isNaN(d.getTime()) ? null : d;
+}
+
+function isLateRequest(request) {
+  const needed = getRequestNeededDateTime(request);
+  if (!needed) return false;
+  const submitted = request.dateSubmitted ? new Date(request.dateSubmitted) : new Date();
+  if (isNaN(submitted.getTime())) return false;
+  const diffMs = needed.getTime() - submitted.getTime();
+  return diffMs < 24 * 60 * 60 * 1000;
+}
+
 /* ── Current user (persistent) ──────────────────────────── */
 
 function getCurrentUser() {
@@ -84,7 +100,7 @@ async function getRequests() {
 }
 
 async function getRequestById(requestId) {
-  const { data } = await db.from('requests').select('*').eq('request_id', requestId).single();
+  const { data } = await db.from('requests').select('*').eq('request_id', requestId).maybeSingle();
   return data ? toClientRequest(data) : null;
 }
 
