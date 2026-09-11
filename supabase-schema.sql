@@ -30,6 +30,25 @@ CREATE TABLE IF NOT EXISTS requests (
   rejection_reason TEXT
 );
 
+-- Incident / breakage reports
+CREATE TABLE IF NOT EXISTS breakages (
+  id                TEXT PRIMARY KEY,
+  request_id        TEXT,
+  student_name      TEXT NOT NULL,
+  student_number    TEXT,
+  group_name        TEXT,
+  item_name         TEXT NOT NULL,
+  quantity          NUMERIC,
+  unit              TEXT,
+  incident_type     TEXT NOT NULL DEFAULT 'breakage',
+  description       TEXT,
+  logbook_image_url TEXT,
+  damage_image_url  TEXT,
+  reported_by       TEXT,
+  date_reported     TIMESTAMPTZ DEFAULT NOW()
+);
+CREATE INDEX IF NOT EXISTS idx_breakages_date ON breakages (date_reported DESC);
+
 -- Chemicals
 CREATE TABLE IF NOT EXISTS chemicals (
   id            TEXT PRIMARY KEY,
@@ -125,6 +144,7 @@ CREATE TABLE IF NOT EXISTS instructors (
 -- Safe for school project; tighten per-table for production
 -- ============================================================
 ALTER TABLE requests      ENABLE ROW LEVEL SECURITY;
+ALTER TABLE breakages     ENABLE ROW LEVEL SECURITY;
 ALTER TABLE chemicals     ENABLE ROW LEVEL SECURITY;
 ALTER TABLE equipment     ENABLE ROW LEVEL SECURITY;
 ALTER TABLE supplies      ENABLE ROW LEVEL SECURITY;
@@ -137,6 +157,7 @@ ALTER TABLE experiments   ENABLE ROW LEVEL SECURITY;
 ALTER TABLE instructors   ENABLE ROW LEVEL SECURITY;
 
 CREATE POLICY "anon_all" ON requests      FOR ALL TO anon USING (true) WITH CHECK (true);
+CREATE POLICY "anon_all" ON breakages     FOR ALL TO anon USING (true) WITH CHECK (true);
 CREATE POLICY "anon_all" ON chemicals     FOR ALL TO anon USING (true) WITH CHECK (true);
 CREATE POLICY "anon_all" ON equipment     FOR ALL TO anon USING (true) WITH CHECK (true);
 CREATE POLICY "anon_all" ON supplies      FOR ALL TO anon USING (true) WITH CHECK (true);

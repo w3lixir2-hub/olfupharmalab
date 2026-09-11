@@ -116,6 +116,9 @@
                         <option value="spill">Spill</option>
                         <option value="error">Error</option>
                         <option value="missing">Missing</option>
+                        <option value="fire">Fire / Smoke</option>
+                        <option value="injury">Injury / Exposure</option>
+                        <option value="other">Other Incident</option>
                     </select>
                 </div>
                 <div class="filter-group">
@@ -148,8 +151,9 @@
                 <div style="margin-bottom:16px;">
                     <label class="filter-label" style="display:block;margin-bottom:6px;">Request ID <span style="color:var(--lab-text-muted);font-weight:400;">(optional — auto-fills student info)</span></label>
                     <div style="display:flex;gap:8px;">
-                        <input type="text" id="m-request-id" class="filter-input" placeholder="e.g. REQ-2026-0615-1234" style="flex:1;">
-                        <button class="btn btn-secondary" onclick="lookupRequest()" style="white-space:nowrap;">Look Up</button>
+                        <select id="m-request-id" class="filter-select" style="width:100%;">
+                            <option value="">No linked request</option>
+                        </select>
                     </div>
                     <div id="m-lookup-msg" style="font-size:12px;margin-top:4px;color:var(--lab-text-muted);"></div>
                 </div>
@@ -193,6 +197,9 @@
                             <option value="spill">Spill</option>
                             <option value="error">Error</option>
                             <option value="missing">Missing</option>
+                            <option value="fire">Fire / Smoke</option>
+                            <option value="injury">Injury / Exposure</option>
+                            <option value="other">Other Incident</option>
                         </select>
                     </div>
                 </div>
@@ -200,6 +207,10 @@
                 <div style="margin-bottom:8px;">
                     <label class="filter-label" style="display:block;margin-bottom:6px;">Notes / Description</label>
                     <textarea id="m-description" rows="3" class="filter-input" placeholder="Describe what happened…" style="width:100%;resize:vertical;"></textarea>
+                </div>
+                <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:16px;">
+                    <div><label class="filter-label" style="display:block;margin-bottom:6px;">Logbook Image *</label><input type="file" id="m-logbook-image" accept="image/*" class="filter-input" style="width:100%;padding:8px;"><small style="color:var(--lab-text-muted);">Photo of handwritten log entry</small></div>
+                    <div><label class="filter-label" style="display:block;margin-bottom:6px;">Damage / Incident Image *</label><input type="file" id="m-damage-image" accept="image/*" class="filter-input" style="width:100%;padding:8px;"><small style="color:var(--lab-text-muted);">Photo of damaged item or scene</small></div>
                 </div>
             </div>
             <div style="display:flex;justify-content:flex-end;gap:8px;padding:16px 24px;border-top:1px solid var(--lab-border);">
@@ -229,7 +240,7 @@
                 ' ' + d.toLocaleTimeString('en-PH', { hour: '2-digit', minute: '2-digit', timeZone: 'Asia/Manila' });
         }
         function typeBadge(t) {
-            var label = { breakage: 'Breakage', spill: 'Spill', error: 'Error', missing: 'Missing' }[t] || t;
+            var label = { breakage: 'Breakage', spill: 'Spill', error: 'Error', missing: 'Missing', fire: 'Fire / Smoke', injury: 'Injury / Exposure', other: 'Other Incident' }[t] || t;
             return '<span class="type-badge type-' + esc(t) + '">' + esc(label) + '</span>';
         }
 
@@ -237,6 +248,9 @@
         window.openModal = async function () {
             document.getElementById('modal-overlay').setAttribute('aria-hidden', 'false');
             document.getElementById('modal-overlay').classList.add('active');
+            var requestSelect = document.getElementById('m-request-id');
+            requestSelect.innerHTML = '<option value="">No linked request</option>';
+            await populateRequestOptions();
             // Populate group dropdown
             var groups = await getGroups();
             document.getElementById('m-group').innerHTML =
@@ -246,9 +260,12 @@
         window.closeModal = function () {
             document.getElementById('modal-overlay').setAttribute('aria-hidden', 'true');
             document.getElementById('modal-overlay').classList.remove('active');
-            ['m-request-id','m-student-name','m-student-number','m-item-name','m-qty','m-unit','m-description'].forEach(function(id) {
+            ['m-student-name','m-student-number','m-item-name','m-qty','m-unit','m-description'].forEach(function(id) {
                 document.getElementById(id).value = '';
             });
+            document.getElementById('m-request-id').value = '';
+            document.getElementById('m-logbook-image').value = '';
+            document.getElementById('m-damage-image').value = '';
             document.getElementById('m-type').value = 'breakage';
             document.getElementById('m-group').value = '';
             document.getElementById('m-lookup-msg').textContent = '';
@@ -258,6 +275,30 @@
         });
 
         /* ── Request lookup ── */
+        async function populateRequestOptions() {
+            var select = document.getElementById('m-request-id');
+            try {
+                var requests = await getRequests();
+                requests.forEach(function (req) {
+                    if (!req.requestId) return;
+                    var option = document.createElement('option');
+                    option.value = req.requestId;
+                    option.textContent = req.requestId + ' — ' + (req.studentName || 'Unknown student') + ' (' + (req.status || 'pending') + ')';
+                    option.dataset.studentName = req.studentName || '';
+                    option.dataset.studentNumber = req.studentNumber || '';
+                    select.appendChild(option);
+                });
+            } catch (err) {
+                document.getElementById('m-lookup-msg').textContent = 'Could not load request list.';
+            }
+        }
+        document.getElementById('m-request-id').addEventListener('change', function () {
+            var option = this.options[this.selectedIndex];
+            if (!option || !this.value) return;
+            document.getElementById('m-student-name').value = option.dataset.studentName || '';
+            document.getElementById('m-student-number').value = option.dataset.studentNumber || '';
+            document.getElementById('m-lookup-msg').textContent = 'Student information auto-filled from request.';
+        });
         window.lookupRequest = async function () {
             var rid = (document.getElementById('m-request-id').value || '').trim();
             if (!rid) return;
@@ -280,14 +321,21 @@
             var studentName = (document.getElementById('m-student-name').value || '').trim();
             var itemName    = (document.getElementById('m-item-name').value    || '').trim();
             var type        = document.getElementById('m-type').value;
+            var logbookFile = document.getElementById('m-logbook-image').files[0];
+            var damageFile  = document.getElementById('m-damage-image').files[0];
             if (!studentName) { alert('Enter student name.'); return; }
             if (!itemName)    { alert('Enter item / material.'); return; }
+            if (!logbookFile || !damageFile) { alert('Please upload both images.'); return; }
+            if (logbookFile.size > 8 * 1024 * 1024 || damageFile.size > 8 * 1024 * 1024) { alert('Each image must be 8 MB or smaller.'); return; }
 
             var btn = document.querySelector('.lab-modal .btn-primary');
             btn.disabled = true; btn.textContent = 'Saving…';
 
             try {
+                var incidentId = 'brk-' + Date.now();
+                var imageUrls = await uploadIncidentImages(incidentId, logbookFile, damageFile);
                 await addBreakage({
+                    id:             incidentId,
                     requestId:     (document.getElementById('m-request-id').value     || '').trim() || null,
                     studentName:   studentName,
                     studentNumber: (document.getElementById('m-student-number').value || '').trim(),
@@ -297,6 +345,8 @@
                     unit:          (document.getElementById('m-unit').value           || '').trim(),
                     incidentType:  type,
                     description:   (document.getElementById('m-description').value   || '').trim(),
+                    logbookImageUrl: imageUrls.logbook,
+                    damageImageUrl:  imageUrls.damage,
                 });
                 await addAuditEntry('Breakage Logged', studentName + ' — ' + itemName + ' (' + type + ')');
                 closeModal();
@@ -354,7 +404,7 @@
                     '<td>' + esc(b.item_name) + '</td>' +
                     '<td>' + (b.quantity != null ? esc(b.quantity) + ' ' + esc(b.unit) : '—') + '</td>' +
                     '<td>' + typeBadge(b.incident_type) + '</td>' +
-                    '<td style="max-width:220px;word-break:break-word;">' + esc(b.description) + '</td>' +
+                    '<td style="max-width:220px;word-break:break-word;">' + esc(b.description) + (b.logbook_image_url || b.damage_image_url ? '<br><small><a href="' + esc(b.logbook_image_url || '') + '" target="_blank">Logbook</a> · <a href="' + esc(b.damage_image_url || '') + '" target="_blank">Incident photo</a></small>' : '') + '</td>' +
                     '<td>' + esc(b.reported_by) + '</td>' +
                     '<td><button class="action-btn" onclick="deleteIncident(\'' + b.id + '\')" title="Remove" style="color:var(--lab-danger);">✕</button></td>' +
                     '</tr>';
@@ -367,7 +417,7 @@
         async function loadData() {
             allBreakages = await getBreakages();
 
-            var counts = { breakage: 0, spill: 0, error: 0, missing: 0 };
+            var counts = { breakage: 0, spill: 0, error: 0, missing: 0, fire: 0, injury: 0, other: 0 };
             allBreakages.forEach(function (b) { if (b.incident_type in counts) counts[b.incident_type]++; });
             document.getElementById('stat-total').textContent    = allBreakages.length;
             document.getElementById('stat-breakage').textContent = counts.breakage;

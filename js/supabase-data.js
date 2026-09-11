@@ -361,7 +361,7 @@ async function getBreakages() {
 
 async function addBreakage(entry) {
   const row = {
-    id:             'brk-' + Date.now(),
+    id:             entry.id || ('brk-' + Date.now()),
     request_id:     entry.requestId     || null,
     student_name:   entry.studentName   || '',
     student_number: entry.studentNumber || '',
@@ -371,12 +371,27 @@ async function addBreakage(entry) {
     unit:           entry.unit          || '',
     incident_type:  entry.incidentType  || 'breakage',
     description:    entry.description   || '',
+    logbook_image_url: entry.logbookImageUrl || null,
+    damage_image_url:  entry.damageImageUrl  || null,
     reported_by:    getCurrentUser()    || 'Admin',
     date_reported:  new Date().toISOString(),
   };
   const { error } = await db.from('breakages').insert(row);
   if (error) throw error;
   return row;
+}
+
+async function uploadIncidentImages(incidentId, logbookFile, damageFile) {
+  const bucket = db.storage.from('incident-evidence');
+  async function upload(file, kind) {
+    const ext = (file.name.split('.').pop() || 'jpg').toLowerCase().replace(/[^a-z0-9]/g, '') || 'jpg';
+    const path = incidentId + '/' + kind + '.' + ext;
+    const { error } = await bucket.upload(path, file, { upsert: true, contentType: file.type || 'image/jpeg' });
+    if (error) throw error;
+    const { data } = bucket.getPublicUrl(path);
+    return data.publicUrl;
+  }
+  return { logbook: await upload(logbookFile, 'logbook'), damage: await upload(damageFile, 'damage') };
 }
 
 async function deleteBreakage(id) {
