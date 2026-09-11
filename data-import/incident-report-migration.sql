@@ -16,6 +16,9 @@ CREATE TABLE IF NOT EXISTS breakages (
   reported_by TEXT,
   date_reported TIMESTAMPTZ DEFAULT NOW()
 );
+ALTER TABLE breakages ADD COLUMN IF NOT EXISTS logbook_image_url TEXT;
+ALTER TABLE breakages ADD COLUMN IF NOT EXISTS damage_image_url TEXT;
+ALTER TABLE breakages ADD COLUMN IF NOT EXISTS incident_type TEXT DEFAULT 'breakage';
 ALTER TABLE breakages ENABLE ROW LEVEL SECURITY;
 DROP POLICY IF EXISTS "anon_all" ON breakages;
 CREATE POLICY "anon_all" ON breakages FOR ALL TO anon USING (true) WITH CHECK (true);
