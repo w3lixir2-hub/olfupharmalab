@@ -28,15 +28,13 @@ function setRequesterType(type) {
         el.style.display = isStudent ? 'none' : '';
     });
 
-    // ID number field: Student Number vs Faculty Number
+    // Student number is only collected for student requests; professors do not need a faculty number.
+    const idGroup = document.getElementById('grp-student-number');
+    if (idGroup) idGroup.style.display = isStudent ? '' : 'none';
     const idLabel = document.getElementById('label-id-number');
-    if (idLabel) {
-        idLabel.innerHTML = isStudent
-            ? 'Student Number <span class="required">*</span>'
-            : 'Faculty Number <span class="required">*</span>';
-    }
+    if (idLabel) idLabel.innerHTML = 'Student Number <span class="required">*</span>';
     const idInput = document.getElementById('student-number');
-    if (idInput) idInput.placeholder = isStudent ? 'e.g., 2020-12345' : 'e.g., FAC-12345';
+    if (idInput) { idInput.placeholder = 'e.g., 2020-12345'; if (!isStudent) idInput.value = ''; }
 
     // Course label: required for student, optional (Department) for professor
     const courseLabel = document.getElementById('label-course');
@@ -250,8 +248,8 @@ async function nextStep() {
         const course     = document.getElementById('course').value;
         const yearLevel  = document.getElementById('year-level').value;
         if (requesterType === 'professor') {
-            if (!name || !studentNum || !contact) {
-                alert('Please fill in Full Name, Faculty Number, and Contact Number.');
+            if (!name || !contact) {
+                alert('Please fill in Full Name and Contact Number.');
                 return;
             }
         } else {
@@ -438,14 +436,14 @@ function buildPrintableRequestHtml(req, options = {}) {
 .section h3{font-size:14px;font-weight:700;background:#f8fafc;padding:10px 14px;color:#111827;border-bottom:1px solid #e5e7eb;}
 .section-body{padding:14px 16px;}.section p{margin-bottom:7px;color:#374151;font-size:14px;}
 table{width:100%;border-collapse:collapse;}th,td{padding:10px 12px;border-bottom:1px solid #e5e7eb;font-size:13px;}th{text-align:left;background:#f8fafc;color:#64748b;font-weight:700;}
-@media print{body{padding:18px;}.notice{border-color:#999;color:#111;background:white;}}
+@page{size:8in 13in;margin:0.4in;}@media print{body{padding:18px;}.notice{border-color:#999;color:#111;background:white;}}
 </style></head><body>
 <div class="header"><div class="brand">PharmaLab IMS</div><div class="title">${escapeHtml(title)}</div>
 <div class="ref"><div class="ref-label">Reference Number</div><div class="ref-value">${escapeHtml(refNumber)}</div></div></div>
 ${previewNote}
 <div class="section"><h3>${isProf ? 'Professor' : 'Student'} Information</h3><div class="section-body">
 <p>Name: <strong>${escapeHtml(req.studentName || '-')}</strong></p>
-<p>${isProf ? 'Faculty' : 'Student'} Number: <strong>${escapeHtml(req.studentNumber || '-')}</strong></p>
+${!isProf ? '<p>Student Number: <strong>' + escapeHtml(req.studentNumber || '-') + '</strong></p>' : ''}
 <p>Contact Number: <strong>${escapeHtml(req.contactNumber || '-')}</strong></p>
 <p>${isProf ? 'Department / Course' : 'Course'}: <strong>${escapeHtml(courseDisplay)}</strong></p>
 ${isProf && req.projectTitle ? '<p>Project / Research: <strong>' + escapeHtml(req.projectTitle) + '</strong></p>' : ''}</div></div>
@@ -499,12 +497,14 @@ function updateReviewSummary() {
     if (typeEl) typeEl.textContent = isStudent ? 'Student' : 'Professor';
 
     document.getElementById('review-name').textContent           = name;
-    document.getElementById('review-student-number').textContent = studentNum;
+    document.getElementById('review-student-number').textContent = studentNum || '-';
     document.getElementById('review-contact').textContent        = contact;
 
     // ID label: Student Number vs Faculty Number
     const idLabelEl = document.getElementById('review-id-label');
-    if (idLabelEl) idLabelEl.textContent = isStudent ? 'Student Number' : 'Faculty Number';
+    if (idLabelEl) idLabelEl.textContent = 'Student Number';
+    const reviewIdRow = document.getElementById('review-student-number-row');
+    if (reviewIdRow) reviewIdRow.style.display = isStudent ? '' : 'none';
 
     document.getElementById('review-course').textContent         =
         course + (yearLevel !== '-' ? ' - ' + yearLevel : '') + (section ? ', Section ' + section : '') + (isStudent && group ? ', ' + group : '');

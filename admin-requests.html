@@ -416,7 +416,7 @@
 .timing{display:inline-block;padding:3px 10px;border-radius:999px;background:#dcfce7;color:#166534;font-size:12px;font-weight:700;}
 .timing.late{background:#fef3c7;color:#92400e;}
 .status{display:inline-block;padding:3px 10px;border-radius:999px;background:#e0f2fe;color:#0369a1;font-size:12px;font-weight:700;text-transform:capitalize;}
-@media print{body{padding:18px;}.section,.box{break-inside:avoid;}}
+@page{size:8in 13in;margin:0.4in;}@media print{body{padding:18px;}.section,.box{break-inside:avoid;}}
 </style></head><body>
 <div class="header"><div class="brand">PharmaLab IMS</div><div class="doc-title">Request Details Printout</div></div>
 <div class="meta">
@@ -427,7 +427,7 @@
 </div>
 <div class="section"><h3>${isProf ? 'Professor' : 'Student'} Information</h3><div class="section-body">
 <p>Name: <strong>${escHtml(request.studentName || '-')}</strong></p>
-<p>${isProf ? 'Faculty' : 'Student'} Number: <strong>${escHtml(request.studentNumber || '-')}</strong></p>
+${!isProf ? '<p>Student Number: <strong>' + escHtml(request.studentNumber || '-') + '</strong></p>' : ''}
 <p>Contact Number: <strong>${escHtml(request.contactNumber || '-')}</strong></p>
 <p>${isProf ? 'Department / Course' : 'Course & Year'}: <strong>${escHtml(courseText)}</strong></p>
 ${isProf && request.projectTitle ? '<p>Project / Research: <strong>' + escHtml(request.projectTitle) + '</strong></p>' : ''}</div></div>
@@ -558,10 +558,7 @@ ${request.remarks ? '<p>Purpose / Remarks: <strong>' + escHtml(request.remarks) 
                     <span class="info-label">Full Name</span>
                     <span class="info-value">${request.studentName}</span>
                 </div>
-                <div class="info-row">
-                    <span class="info-label">${isProf ? 'Faculty Number' : 'Student Number'}</span>
-                    <span class="info-value">${request.studentNumber || '-'}</span>
-                </div>
+                ${!isProf ? `<div class="info-row"><span class="info-label">Student Number</span><span class="info-value">${request.studentNumber || '-'}</span></div>` : ''}
                 <div class="info-row">
                     <span class="info-label">Contact Number</span>
                     <span class="info-value">${request.contactNumber}</span>

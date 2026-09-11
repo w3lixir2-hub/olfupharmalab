@@ -152,6 +152,12 @@
                     <h3>Current Experiments & Activities</h3>
                     <button class="btn btn-primary" onclick="openModal('modal-experiment')">+ Add Experiment / Activity</button>
                 </div>
+                <div style="margin-bottom:16px;">
+                    <label class="filter-label" for="experiment-subject-filter" style="display:block;margin-bottom:6px;">Filter by Subject</label>
+                    <select id="experiment-subject-filter" class="filter-select" style="width:100%;" onchange="renderExperiments()">
+                        <option value="">All Subjects</option>
+                    </select>
+                </div>
                 <div id="experiments-list"></div>
             </div>
         </div>
@@ -508,8 +514,13 @@
             const el = document.getElementById('experiments-list');
             el.innerHTML = '<p style="color:#718096;font-size:14px;">Loading...</p>';
             const [list, subjects] = await Promise.all([getExperiments(), getSubjects()]);
-            el.innerHTML = list.length === 0 ? '<p style="color:#718096;font-size:14px;">No experiments yet. Add above.</p>' :
-                list.map(e => {
+            const filter = document.getElementById('experiment-subject-filter');
+            const current = filter ? filter.value : '';
+            if (filter) filter.innerHTML = '<option value="">All Subjects</option>' + subjects.map(s => `<option value="${s.id}">${s.name}</option>`).join('');
+            if (filter) filter.value = current;
+            const visible = current ? list.filter(e => e.subject_id === current) : list;
+            el.innerHTML = visible.length === 0 ? '<p style="color:#718096;font-size:14px;">No experiments match this subject.</p>' :
+                visible.map(e => {
                     const subj = subjects.find(s => s.id === e.subject_id);
                     return `<div class="settings-item"><div><div class="name">${e.name}</div><div class="meta">Subject: ${subj ? subj.name : '—'}</div></div><button onclick="removeExperiment('${e.id}')">Remove</button></div>`;
                 }).join('');
