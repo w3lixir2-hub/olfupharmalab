@@ -365,7 +365,7 @@
         }
 
         /* Print Styles */
-        @page { size: 8in 13in; margin: 0.4in; }
+        @page { size: 8.5in 13in; margin: 0.4in; }
 
         @media print {
             body {
@@ -486,7 +486,7 @@
                         <label class="form-label" id="label-id-number">Student Number <span class="required">*</span></label>
                         <input type="text" id="student-number" class="form-input" placeholder="e.g., 2020-12345">
                     </div>
-                    <div class="form-group">
+                    <div class="form-group" id="grp-contact-number">
                         <label class="form-label">Contact Number <span class="required">*</span></label>
                         <input type="tel" id="contact-number" class="form-input" placeholder="e.g., 09171234567" required>
                     </div>
@@ -684,7 +684,7 @@
                         <p style="margin-bottom: 8px; color: #4a5568;">Type: <strong id="review-requester-type">Student</strong></p>
                         <p style="margin-bottom: 8px; color: #4a5568;">Name: <strong id="review-name">-</strong></p>
                         <p style="margin-bottom: 8px; color: #4a5568;" id="review-student-number-row"><span id="review-id-label">Student Number</span>: <strong id="review-student-number">-</strong></p>
-                        <p style="margin-bottom: 8px; color: #4a5568;">Contact Number: <strong id="review-contact">-</strong></p>
+                        <p id="review-contact-row" style="margin-bottom: 8px; color: #4a5568;">Contact Number: <strong id="review-contact">-</strong></p>
                         <p style="margin-bottom: 8px; color: #4a5568;">Course: <strong id="review-course">-</strong></p>
                         <p style="color: #4a5568; display: none;" id="review-project-row">Project / Research Title: <strong id="review-project-title">-</strong></p>
                     </div>

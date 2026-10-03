@@ -200,6 +200,25 @@
                         </select>
                     </div>
                     <div class="filter-group">
+                        <label class="filter-label">Requester</label>
+                        <select id="req-requester" class="filter-select" onchange="renderRequests()">
+                            <option value="">All</option>
+                            <option value="student">Students</option>
+                            <option value="professor">Professors</option>
+                        </select>
+                    </div>
+                    <div class="filter-group">
+                        <label class="filter-label">Sort By</label>
+                        <select id="req-sort" class="filter-select" onchange="renderRequests()">
+                            <option value="submitted-desc">Date Submitted (Newest)</option>
+                            <option value="submitted-asc">Date Submitted (Oldest)</option>
+                            <option value="name-asc">Requester Name (A-Z)</option>
+                            <option value="name-desc">Requester Name (Z-A)</option>
+                            <option value="needed-asc">Date Needed (Earliest)</option>
+                            <option value="needed-desc">Date Needed (Latest)</option>
+                        </select>
+                    </div>
+                    <div class="filter-group">
                         <label class="filter-label">From</label>
                         <input type="date" id="req-from" class="filter-input" onchange="renderRequests()">
                     </div>
@@ -475,8 +494,17 @@
             var status = document.getElementById('req-status').value;
             var from   = document.getElementById('req-from').value;
             var to     = document.getElementById('req-to').value;
+            var requester = document.getElementById('req-requester').value;
+            var sortParts = document.getElementById('req-sort').value.split('-');
+            var key = sortParts[0], desc = sortParts[1] === 'desc';
+            function val(r) {
+                return key === 'name' ? (r.studentName || '').toLowerCase()
+                    : key === 'needed' ? (r.dateNeeded || '') + ' ' + (r.timeNeeded || '')
+                    : (r.dateSubmitted || '');
+            }
             return requests.filter(function (r) {
                 if (status && r.status !== status) return false;
+                if (requester && (r.requesterType || 'student') !== requester) return false;
                 var sub = (r.dateSubmitted || '').slice(0, 10);
                 if (from && sub < from) return false;
                 if (to   && sub > to)   return false;
@@ -485,6 +513,9 @@
                     if (q.indexOf(search) === -1) return false;
                 }
                 return true;
+            }).sort(function (a, b) {
+                var x = val(a), y = val(b);
+                return (x < y ? -1 : x > y ? 1 : 0) * (desc ? -1 : 1);
             });
         }
 

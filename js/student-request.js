@@ -36,6 +36,14 @@ function setRequesterType(type) {
     const idInput = document.getElementById('student-number');
     if (idInput) { idInput.placeholder = 'e.g., 2020-12345'; if (!isStudent) idInput.value = ''; }
 
+    // Contact number is only collected for students; professors don't provide one.
+    const contactGroup = document.getElementById('grp-contact-number');
+    if (contactGroup) contactGroup.style.display = isStudent ? '' : 'none';
+    const contactInput = document.getElementById('contact-number');
+    if (contactInput && !isStudent) contactInput.value = '';
+    const reviewContactRow = document.getElementById('review-contact-row');
+    if (reviewContactRow) reviewContactRow.style.display = isStudent ? '' : 'none';
+
     // Course label: required for student, optional (Department) for professor
     const courseLabel = document.getElementById('label-course');
     if (courseLabel) {
@@ -248,8 +256,8 @@ async function nextStep() {
         const course     = document.getElementById('course').value;
         const yearLevel  = document.getElementById('year-level').value;
         if (requesterType === 'professor') {
-            if (!name || !contact) {
-                alert('Please fill in Full Name and Contact Number.');
+            if (!name) {
+                alert('Please fill in Full Name.');
                 return;
             }
         } else {
@@ -425,18 +433,18 @@ function buildPrintableRequestHtml(req, options = {}) {
 
     return `<!DOCTYPE html><html><head><title>${escapeHtml(title)} - ${escapeHtml(refNumber)}</title>
 <style>
-*{margin:0;padding:0;box-sizing:border-box;}body{font-family:Arial,sans-serif;padding:36px;color:#1f2937;background:white;}
-.header{text-align:center;margin-bottom:24px;border-bottom:2px solid #d1d5db;padding-bottom:18px;}
-.brand{font-size:26px;font-weight:700;color:#0d9488;}.title{font-size:16px;font-weight:700;margin-top:6px;color:#111827;}
-.ref{background:#f8fafc;border:1px solid #e2e8f0;padding:14px;border-radius:8px;text-align:center;margin:18px 0;}
-.ref-label{font-size:11px;color:#64748b;text-transform:uppercase;font-weight:700;letter-spacing:.05em;margin-bottom:4px;}
-.ref-value{font-size:21px;font-weight:700;color:#0f766e;font-family:'Courier New',monospace;}
-.notice{padding:12px 14px;background:#fffbeb;border:1px solid #f59e0b;border-radius:8px;color:#92400e;font-size:13px;margin-bottom:16px;}
-.section{border:1px solid #e5e7eb;border-radius:8px;margin-bottom:16px;overflow:hidden;}
-.section h3{font-size:14px;font-weight:700;background:#f8fafc;padding:10px 14px;color:#111827;border-bottom:1px solid #e5e7eb;}
-.section-body{padding:14px 16px;}.section p{margin-bottom:7px;color:#374151;font-size:14px;}
-table{width:100%;border-collapse:collapse;}th,td{padding:10px 12px;border-bottom:1px solid #e5e7eb;font-size:13px;}th{text-align:left;background:#f8fafc;color:#64748b;font-weight:700;}
-@page{size:8in 13in;margin:0.4in;}@media print{body{padding:18px;}.notice{border-color:#999;color:#111;background:white;}}
+*{margin:0;padding:0;box-sizing:border-box;}body{font-family:Arial,sans-serif;padding:0;color:#1f2937;background:white;}
+.header{text-align:center;margin-bottom:8px;border-bottom:2px solid #d1d5db;padding-bottom:6px;}
+.brand{font-size:20px;font-weight:700;color:#0d9488;}.title{font-size:13px;font-weight:700;margin-top:2px;color:#111827;}
+.ref{background:#f8fafc;border:1px solid #e2e8f0;padding:6px;border-radius:6px;text-align:center;margin:6px 0 0;}
+.ref-label{font-size:9px;color:#64748b;text-transform:uppercase;font-weight:700;letter-spacing:.05em;margin-bottom:1px;}
+.ref-value{font-size:16px;font-weight:700;color:#0f766e;font-family:'Courier New',monospace;}
+.notice{padding:6px 10px;background:#fffbeb;border:1px solid #f59e0b;border-radius:6px;color:#92400e;font-size:11px;margin-bottom:8px;}
+.section{border:1px solid #e5e7eb;border-radius:6px;margin-bottom:8px;overflow:hidden;break-inside:avoid;}
+.section h3{font-size:12px;font-weight:700;background:#f8fafc;padding:4px 10px;color:#111827;border-bottom:1px solid #e5e7eb;}
+.section-body{padding:6px 10px;}.section p{margin-bottom:3px;color:#374151;font-size:12px;}
+table{width:100%;border-collapse:collapse;}th,td{padding:4px 8px;border-bottom:1px solid #e5e7eb;font-size:11px;}th{text-align:left;background:#f8fafc;color:#64748b;font-weight:700;}
+html,body{height:auto;}@page{size:8.5in 13in;margin:0.4in;}@media print{.notice{border-color:#999;color:#111;background:white;}}
 </style></head><body>
 <div class="header"><div class="brand">PharmaLab IMS</div><div class="title">${escapeHtml(title)}</div>
 <div class="ref"><div class="ref-label">Reference Number</div><div class="ref-value">${escapeHtml(refNumber)}</div></div></div>
@@ -444,7 +452,7 @@ ${previewNote}
 <div class="section"><h3>${isProf ? 'Professor' : 'Student'} Information</h3><div class="section-body">
 <p>Name: <strong>${escapeHtml(req.studentName || '-')}</strong></p>
 ${!isProf ? '<p>Student Number: <strong>' + escapeHtml(req.studentNumber || '-') + '</strong></p>' : ''}
-<p>Contact Number: <strong>${escapeHtml(req.contactNumber || '-')}</strong></p>
+${!isProf ? '<p>Contact Number: <strong>' + escapeHtml(req.contactNumber || '-') + '</strong></p>' : ''}
 <p>${isProf ? 'Department / Course' : 'Course'}: <strong>${escapeHtml(courseDisplay)}</strong></p>
 ${isProf && req.projectTitle ? '<p>Project / Research: <strong>' + escapeHtml(req.projectTitle) + '</strong></p>' : ''}</div></div>
 <div class="section"><h3>Request Details</h3><div class="section-body">
