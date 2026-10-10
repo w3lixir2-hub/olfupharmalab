@@ -3,6 +3,8 @@
  const form=document.getElementById('laboratory-report-form'), error=document.getElementById('submit-error');
  if(!config.types[type]){document.getElementById('form-title').textContent='Choose a valid report QR code';form.hidden=true;return;}
  document.title=config.types[type]+' - PharmaLab';document.getElementById('form-title').textContent=config.types[type];
+ const introductions={breakage:'Report damaged or broken laboratory items so staff can review and arrange follow-up.',incident:'Document a laboratory incident, what happened, and the immediate action taken.',concern:'Share a concern about laboratory facilities, equipment, cleanliness, or safety.',session:'Record your laboratory activity, observations, and session outcome.'};
+ document.getElementById('form-intro').textContent=introductions[type];
  document.getElementById('emergency-notice').hidden=type!=='incident';
  config.rooms.forEach(room=>document.getElementById('form-room').add(new Option(room,room)));
  const fields=document.getElementById('type-fields');
