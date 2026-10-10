@@ -8,6 +8,8 @@
     <style>
         .type-badge {
             display: inline-block;
+            white-space: nowrap;
+            overflow-wrap: normal;
             padding: 3px 10px;
             border-radius: 12px;
             font-size: 12px;
@@ -19,7 +21,9 @@
         .type-missing   { background: #f3f4f6; color: #374151; }
         .breakage-table { table-layout: fixed; min-width: 1500px; }
         .breakage-table th, .breakage-table td { padding: 14px 12px; text-align: left; vertical-align: middle; overflow-wrap: anywhere; }
-        .breakage-table th { line-height: 1.5; }
+        .breakage-table th { line-height: 1.5; white-space: normal; }
+        .breakage-table td:nth-child(11) { padding-left: 8px; padding-right: 8px; }
+        .breakage-table .type-badge { padding: 3px 8px; }
         .breakage-table .date-cell span { display: block; white-space: nowrap; }
         .breakage-table .date-cell .date-time { color: var(--lab-text-muted); font-size: 12px; margin-top: 3px; }
         .breakage-table .quantity-cell { white-space: nowrap; }
@@ -501,7 +505,7 @@
             }
 
             var html = '<div class="table-container"><table class="table breakage-table"><colgroup>' +
-                [8,10,8,7,10,10,7,5,10,4,6,7,8].map(function (width) { return '<col style="width:' + width + '%">'; }).join('') +
+                [8,10,8,7,9,10,7,5,9,4,8,7,8].map(function (width) { return '<col style="width:' + width + '%">'; }).join('') +
                 '</colgroup><thead><tr>' +
                 '<th>Incident Date</th><th>Computer Reported Date</th><th>Resolved Date</th><th>Resolution</th><th>Request ID</th><th>Student Name</th><th>Student No.</th><th>Group</th>' +
                 '<th>Item / Material</th><th>Qty</th><th>Type</th><th>Reported By</th><th>Actions</th>' +
