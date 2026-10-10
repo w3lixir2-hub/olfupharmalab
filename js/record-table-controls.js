@@ -28,11 +28,15 @@
                 (index >= 0 && chosen && text(row.cells[index]) !== chosen));
         });
         const sortIndex = Number(state.sort.value);
+        if (sortIndex < 0 && state.originalRows) {
+            state.originalRows.filter(row => rows.includes(row)).forEach(row => state.table.tBodies[0].appendChild(row));
+        }
         if (sortIndex >= 0) {
             const isDate = /date|maintenance/i.test(state.headers[sortIndex]);
             rows.sort((a, b) => {
                 const x = text(a.cells[sortIndex]), y = text(b.cells[sortIndex]);
                 const dx = Date.parse(x), dy = Date.parse(y);
+                if (isDate && Number.isFinite(dx) !== Number.isFinite(dy)) return Number.isFinite(dx) ? -1 : 1;
                 const comparison = isDate && Number.isFinite(dx) && Number.isFinite(dy) ? dx - dy : collator.compare(x, y);
                 return comparison * (state.direction.value === 'desc' ? -1 : 1);
             });
@@ -56,6 +60,9 @@
     }
     function refresh() {
         observer.disconnect();
+        states.forEach(state => {
+            if (!state.table.isConnected) { state.bar.remove(); state.empty.remove(); }
+        });
         document.querySelectorAll(selector).forEach((table, tableIndex) => {
             if (table.closest('[role="dialog"], .modal, .lab-modal')) return;
             if (!table.tHead || !table.tBodies[0]) return;
@@ -90,7 +97,7 @@
             }
             state.table = table;
             const currentRows = Array.from(table.tBodies[0].rows);
-            if (!state.originalRows || currentRows.some(row => !state.originalRows.includes(row))) state.originalRows = currentRows;
+            if (!state.originalRows || currentRows.length !== state.originalRows.length || currentRows.some(row => !state.originalRows.includes(row))) state.originalRows = currentRows;
             const container = table.closest('.table-container') || table;
             if (container.previousElementSibling !== state.bar) container.before(state.bar);
             if (container.nextElementSibling !== state.empty) container.after(state.empty);

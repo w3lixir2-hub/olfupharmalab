@@ -17,7 +17,11 @@
   try{const {data,error}=await db.from('laboratory_reports').select('*').order('submitted_at',{ascending:false});if(error)throw error;reports=data;document.getElementById('pending-count').textContent=reports.filter(r=>r.status==='pending').length;document.getElementById('report-count').textContent=reports.length;render();}
   catch(error){document.getElementById('inbox-error').textContent='Could not load reports: '+error.message;}
  }
+ let detailVersion=0, busy=false;
+ function setBusy(value){busy=value;document.querySelectorAll('[data-review], #save-staff-photos').forEach(button=>button.disabled=value);}
+ dialog.addEventListener('close',()=>{selected=null;detailVersion++;});
  async function showDetails(id){
+  const version=++detailVersion;
   selected=reports.find(r=>r.id===id);if(!selected)return;
   const r=selected,detail=document.getElementById('report-detail');detail.replaceChildren();document.getElementById('report-dialog-title').textContent=r.reference_number;
   const dl=document.createElement('dl');
@@ -29,17 +33,17 @@
   document.getElementById('review-notes').value=r.review_notes||'';document.getElementById('review-resolved').value=config.phtInput(new Date());document.getElementById('staff-photos').value='';document.getElementById('review-error').textContent='';
   document.querySelectorAll('[data-review]').forEach(button=>button.hidden=button.dataset.review==='resolve'?r.status!=='accepted':r.status!=='pending');
   if(!dialog.open)dialog.showModal();
-  for(const photo of r.photos||[]){const {data,error}=await db.storage.from('laboratory-report-photos').createSignedUrl(photo.path,300);if(selected?.id!==id)return;if(error){photoWrap.appendChild(node('p','Photo unavailable. Close and reopen to retry.'));continue;}const link=node('a','Open Photo');link.href=data.signedUrl;link.target='_blank';link.rel='noopener';const image=document.createElement('img');image.src=data.signedUrl;image.alt='Report evidence';photoWrap.append(link,image);}
+  for(const photo of r.photos||[]){const {data,error}=await db.storage.from('laboratory-report-photos').createSignedUrl(photo.path,300);if(selected?.id!==id||version!==detailVersion||!dialog.open)return;if(error){photoWrap.appendChild(node('p','Photo unavailable. Close and reopen to retry.'));continue;}const link=node('a','Open Photo');link.href=data.signedUrl;link.target='_blank';link.rel='noopener';const image=document.createElement('img');image.src=data.signedUrl;image.alt='Report evidence';photoWrap.append(link,image);}
  }
  async function action(button){
-  if(!selected)return;document.getElementById('review-error').textContent='';button.disabled=true;
-  try{const notes=document.getElementById('review-notes').value.trim(),action=button.dataset.review;if(action==='reject'&&!notes)throw Error('Enter a rejection reason.');const resolved=action==='resolve'?config.iso(document.getElementById('review-resolved').value):null;const {error}=await db.rpc('review_laboratory_report',{p_id:selected.id,p_action:action,p_notes:notes,p_resolved_at:resolved});if(error)throw error;const id=selected.id;await load();await showDetails(id);}
-  catch(error){document.getElementById('review-error').textContent=error.message;}finally{button.disabled=false;}
+  if(!selected||busy)return;const id=selected.id;document.getElementById('review-error').textContent='';setBusy(true);
+  try{const notes=document.getElementById('review-notes').value.trim(),action=button.dataset.review;if(action==='reject'&&!notes)throw Error('Enter a rejection reason.');const resolved=action==='resolve'?config.iso(document.getElementById('review-resolved').value):null;const {error}=await db.rpc('review_laboratory_report',{p_id:id,p_action:action,p_notes:notes,p_resolved_at:resolved});if(error)throw error;await load();if(dialog.open&&selected?.id===id)await showDetails(id);}
+  catch(error){document.getElementById('review-error').textContent=error.message;}finally{setBusy(false);}
  }
  document.querySelectorAll('[data-review]').forEach(button=>button.onclick=()=>action(button));
  document.getElementById('save-staff-photos').onclick=async function(){
-  if(!selected)return;this.disabled=true;const errorEl=document.getElementById('review-error');errorEl.textContent='';
-  try{const files=Array.from(document.getElementById('staff-photos').files);if(!files.length)throw Error('Select photos first.');config.validateFiles(files,(selected.photos||[]).length);const photos=[];for(const file of files){const path=selected.id+'/staff-'+crypto.randomUUID()+'.'+({ 'image/jpeg':'jpg','image/png':'png','image/webp':'webp'}[file.type]);const {error}=await db.storage.from('laboratory-report-photos').upload(path,file,{contentType:file.type});if(error)throw error;photos.push({path});}const {error}=await db.rpc('add_laboratory_report_photos',{p_id:selected.id,p_photos:photos});if(error)throw error;const id=selected.id;await load();await showDetails(id);}catch(error){errorEl.textContent=error.message;}finally{this.disabled=false;}
+  if(!selected||busy)return;const id=selected.id,existing=(selected.photos||[]).length;setBusy(true);const errorEl=document.getElementById('review-error');errorEl.textContent='';
+  try{const files=Array.from(document.getElementById('staff-photos').files);if(!files.length)throw Error('Select photos first.');config.validateFiles(files,existing);const photos=[];for(const file of files){const path=id+'/staff-'+crypto.randomUUID()+'.'+({ 'image/jpeg':'jpg','image/png':'png','image/webp':'webp'}[file.type]);const {error}=await db.storage.from('laboratory-report-photos').upload(path,file,{contentType:file.type});if(error)throw error;photos.push({path});}const {error}=await db.rpc('add_laboratory_report_photos',{p_id:id,p_photos:photos});if(error)throw error;await load();if(dialog.open&&selected?.id===id)await showDetails(id);}catch(error){errorEl.textContent=error.message;}finally{setBusy(false);}
  };
  document.getElementById('close-report').onclick=()=>{dialog.close();selected=null;};
  document.getElementById('refresh-reports').onclick=load;
