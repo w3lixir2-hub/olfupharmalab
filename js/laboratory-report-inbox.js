@@ -1,4 +1,6 @@
 (function(){
+ function updateClock(){const clock=document.getElementById('sidebar-datetime');if(clock)clock.textContent=new Date().toLocaleString('en-PH',{timeZone:'Asia/Manila',weekday:'short',year:'numeric',month:'short',day:'numeric',hour:'2-digit',minute:'2-digit',second:'2-digit'});}
+ updateClock();setInterval(updateClock,1000);
  const config=LabReports, tbody=document.getElementById('lab-reports-body'),dialog=document.getElementById('report-dialog');let reports=[],selected=null;
  Object.entries(config.types).forEach(([value,label])=>document.getElementById('report-type').add(new Option(label,value)));
  config.rooms.forEach(room=>document.getElementById('report-room').add(new Option(room,room)));
