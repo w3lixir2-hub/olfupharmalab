@@ -17,6 +17,17 @@
         .type-spill     { background: #fef3c7; color: #92400e; }
         .type-error     { background: #ede9fe; color: #5b21b6; }
         .type-missing   { background: #f3f4f6; color: #374151; }
+        .breakage-table { table-layout: fixed; min-width: 1500px; }
+        .breakage-table th, .breakage-table td { padding: 14px 12px; text-align: left; vertical-align: middle; overflow-wrap: anywhere; }
+        .breakage-table th { line-height: 1.5; }
+        .breakage-table .date-cell span { display: block; white-space: nowrap; }
+        .breakage-table .date-cell .date-time { color: var(--lab-text-muted); font-size: 12px; margin-top: 3px; }
+        .breakage-table .quantity-cell { white-space: nowrap; }
+        .breakage-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; }
+        .breakage-actions .action-btn { white-space: nowrap; padding: 5px 8px; border: 1px solid var(--lab-border, #e2e8f0); border-radius: 6px; }
+        #incident-details { width: min(520px, calc(100vw - 32px)); max-height: 80vh; overflow: auto; margin: auto; padding: 24px; border: 1px solid #e2e8f0; border-radius: 12px; }
+        #incident-details::backdrop { background: rgba(15, 23, 42, .45); }
+        #incident-details-content { margin: 16px 0; overflow-wrap: anywhere; white-space: pre-wrap; }
     </style>
 </head>
 <body>
@@ -244,6 +255,11 @@
         </div>
     </div>
 
+    <dialog id="incident-details" aria-labelledby="incident-details-title">
+        <h2 id="incident-details-title">Incident Details</h2>
+        <div id="incident-details-content"></div>
+        <button class="btn btn-secondary" onclick="document.getElementById('incident-details').close()">Close</button>
+    </dialog>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="js/supabase-client.js"></script>
     <script src="js/supabase-data.js"></script>
@@ -268,14 +284,30 @@
 
         function esc(s) {
             if (s == null) return '—';
-            return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+            return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#39;');
         }
         function fmtDateTime(str) {
             if (!str) return '—';
             var d = new Date(str);
-            return d.toLocaleDateString('en-PH', { year: 'numeric', month: 'short', day: 'numeric', timeZone: 'Asia/Manila' }) +
-                ' ' + d.toLocaleTimeString('en-PH', { hour: '2-digit', minute: '2-digit', timeZone: 'Asia/Manila' });
+            return '<span>' + d.toLocaleDateString('en-PH', { year: 'numeric', month: 'short', day: 'numeric', timeZone: 'Asia/Manila' }) +
+                '</span> <span class="date-time">' + d.toLocaleTimeString('en-PH', { hour: '2-digit', minute: '2-digit', timeZone: 'Asia/Manila' }) + '</span>';
         }
+        window.viewIncidentDetails = function (id) {
+            var record = allBreakages.find(function (b) { return b.id === id; });
+            if (!record) return;
+            var content = document.getElementById('incident-details-content');
+            content.replaceChildren();
+            var description = document.createElement('p');
+            description.textContent = record.description || 'No notes recorded.';
+            content.appendChild(description);
+            [['Logbook Photo', record.logbook_image_url], ['Incident Photo', record.damage_image_url]].forEach(function (evidence) {
+                if (!evidence[1] || !/^https?:\/\//i.test(evidence[1])) return;
+                var link = document.createElement('a');
+                link.textContent = evidence[0]; link.href = evidence[1]; link.target = '_blank'; link.rel = 'noopener'; link.style.display = 'block';
+                content.appendChild(link);
+            });
+            document.getElementById('incident-details').showModal();
+        };
         function typeBadge(t) {
             var label = { breakage: 'Breakage', spill: 'Spill', error: 'Error', missing: 'Missing', fire: 'Fire / Smoke', injury: 'Injury / Exposure', other: 'Other Incident' }[t] || t;
             return '<span class="type-badge type-' + esc(t) + '">' + esc(label) + '</span>';
@@ -468,26 +500,27 @@
                 return;
             }
 
-            var html = '<div class="table-container"><table class="table"><thead><tr>' +
+            var html = '<div class="table-container"><table class="table breakage-table"><colgroup>' +
+                [8,10,8,7,10,10,7,5,10,4,6,7,8].map(function (width) { return '<col style="width:' + width + '%">'; }).join('') +
+                '</colgroup><thead><tr>' +
                 '<th>Incident Date</th><th>Computer Reported Date</th><th>Resolved Date</th><th>Resolution</th><th>Request ID</th><th>Student Name</th><th>Student No.</th><th>Group</th>' +
-                '<th>Item / Material</th><th>Qty</th><th>Type</th><th>Notes</th><th>Reported By</th><th></th>' +
+                '<th>Item / Material</th><th>Qty</th><th>Type</th><th>Reported By</th><th>Actions</th>' +
                 '</tr></thead><tbody>';
             rows.forEach(function (b) {
                 html += '<tr>' +
-                    '<td>' + fmtDateTime(b.date_occurred) + '</td>' +
-                    '<td style="white-space:nowrap;">' + fmtDateTime(b.date_reported) + '</td>' +
-                    '<td>' + fmtDateTime(b.date_resolved) + '</td>' +
+                    '<td class="date-cell">' + fmtDateTime(b.date_occurred) + '</td>' +
+                    '<td class="date-cell">' + fmtDateTime(b.date_reported) + '</td>' +
+                    '<td class="date-cell">' + fmtDateTime(b.date_resolved) + '</td>' +
                     '<td>' + (b.date_resolved ? 'Resolved' : 'Unresolved') + '</td>' +
                     '<td style="white-space:nowrap;">' + esc(b.request_id || '—') + '</td>' +
                     '<td>' + esc(b.student_name) + '</td>' +
                     '<td>' + esc(b.student_number) + '</td>' +
                     '<td>' + esc(b.group_name || '—') + '</td>' +
                     '<td>' + esc(b.item_name) + '</td>' +
-                    '<td>' + (b.quantity != null ? esc(b.quantity) + ' ' + esc(b.unit) : '—') + '</td>' +
+                    '<td class="quantity-cell">' + (b.quantity != null ? esc(b.quantity) + ' ' + esc(b.unit) : '—') + '</td>' +
                     '<td>' + typeBadge(b.incident_type) + '</td>' +
-                    '<td style="max-width:220px;word-break:break-word;">' + esc(b.description) + (b.logbook_image_url || b.damage_image_url ? '<br><small><a href="' + esc(b.logbook_image_url || '') + '" target="_blank">Logbook</a> · <a href="' + esc(b.damage_image_url || '') + '" target="_blank">Incident photo</a></small>' : '') + '</td>' +
                     '<td>' + esc(b.reported_by) + '</td>' +
-                    '<td><button class="action-btn" onclick="editIncidentDates(\'' + b.id + '\')">Update Dates</button><button class="action-btn" onclick="deleteIncident(\'' + b.id + '\')" title="Remove" style="color:var(--lab-danger);">✕</button></td>' +
+                    '<td><div class="breakage-actions"><button class="action-btn" onclick="editIncidentDates(\'' + esc(b.id) + '\')">Update Dates</button><button class="action-btn" onclick="viewIncidentDetails(\'' + esc(b.id) + '\')">Details</button><button class="action-btn" onclick="deleteIncident(\'' + esc(b.id) + '\')" aria-label="Remove incident" title="Remove" style="color:var(--lab-danger);">✕</button></div></td>' +
                     '</tr>';
             });
             html += '</tbody></table></div>';
