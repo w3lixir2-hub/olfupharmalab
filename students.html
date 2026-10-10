@@ -192,12 +192,13 @@
             <div class="info-card">
                 <p class="info-card-title">Material Request QR Code</p>
                 <div class="qr-wrap">
+                    <p class="qr-description">Scan to request laboratory materials and equipment.</p>
                     <img id="qr-img" class="qr-img" src="" alt="QR Code">
                     <div class="qr-url" id="qr-url-display">—</div>
-                    <button class="copy-btn" onclick="copyQrUrl()">Copy Link</button>
                     <div class="qr-actions">
-                        <a href="print-qr-poster.html" target="_blank" class="btn btn-primary" style="text-decoration:none;font-size:13px;">Print Poster</a>
-                        <a href="qr-landing.html" target="_blank" class="btn btn-secondary" style="text-decoration:none;font-size:13px;">Preview Landing</a>
+                        <a href="print-qr-poster.html" target="_blank" rel="noopener" class="btn btn-primary">Print Poster</a>
+                        <button class="btn btn-secondary" onclick="copyQrUrl()">Copy Link</button>
+                        <a href="qr-landing.html" target="_blank" rel="noopener" class="btn btn-secondary">Open Link</a>
                     </div>
                 </div>
             </div>
