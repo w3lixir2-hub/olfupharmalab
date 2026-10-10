@@ -1109,3 +1109,9 @@ body {
 ::-webkit-scrollbar-track { background: transparent; }
 ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
 ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+/* Shared record-table controls wrap on smaller screens. */
+.record-table-controls { display: flex; flex-wrap: wrap; gap: 12px; align-items: flex-end; margin: 12px 0; }
+.record-table-controls .filter-group { display: flex; flex-direction: column; gap: 6px; min-width: 140px; flex: 1; }
+.record-table-controls select, .record-table-controls input { max-width: 100%; }
+.record-table-controls [aria-live] { font-size: 12px; white-space: nowrap; padding: 10px 0; }
+@media print { .record-table-controls, .record-table-controls + .no-print { display: none !important; } }

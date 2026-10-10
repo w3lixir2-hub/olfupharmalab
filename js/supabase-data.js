@@ -355,7 +355,8 @@ async function getInstructorsBySubject(subjectId) {
 /* ── Breakages ──────────────────────────────────────────────── */
 
 async function getBreakages() {
-  const { data } = await db.from('breakages').select('*').order('date_reported', { ascending: false });
+  const { data, error } = await db.from('breakages').select('*').order('date_reported', { ascending: false });
+  if (error) throw error;
   return data || [];
 }
 
@@ -375,6 +376,8 @@ async function addBreakage(entry) {
     damage_image_url:  entry.damageImageUrl  || null,
     reported_by:    getCurrentUser()    || 'Admin',
     date_reported:  new Date().toISOString(),
+    date_occurred: entry.dateOccurred || null,
+    date_resolved: entry.dateResolved || null,
   };
   const { error } = await db.from('breakages').insert(row);
   if (error) throw error;
@@ -396,6 +399,14 @@ async function uploadIncidentImages(incidentId, logbookFile, damageFile) {
 
 async function deleteBreakage(id) {
   const { error } = await db.from('breakages').delete().eq('id', id);
+  if (error) throw error;
+}
+
+async function updateBreakageDates(id, dateOccurred, dateResolved) {
+  const { error } = await db.from('breakages').update({
+    date_occurred: dateOccurred || null,
+    date_resolved: dateResolved || null,
+  }).eq('id', id);
   if (error) throw error;
 }
 

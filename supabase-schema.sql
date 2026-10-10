@@ -45,7 +45,13 @@ CREATE TABLE IF NOT EXISTS breakages (
   logbook_image_url TEXT,
   damage_image_url  TEXT,
   reported_by       TEXT,
-  date_reported     TIMESTAMPTZ DEFAULT NOW()
+  date_reported     TIMESTAMPTZ DEFAULT NOW(),
+  date_occurred     TIMESTAMPTZ,
+  date_resolved     TIMESTAMPTZ,
+  CONSTRAINT breakages_dates_valid CHECK (
+    (date_occurred IS NULL OR date_occurred <= date_reported) AND
+    (date_resolved IS NULL OR (date_occurred IS NOT NULL AND date_resolved >= date_occurred))
+  )
 );
 CREATE INDEX IF NOT EXISTS idx_breakages_date ON breakages (date_reported DESC);
 

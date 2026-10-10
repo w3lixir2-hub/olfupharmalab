@@ -129,6 +129,20 @@
                     <label class="filter-label">To</label>
                     <input type="date" id="f-to" class="filter-input" onchange="renderTable()">
                 </div>
+                <div class="filter-group">
+                    <label class="filter-label" for="f-date-field">Date to Filter</label>
+                    <select id="f-date-field" class="filter-select" onchange="renderTable()">
+                        <option value="date_occurred">Incident Date</option>
+                        <option value="date_reported" selected>Computer Reported Date</option>
+                        <option value="date_resolved">Resolved Date</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label class="filter-label" for="f-resolution">Resolution</label>
+                    <select id="f-resolution" class="filter-select" onchange="renderTable()">
+                        <option value="">All</option><option value="open">Unresolved</option><option value="resolved">Resolved</option>
+                    </select>
+                </div>
             </div>
         </div>
 
@@ -146,6 +160,16 @@
                 <button class="lab-modal-close" onclick="closeModal()" aria-label="Close">&times;</button>
             </div>
             <div class="lab-modal-body">
+                <div class="filter-group" style="margin-bottom:16px;">
+                    <label class="filter-label" for="m-date-occurred">Incident Date &amp; Time (PHT) *</label>
+                    <input type="datetime-local" id="m-date-occurred" class="filter-input">
+                    <small>For old records, enter when the incident actually happened.</small>
+                </div>
+                <div class="filter-group" style="margin-bottom:16px;">
+                    <label class="filter-label" for="m-date-resolved">Resolved Date &amp; Time (PHT)</label>
+                    <input type="datetime-local" id="m-date-resolved" class="filter-input">
+                    <small>Leave blank if unresolved. Computer reporting time is recorded automatically upon save.</small>
+                </div>
 
                 <!-- Request lookup -->
                 <div style="margin-bottom:16px;">
@@ -228,6 +252,19 @@
     <script>
     (function () {
         var allBreakages = [];
+        var editingDatesId = null;
+        function phtInput(str) { return str ? new Date(new Date(str).getTime() + 8 * 3600000).toISOString().slice(0, 16) : ''; }
+        function readIncidentDates(reportedAt) {
+            var occurred = document.getElementById('m-date-occurred').value;
+            var resolved = document.getElementById('m-date-resolved').value;
+            if (!occurred) throw new Error('Enter when the incident happened.');
+            var incident = new Date(occurred + ':00+08:00');
+            var resolution = resolved ? new Date(resolved + ':00+08:00') : null;
+            if (!Number.isFinite(incident.getTime()) || (resolution && !Number.isFinite(resolution.getTime()))) throw new Error('Enter valid dates.');
+            if (incident > new Date(reportedAt || Date.now())) throw new Error('Incident date cannot be after the computer reporting date.');
+            if (resolution && (resolution < incident || resolution > new Date())) throw new Error('Resolution must be on or after the incident and cannot be in the future.');
+            return { dateOccurred: incident.toISOString(), dateResolved: resolution ? resolution.toISOString() : null };
+        }
 
         function esc(s) {
             if (s == null) return '—';
@@ -246,6 +283,12 @@
 
         /* ── Modal ── */
         window.openModal = async function () {
+            editingDatesId = null;
+            document.querySelector('.lab-modal-title').textContent = 'Log Incident';
+            document.querySelector('.lab-modal .btn-primary').textContent = 'Save Incident';
+            document.querySelectorAll('.lab-modal-body > div').forEach(function (el) { el.hidden = false; });
+            document.getElementById('m-date-occurred').value = phtInput(new Date().toISOString());
+            document.getElementById('m-date-resolved').value = '';
             document.getElementById('modal-overlay').setAttribute('aria-hidden', 'false');
             document.getElementById('modal-overlay').classList.add('active');
             var requestSelect = document.getElementById('m-request-id');
@@ -257,7 +300,20 @@
                 '<option value="">Select Group</option>' +
                 groups.map(function(g){ return '<option value="' + g.name + '">' + g.name + '</option>'; }).join('');
         };
+        window.editIncidentDates = function (id) {
+            var record = allBreakages.find(function (b) { return b.id === id; });
+            if (!record) return;
+            editingDatesId = id;
+            document.querySelector('.lab-modal-title').textContent = 'Update Incident / Resolution Dates';
+            document.querySelector('.lab-modal .btn-primary').textContent = 'Save Dates';
+            document.querySelectorAll('.lab-modal-body > div').forEach(function (el, index) { el.hidden = index > 1; });
+            document.getElementById('m-date-occurred').value = phtInput(record.date_occurred);
+            document.getElementById('m-date-resolved').value = phtInput(record.date_resolved);
+            document.getElementById('modal-overlay').setAttribute('aria-hidden', 'false');
+            document.getElementById('modal-overlay').classList.add('active');
+        };
         window.closeModal = function () {
+            editingDatesId = null;
             document.getElementById('modal-overlay').setAttribute('aria-hidden', 'true');
             document.getElementById('modal-overlay').classList.remove('active');
             ['m-student-name','m-student-number','m-item-name','m-qty','m-unit','m-description'].forEach(function(id) {
@@ -318,6 +374,21 @@
 
         /* ── Submit ── */
         window.submitIncident = async function () {
+            var dates;
+            var existing = editingDatesId ? allBreakages.find(function (b) { return b.id === editingDatesId; }) : null;
+            try { dates = readIncidentDates(existing && existing.date_reported); } catch (err) { alert(err.message); return; }
+            if (existing) {
+                var saveDatesButton = document.querySelector('.lab-modal .btn-primary');
+                saveDatesButton.disabled = true;
+                try {
+                    await updateBreakageDates(existing.id, dates.dateOccurred, dates.dateResolved);
+                    await addAuditEntry('Incident Dates Updated', existing.id + ' — ' + (dates.dateResolved ? 'Resolved: ' + dates.dateResolved : 'Unresolved'));
+                    closeModal();
+                    await loadData();
+                } catch (err) { alert('Error: ' + err.message); }
+                finally { saveDatesButton.disabled = false; }
+                return;
+            }
             var studentName = (document.getElementById('m-student-name').value || '').trim();
             var itemName    = (document.getElementById('m-item-name').value    || '').trim();
             var type        = document.getElementById('m-type').value;
@@ -344,6 +415,8 @@
                     quantity:      parseFloat(document.getElementById('m-qty').value) || null,
                     unit:          (document.getElementById('m-unit').value           || '').trim(),
                     incidentType:  type,
+                    dateOccurred: dates.dateOccurred,
+                    dateResolved: dates.dateResolved,
                     description:   (document.getElementById('m-description').value   || '').trim(),
                     logbookImageUrl: imageUrls.logbook,
                     damageImageUrl:  imageUrls.damage,
@@ -374,7 +447,12 @@
 
             var rows = allBreakages.filter(function (b) {
                 if (type && b.incident_type !== type) return false;
-                var d = (b.date_reported || '').slice(0, 10);
+                var resolution = document.getElementById('f-resolution').value;
+                if (resolution === 'resolved' && !b.date_resolved) return false;
+                if (resolution === 'open' && b.date_resolved) return false;
+                var dateValue = b[document.getElementById('f-date-field').value];
+                if ((from || to) && !dateValue) return false;
+                var d = phtInput(dateValue).slice(0, 10);
                 if (from && d < from) return false;
                 if (to   && d > to)   return false;
                 if (search) {
@@ -391,12 +469,15 @@
             }
 
             var html = '<div class="table-container"><table class="table"><thead><tr>' +
-                '<th>Date Reported</th><th>Request ID</th><th>Student Name</th><th>Student No.</th><th>Group</th>' +
+                '<th>Incident Date</th><th>Computer Reported Date</th><th>Resolved Date</th><th>Resolution</th><th>Request ID</th><th>Student Name</th><th>Student No.</th><th>Group</th>' +
                 '<th>Item / Material</th><th>Qty</th><th>Type</th><th>Notes</th><th>Reported By</th><th></th>' +
                 '</tr></thead><tbody>';
             rows.forEach(function (b) {
                 html += '<tr>' +
+                    '<td>' + fmtDateTime(b.date_occurred) + '</td>' +
                     '<td style="white-space:nowrap;">' + fmtDateTime(b.date_reported) + '</td>' +
+                    '<td>' + fmtDateTime(b.date_resolved) + '</td>' +
+                    '<td>' + (b.date_resolved ? 'Resolved' : 'Unresolved') + '</td>' +
                     '<td style="white-space:nowrap;">' + esc(b.request_id || '—') + '</td>' +
                     '<td>' + esc(b.student_name) + '</td>' +
                     '<td>' + esc(b.student_number) + '</td>' +
@@ -406,7 +487,7 @@
                     '<td>' + typeBadge(b.incident_type) + '</td>' +
                     '<td style="max-width:220px;word-break:break-word;">' + esc(b.description) + (b.logbook_image_url || b.damage_image_url ? '<br><small><a href="' + esc(b.logbook_image_url || '') + '" target="_blank">Logbook</a> · <a href="' + esc(b.damage_image_url || '') + '" target="_blank">Incident photo</a></small>' : '') + '</td>' +
                     '<td>' + esc(b.reported_by) + '</td>' +
-                    '<td><button class="action-btn" onclick="deleteIncident(\'' + b.id + '\')" title="Remove" style="color:var(--lab-danger);">✕</button></td>' +
+                    '<td><button class="action-btn" onclick="editIncidentDates(\'' + b.id + '\')">Update Dates</button><button class="action-btn" onclick="deleteIncident(\'' + b.id + '\')" title="Remove" style="color:var(--lab-danger);">✕</button></td>' +
                     '</tr>';
             });
             html += '</tbody></table></div>';
@@ -427,7 +508,9 @@
             renderTable();
         }
 
-        loadData();
+        loadData().catch(function (err) {
+            document.getElementById('table-wrap').textContent = 'Unable to load incidents: ' + err.message;
+        });
     })();
 
     (function () {
@@ -438,5 +521,6 @@
         u(); setInterval(u, 1000);
     })();
     </script>
+    <script src="js/record-table-controls.js"></script>
 </body>
 </html>

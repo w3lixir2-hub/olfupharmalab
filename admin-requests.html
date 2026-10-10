@@ -101,7 +101,7 @@
             <div class="filters-grid">
                 <div class="filter-group">
                     <label class="filter-label">Search</label>
-                    <input type="text" id="filter-search" class="filter-input" placeholder="Request ID, Student name...">
+                    <input type="text" id="filter-search" class="filter-input" placeholder="Request ID, name, subject, instructor...">
                 </div>
                 <div class="filter-group">
                     <label class="filter-label">Status</label>
@@ -144,6 +144,8 @@
                         <th>Request ID</th>
                         <th>Student Name</th>
                         <th>Student Number</th>
+                        <th>Requester Type</th>
+                        <th>Professor / Instructor</th>
                         <th>Subject</th>
                         <th>Date Needed</th>
                         <th>Date Submitted</th>
@@ -340,7 +342,8 @@
                     (r.requestId    || '').toLowerCase().includes(search) ||
                     (r.studentName  || '').toLowerCase().includes(search) ||
                     (r.studentNumber|| '').toLowerCase().includes(search) ||
-                    (r.subject      || '').toLowerCase().includes(search)
+                    (r.subject      || '').toLowerCase().includes(search) ||
+                    (r.instructor   || '').toLowerCase().includes(search)
                 )) return false;
                 if (status && r.status !== status) return false;
                 if (requester && (r.requesterType || 'student') !== requester) return false;
@@ -501,7 +504,7 @@ ${request.remarks ? '<p>Purpose / Remarks: <strong>' + escHtml(request.remarks) 
             if (filtered.length === 0) {
                 tbody.innerHTML = `
                     <tr>
-                        <td colspan="8" style="text-align: center; padding: 40px; color: #718096;">
+                        <td colspan="10" style="text-align: center; padding: 40px; color: #718096;">
                             No requests found. Requests submitted through the form will appear here.
                         </td>
                     </tr>
@@ -533,6 +536,8 @@ ${request.remarks ? '<p>Purpose / Remarks: <strong>' + escHtml(request.remarks) 
                     <td><strong>${request.requestId}</strong></td>
                     <td>${request.studentName}</td>
                     <td>${request.studentNumber}</td>
+                    <td>${request.requesterType === 'professor' ? 'Professor' : 'Student'}</td>
+                    <td>${escHtml(request.instructor || '—')}</td>
                     <td>${request.subject}</td>
                     <td>${dateNeededDisplay}</td>
                     <td>${formatDateTime(request.dateSubmitted)}</td>
@@ -540,6 +545,15 @@ ${request.remarks ? '<p>Purpose / Remarks: <strong>' + escHtml(request.remarks) 
                     <td>${actionButton}</td>
                 `;
                 tbody.appendChild(row);
+                const checklistLink = document.createElement('a');
+                checklistLink.className = 'btn btn-secondary btn-sm';
+                checklistLink.textContent = 'View Checklist';
+                checklistLink.href = 'print-checklist.html?requestId=' + encodeURIComponent(request.requestId);
+                checklistLink.target = '_blank';
+                checklistLink.rel = 'noopener';
+                checklistLink.style.margin = '4px';
+                checklistLink.onclick = event => event.stopPropagation();
+                row.lastElementChild.appendChild(checklistLink);
             });
         }
 
@@ -942,5 +956,6 @@ ${request.remarks ? '<p>Purpose / Remarks: <strong>' + escHtml(request.remarks) 
         onTableChange('requests', () => loadRequests());
     </script>
     <script>(function(){function u(){var e=document.getElementById('sidebar-datetime');if(e)e.textContent=new Date().toLocaleString('en-PH',{timeZone:'Asia/Manila',weekday:'short',year:'numeric',month:'short',day:'numeric',hour:'2-digit',minute:'2-digit',second:'2-digit'});}u();setInterval(u,1000);})();</script>
+    <script src="js/record-table-controls.js"></script>
 </body>
 </html>
