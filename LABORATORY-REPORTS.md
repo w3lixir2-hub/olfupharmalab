@@ -6,7 +6,7 @@ Production: https://olfupharmalab.vercel.app. Deploy frontend changes by pushing
 
 1. Apply `migrations/20261010-breakage-dates.sql` if missing, then apply `migrations/20261010-laboratory-reports.sql` once in the PharmaLab Supabase SQL Editor.
 2. Deploy `supabase/functions/submit-laboratory-report/index.ts` as `submit-laboratory-report`. Retain legacy JWT verification. The anonymous public key supplied by the form is sufficient; no reporter login is required. Server-side `SUPABASE_URL` and `SUPABASE_SERVICE_ROLE_KEY` are built-in Edge runtime secrets and must never be placed in frontend files.
-3. Push the frontend to `main`. Students contains the four report QR cards. Lab Tech → Lab Reports opens the authenticated review inbox.
+3. Push the frontend to `main`. Students contains one report QR card pointing to `laboratory-reports.html`, where reporters choose one of the four forms. Lab Tech → Lab Reports opens the authenticated review inbox.
 
 The endpoint accepts multipart fields `submission_id` (UUID v4), `payload` (JSON), and up to three `photos` (JPEG/PNG/WebP, at most 8 MB each). It returns only `{reference_number}` after saving, or `{error}` with a failure status. Dates are sent as ISO timestamps; datetime controls represent Philippine time. Reusing the same ID and payload returns the same reference. Changed data uses a new ID. Reference receipts do not expose report contents or status.
 
