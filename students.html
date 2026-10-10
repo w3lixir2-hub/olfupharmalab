@@ -112,7 +112,7 @@
         }
         .copy-btn:hover { background: var(--lab-bg, #f9fafb); }
     </style>
-</head>
+<link rel="stylesheet" href="css/laboratory-reports.css"></head>
 <body>
     <nav class="top-nav">
         <div class="top-nav-left">
@@ -246,6 +246,7 @@
             </div>
         </div>
 
+        <section class="info-card" style="margin-bottom:24px;"><h2 class="info-card-title">Laboratory Report QR Codes</h2><div id="report-qr-cards" class="report-qr-grid"></div></section>
         <!-- Recent Student Requests -->
         <div class="activity-section">
             <h2 class="section-title" style="margin-bottom:14px;">Student Requests</h2>
@@ -444,5 +445,5 @@
     })();
     </script>
     <script src="js/record-table-controls.js"></script>
-</body>
+<script src="js/laboratory-report-common.js"></script><script src="js/laboratory-report-qr.js"></script></body>
 </html>

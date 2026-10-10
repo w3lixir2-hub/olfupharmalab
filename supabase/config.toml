@@ -1,0 +1,2 @@
+[functions.submit-laboratory-report]
+verify_jwt = true

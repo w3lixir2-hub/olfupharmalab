@@ -304,6 +304,7 @@
             var description = document.createElement('p');
             description.textContent = record.description || 'No notes recorded.';
             content.appendChild(description);
+            if (record.laboratory_report_id) { var inbox = document.createElement('a'); inbox.href = 'lab-reports.html'; inbox.textContent = 'View QR Report and Private Photos'; content.appendChild(inbox); }
             [['Logbook Photo', record.logbook_image_url], ['Incident Photo', record.damage_image_url]].forEach(function (evidence) {
                 if (!evidence[1] || !/^https?:\/\//i.test(evidence[1])) return;
                 var link = document.createElement('a');
@@ -524,7 +525,7 @@
                     '<td class="quantity-cell">' + (b.quantity != null ? esc(b.quantity) + ' ' + esc(b.unit) : '—') + '</td>' +
                     '<td>' + typeBadge(b.incident_type) + '</td>' +
                     '<td>' + esc(b.reported_by) + '</td>' +
-                    '<td><div class="breakage-actions"><button class="action-btn" onclick="editIncidentDates(\'' + esc(b.id) + '\')">Update Dates</button><button class="action-btn" onclick="viewIncidentDetails(\'' + esc(b.id) + '\')">Details</button><button class="action-btn" onclick="deleteIncident(\'' + esc(b.id) + '\')" aria-label="Remove incident" title="Remove" style="color:var(--lab-danger);">✕</button></div></td>' +
+                    '<td><div class="breakage-actions"><button class="action-btn" onclick="editIncidentDates(\'' + esc(b.id) + '\')">Update Dates</button><button class="action-btn" onclick="viewIncidentDetails(\'' + esc(b.id) + '\')">Details</button>' + (b.laboratory_report_id ? '' : '<button class="action-btn" onclick="deleteIncident(\'' + esc(b.id) + '\')" aria-label="Remove incident" title="Remove" style="color:var(--lab-danger);">✕</button>') + '</div></td>' +
                     '</tr>';
             });
             html += '</tbody></table></div>';

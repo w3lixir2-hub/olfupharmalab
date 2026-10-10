@@ -13,6 +13,7 @@
         var pageMap = {
             'index.html':              'dashboard',
             'admin-requests.html':     'labtech',
+            'lab-reports.html':        'labtech',
             'inventory.html':          'inventory',
             'equipment.html':          'inventory',
             'lecture-rooms.html':      'rooms',
