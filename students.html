@@ -197,7 +197,7 @@
                     <div class="qr-url" id="qr-url-display">—</div>
                     <div class="qr-actions">
                         <a href="print-qr-poster.html" target="_blank" rel="noopener" class="btn btn-primary">Print Poster</a>
-                        <button class="btn btn-secondary" onclick="copyQrUrl()">Copy Link</button>
+                        <button id="copy-material-link" class="btn btn-secondary" onclick="copyQrUrl()">Copy Link</button>
                         <a href="qr-landing.html" target="_blank" rel="noopener" class="btn btn-secondary">Open Link</a>
                     </div>
                 </div>
@@ -324,7 +324,7 @@
 
         window.copyQrUrl = function () {
             navigator.clipboard.writeText(QR_TARGET_URL).then(function () {
-                var btn = document.querySelector('.copy-btn');
+                var btn = document.getElementById('copy-material-link');
                 var orig = btn.textContent;
                 btn.textContent = 'Copied!';
                 setTimeout(function () { btn.textContent = orig; }, 1500);
