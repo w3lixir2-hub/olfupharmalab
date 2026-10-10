@@ -187,23 +187,7 @@
             <div class="stat-card"><div class="stat-card-header"><span class="stat-label">Released</span></div><div class="stat-value" id="stat-released" style="color:var(--lab-success)">—</div></div>
         </div>
 
-        <!-- QR Code + Portal Links -->
         <div class="portal-grid">
-
-            <!-- QR Code card -->
-            <div class="info-card">
-                <p class="info-card-title">QR Code</p>
-                <div class="qr-wrap">
-                    <img id="qr-img" class="qr-img" src="" alt="QR Code">
-                    <div class="qr-url" id="qr-url-display">—</div>
-                    <button class="copy-btn" onclick="copyQrUrl()">Copy Link</button>
-                    <div class="qr-actions">
-                        <a href="print-qr-poster.html" target="_blank" class="btn btn-primary" style="text-decoration:none;font-size:13px;">Print Poster</a>
-                        <a href="qr-landing.html" target="_blank" class="btn btn-secondary" style="text-decoration:none;font-size:13px;">Preview Landing</a>
-                    </div>
-                </div>
-            </div>
-
             <!-- Student Portal Links card -->
             <div class="info-card">
                 <p class="info-card-title">Student Portal Links</p>
@@ -244,9 +228,22 @@
                     <span class="portal-link-arrow">›</span>
                 </a>
             </div>
+            <section class="info-card"><h2 class="info-card-title">Laboratory Reports QR Code</h2><div id="report-qr-cards" class="report-qr-grid"></div></section>
         </div>
+            <!-- QR Code card -->
+            <div class="info-card" style="margin-bottom:24px;">
+                <p class="info-card-title">Material Request QR Code</p>
+                <div class="qr-wrap">
+                    <img id="qr-img" class="qr-img" src="" alt="QR Code">
+                    <div class="qr-url" id="qr-url-display">—</div>
+                    <button class="copy-btn" onclick="copyQrUrl()">Copy Link</button>
+                    <div class="qr-actions">
+                        <a href="print-qr-poster.html" target="_blank" class="btn btn-primary" style="text-decoration:none;font-size:13px;">Print Poster</a>
+                        <a href="qr-landing.html" target="_blank" class="btn btn-secondary" style="text-decoration:none;font-size:13px;">Preview Landing</a>
+                    </div>
+                </div>
+            </div>
 
-        <section class="info-card" style="margin-bottom:24px;"><h2 class="info-card-title">Laboratory Reports QR Code</h2><div id="report-qr-cards" class="report-qr-grid"></div></section>
         <!-- Recent Student Requests -->
         <div class="activity-section">
             <h2 class="section-title" style="margin-bottom:14px;">Student Requests</h2>
