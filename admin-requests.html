@@ -285,6 +285,7 @@
                 <button class="btn btn-secondary" onclick="closeModal()">Save Draft</button>
                 <button class="btn btn-warning" id="release-btn" onclick="releaseRequest()" style="display:none;background:#f59e0b;color:white;border:none;">Mark as Released</button>
                 <button class="btn btn-primary" id="return-btn" onclick="openReturnModal()" style="display:none;background:#8b5cf6;border:none;">Process Return</button>
+                <button class="btn btn-secondary" id="edit-request-btn" onclick="editPendingRequest()">Edit Request</button>
                 <button class="btn btn-success" id="approve-btn" onclick="approveRequest()">Approve Request</button>
             </div>
         </div>
@@ -321,6 +322,7 @@
     <script src="js/supabase-data.js"></script>
     <script src="js/auth-guard.js"></script>
     <script src="js/nav-highlighting.js"></script>
+    <script src="js/request-editor.js"></script>
     <script>
         let allRequests = [];
         let currentRequestData = null;
@@ -589,6 +591,8 @@ ${request.remarks ? '<p>Purpose / Remarks: <strong>' + escHtml(request.remarks) 
                 return;
             }
 
+            document.getElementById('request-edit-controls')?.remove();
+            document.getElementById('approve-btn').disabled = false;
             currentRequestData = request;
 
             // Update modal title
@@ -680,6 +684,7 @@ ${request.remarks ? '<p>Purpose / Remarks: <strong>' + escHtml(request.remarks) 
 
             // Show/hide action buttons based on status
             const status = request.status || 'pending';
+            document.getElementById('edit-request-btn').style.display = status === 'pending' ? '' : 'none';
             document.getElementById('approve-btn').style.display  = status === 'pending'  ? '' : 'none';
             document.getElementById('release-btn').style.display  = status === 'approved' ? '' : 'none';
             document.getElementById('return-btn').style.display   = status === 'released' ? '' : 'none';

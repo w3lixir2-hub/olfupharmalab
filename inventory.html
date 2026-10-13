@@ -228,6 +228,7 @@
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="js/supabase-client.js"></script>
     <script src="js/supabase-data.js"></script>
+    <script src="js/inventory-balance.js"></script>
     <script src="js/auth-guard.js"></script>
     <script src="js/nav-highlighting.js"></script>
     <script>
@@ -398,7 +399,12 @@
                     await saveItemHistory(chemicalId, entries);
                     // Also save previous_balance back to the chemical record
                     if (semPrev !== '' && db) {
-                        await db.from('chemicals').update({ previous_balance: Number(semPrev) }).eq('id', chemicalId);
+                        var original = await getChemicalById(chemicalId);
+                        if (!original) throw new Error('Item not found.');
+                        var updatedQuantity = calculateInventoryBalance(original, semPrev, original.received_amount);
+                        var result = await db.from('chemicals').update({ previous_balance: Number(semPrev), quantity: updatedQuantity }).eq('id', chemicalId);
+                        if (result.error) throw result.error;
+                        renderInventory();
                     }
                     if (btn) {
                         btn.textContent = 'Saved ✓';
@@ -507,10 +513,10 @@
                         '<div class="lab-form-group"><label class="lab-form-label" for="chem-ref">Reference No.</label><input type="text" id="chem-ref" class="lab-form-input" value="' + (c ? (c.reference_number || '').replace(/"/g, '&quot;') : '') + '" placeholder="e.g. REF-001"></div>' +
                         '<div class="lab-form-group"><label class="lab-form-label" for="chem-category">Category</label><select id="chem-category" class="lab-form-input">' + catSelectHtml + '</select></div>' +
                         '<div class="lab-form-group"><label class="lab-form-label" for="chem-unit">UOM</label><input type="text" id="chem-unit" class="lab-form-input" value="' + (c ? (c.unit || '').replace(/"/g, '&quot;') : '') + '" placeholder="L, g, mL, pcs"></div>' +
-                        '<div class="lab-form-group"><label class="lab-form-label" for="chem-quantity">Current Balance</label><input type="number" id="chem-quantity" class="lab-form-input" step="any" value="' + (c ? c.quantity : '') + '" placeholder="0"></div>' +
+                        '<div class="lab-form-group"><label class="lab-form-label" for="chem-quantity">Current Balance</label><input type="number" id="chem-quantity" class="lab-form-input" step="any" readonly value="' + (c ? c.quantity : '') + '" placeholder="0"></div>' +
                         '<div class="lab-form-group"><label class="lab-form-label" for="chem-prev-balance">Previous Balance</label><input type="number" id="chem-prev-balance" class="lab-form-input" step="any" value="' + (c && c.previous_balance != null ? c.previous_balance : '') + '" placeholder="0"></div>' +
                         '<div class="lab-form-group"><label class="lab-form-label" for="chem-req-amount">Requested Amount</label><input type="number" id="chem-req-amount" class="lab-form-input" step="any" value="' + (c && c.requested_amount != null ? c.requested_amount : '') + '" placeholder="0"></div>' +
-                        '<div class="lab-form-group"><label class="lab-form-label" for="chem-rec-amount">Received Amount</label><input type="number" id="chem-rec-amount" class="lab-form-input" step="any" value="' + (c && c.received_amount != null ? c.received_amount : '') + '" placeholder="0"></div>' +
+                        '<div class="lab-form-group"><label class="lab-form-label" for="chem-rec-amount">Received Amount (cumulative)</label><input type="number" id="chem-rec-amount" class="lab-form-input" step="any" value="' + (c && c.received_amount != null ? c.received_amount : '') + '" placeholder="0"></div>' +
                         '<div class="lab-form-group"><label class="lab-form-label" for="chem-min-qty">Reorder Level</label><input type="number" id="chem-min-qty" class="lab-form-input" step="any" value="' + (c && c.min_quantity != null ? c.min_quantity : '') + '" placeholder="0"></div>' +
                         '<div class="lab-form-group"><label class="lab-form-label" for="chem-delivery">Date of Acquisition</label><input type="date" id="chem-delivery" class="lab-form-input" value="' + dAcq + '"></div>' +
                         '<div class="lab-form-group"><label class="lab-form-label" for="chem-storage">Storage</label><input type="text" id="chem-storage" class="lab-form-input" value="' + (c ? (c.storage || c.location || '').replace(/"/g, '&quot;') : '') + '" placeholder="e.g. Hazmat Cabinet A1"></div>' +
@@ -529,6 +535,27 @@
                         '<button type="button" class="btn btn-primary" id="chemical-save">Save</button>' +
                         '<button type="button" class="btn btn-secondary" id="chemical-cancel">Cancel</button>' +
                         '</div>';
+                    var balanceInput = document.getElementById('chem-quantity');
+                    balanceInput._originalStock = c;
+                    var reconcile = document.createElement('button');
+                    reconcile.type = 'button'; reconcile.className = 'btn btn-secondary';
+                    reconcile.textContent = 'Set Current to Previous + Received';
+                    reconcile.onclick = function () {
+                        if (!confirm('Recompute this item from Previous + Received? Any stock already issued must be reflected in Previous Balance before saving.')) return;
+                        balanceInput._originalStock = null;
+                        previewBalance();
+                    };
+                    balanceInput.parentElement.appendChild(reconcile);
+                    function previewBalance() {
+                        try {
+                            balanceInput.value = calculateInventoryBalance(balanceInput._originalStock, document.getElementById('chem-prev-balance').value, document.getElementById('chem-rec-amount').value);
+                            balanceInput.setCustomValidity('');
+                        } catch (err) { balanceInput.setCustomValidity(err.message); }
+                    }
+                    document.getElementById('chem-prev-balance').addEventListener('input', previewBalance);
+                    document.getElementById('chem-rec-amount').addEventListener('input', previewBalance);
+                    balanceInput.title = 'Previous + received, adjusted for stock already issued. Receipts are cumulative; increase received for each delivery.';
+                    if (!c) previewBalance();
                     var saveBtn = document.getElementById('chemical-save');
                     var cancelBtn = document.getElementById('chemical-cancel');
                     if (saveBtn) saveBtn.addEventListener('click', function () { saveChemicalRecord(chemicalId); });
@@ -630,6 +657,10 @@
                 var minQty          = (document.getElementById('chem-min-qty')     || {}).value;
                 var semCon = (document.getElementById('chem-sem-consumption') || {}).value;
                 var semAcq = (document.getElementById('chem-sem-acquisition') || {}).value;
+                try {
+                    quantity = calculateInventoryBalance(document.getElementById('chem-quantity')._originalStock, prevBalance, recAmount);
+                    if (!name.trim()) throw new Error('Item name is required.');
+                } catch (err) { alert(err.message); return; }
                 var record = {
                     id:               chemicalId || 'ch-' + Date.now(),
                     name, category, storage, quantity, unit,
